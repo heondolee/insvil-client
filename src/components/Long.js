@@ -4,6 +4,8 @@ import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포
 import axios from 'axios';
 import './css/Long.css'; // CSS 파일 임포트
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 const Long = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState('2024-07-31');
@@ -11,7 +13,7 @@ const Long = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.post('http://localhost:4000/long/date-range', {
+      const response = await axios.post(`${API_URL}/api/long/date-range`, {
         startDate,
         endDate
       });
