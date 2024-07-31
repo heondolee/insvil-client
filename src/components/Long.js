@@ -13,7 +13,7 @@ const Long = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.post(`${API_URL}/api/long/date-range`, {
+      const response = await axios.post(`${API_URL}/long/date-range`, {
         startDate,
         endDate
       });
