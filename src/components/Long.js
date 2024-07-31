@@ -27,6 +27,17 @@ const Long = () => {
     fetchData();
   }, [fetchData]);
 
+  // 숫자를 1,000 단위로 구분하는 함수
+  const formatNumber = (num) => {
+    const formattedNum = new Intl.NumberFormat().format(num * 1000);
+    return formattedNum;
+  };
+
+  // 회차를 0/120 형식으로 변환하는 함수
+  const formatTerm = (totalTerm) => {
+    return `0/${totalTerm}`;
+  };
+
   return (
     <div>
       <Navigation />
@@ -58,7 +69,7 @@ const Long = () => {
             </Col>
           </Row>
         </Form>
-        <Table striped bordered hover>
+        <Table striped bordered hover className="table-custom">
           <thead>
             <tr>
               <th>계약일</th>
@@ -71,9 +82,9 @@ const Long = () => {
               <th>지점</th>
               <th>팀</th>
               <th>담당</th>
-              <th>납입보험료</th>
-              <th>수정보험료</th>
-              <th>납입일</th>
+              <th>납입보</th>
+              <th>수정보</th>
+              <th>납입</th>
               <th>상태</th>
               <th>회차</th>
               <th>업무</th>
@@ -93,11 +104,11 @@ const Long = () => {
                 <td>{item.branch}</td>
                 <td>{item.team}</td>
                 <td>{item.responsible}</td>
-                <td>{item.paymentInsurance}</td>
-                <td>{item.correctedInsurance}</td>
-                <td>{item.paymentDate}</td>
+                <td>{formatNumber(item.paymentInsurance)}</td>
+                <td>{formatNumber(item.correctedInsurance)}</td>
+                <td>{item.paymentMethod}</td>
                 <td>{item.contractStatus}</td>
-                <td>{item.totalTerm}</td>
+                <td>{formatTerm(item.totalTerm)}</td>
                 <td>{item.counselor}</td>
                 <td>{item.customerCounselingContent}</td>
               </tr>
