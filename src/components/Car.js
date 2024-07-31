@@ -1,0 +1,13 @@
+import React from 'react';
+import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
+
+const Car = () => {
+  return (
+    <div>
+      <h1>자동차 보험 페이지</h1>
+      <Navigation />
+    </div>
+  );
+};
+
+export default Car;
