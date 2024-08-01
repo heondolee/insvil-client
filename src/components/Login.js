@@ -25,7 +25,7 @@ const Login = () => {
         const response = await axios.post(`${API_URL}/login`, { username, password });
         if (response.data.success) {
           // setModalMessage('로그인 성공');
-          navigate('/home');
+          navigate('/long');
         } else {
           setModalMessage(response.data.message || '로그인 실패');
         }
