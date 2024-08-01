@@ -1,0 +1,12 @@
+/* Navigation.module.css */
+
+.nav-link {
+  color: rgb(109, 109, 109); /* 원하는 기본 색상으로 변경 */
+}
+.inactive {
+  color: rgb(109, 109, 109); /* 원하는 기본 색상으로 변경 */
+}
+
+.active {
+  color: #0d6efd;
+}

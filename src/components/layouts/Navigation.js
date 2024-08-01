@@ -1,13 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import styles from '../css/Navibar.module.css';
+import styles from '../css/Navigation.module.css';
 
 const Navigation = () => {
   const location = useLocation();
 
   return (
     <div className="App">
-      <Nav variant="pills" defaultActiveKey="/home">
+      <Nav defaultActiveKey="/home">
         <Nav.Item>
           <Nav.Link 
             as={Link} 
