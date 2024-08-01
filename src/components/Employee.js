@@ -32,7 +32,7 @@ const Employee = () => {
             <Table bordered className={styles.table_custom}>
               <thead>
                 <tr>
-                  <th>지점(7개)</th>
+                  <th>지점</th>
                   <th>아이디</th>
                   <th>생년월일 / 성별</th>
                   <th>핸드폰</th>
@@ -44,18 +44,20 @@ const Employee = () => {
                 </tr>
               </thead>
               <tbody>
-                {branchData.map((branch, index) => (
-                  <tr key={index}>
-                    <td><Link to="#">{branch.branch}</Link></td>
-                    <td><Link to="#">{branch.userCode}</Link></td>
-                    <td>{branch.birthdateGender}</td>
-                    <td>{branch.mobilePhone}</td>
-                    <td>{branch.phone}</td>
-                    <td>{branch.fax}</td>
-                    <td>{branch.carSettlement}</td>
-                    <td>{branch.longTermSettlement}</td>
-                    <td>{branch.lifeSettlement}</td>
-                  </tr>
+                {Object.keys(branchData).map((branch) => (
+                  branchData[branch].map((user, index) => (
+                    <tr key={`${branch}-${index}`}>
+                      <td><Link to="#">{branch}</Link></td>
+                      <td><Link to="#">{user.username}</Link></td>
+                      <td>{user.birthdateGender}</td>
+                      <td>{user.mobilePhone}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.fax}</td>
+                      <td>{user.carSettlement}</td>
+                      <td>{user.longTermSettlement}</td>
+                      <td>{user.lifeSettlement}</td>
+                    </tr>
+                  ))
                 ))}
               </tbody>
             </Table>
