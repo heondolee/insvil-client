@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Button, Table, Container, Row, Col, InputGroup } from 'react-bootstrap';
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
-import './css/Long.css'; // CSS 파일 임포트
+import styles from './css/Long.module.css'; // 모듈 import
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -69,26 +69,26 @@ const Long = () => {
             </Col>
           </Row>
         </Form>
-        <Table striped bordered hover className="table-custom">
+        <Table striped bordered hover className={styles.table_custom}>
           <thead>
             <tr>
-              <th className="contract-date">계약일</th>
-              <th className="insurance-company">보험회사</th>
+              <th className={styles.contract_date}>계약일</th>
+              <th className={styles.insurance_company}>보험회사</th>
               <th>보험상품</th>
-              <th className="birth-gender">생년월일 / 성별</th>
-              <th className='name'>피보험자</th>
-              <th className='name'>계약자</th>
+              <th className={styles.birth_gender}>생년월일 / 성별</th>
+              <th className={styles.name}>피보험자</th>
+              <th className={styles.name}>계약자</th>
               <th>증권번호</th>
               <th>지점</th>
               <th>팀</th>
-              <th className='name'>담당</th>
+              <th className={styles.name}>담당</th>
               <th>납입보</th>
               <th>수정보</th>
-              <th className='name'>납입</th>
-              <th className='name'>상태</th>
+              <th className={styles.name}>납입</th>
+              <th className={styles.name}>상태</th>
               <th>회차</th>
-              <th className='name'>업무</th>
-              <th className='sign'>자필서명</th>
+              <th className={styles.name}>업무</th>
+              <th className={styles.sign}>자필서명</th>
             </tr>
           </thead>
           <tbody>
