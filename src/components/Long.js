@@ -29,11 +29,8 @@ const Long = () => {
 
   // 숫자를 1,000 단위로 구분하는 함수
   const formatNumber = (num) => {
-    const parts = num.toString().split('.');
-    const integerPart = parts[0];
-    const decimalPart = parts[1] || '000'; // 소수점 이하가 없는 경우 .000으로 표시
-    const formattedIntegerPart = new Intl.NumberFormat().format(integerPart);
-    return `${formattedIntegerPart}.${decimalPart}`;
+    const formattedNum = new Intl.NumberFormat().format(num * 1000);
+    return formattedNum;
   };
 
   // 회차를 0/120 형식으로 변환하는 함수
