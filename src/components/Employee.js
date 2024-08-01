@@ -40,6 +40,7 @@ const Employee = () => {
     <div>
       <Navigation />
       <Container>
+        <h4>인스빌</h4>
         <Row>
           <Col>
             <Table bordered className={styles.table_custom}>

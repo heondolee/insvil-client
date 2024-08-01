@@ -37,7 +37,7 @@ const Navigation = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link 
-            as={Link} 
+            as={Link}
             to="/employee" 
             className={location.pathname === '/employee' ? styles.active : styles.inactive}
           >
@@ -46,7 +46,7 @@ const Navigation = () => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link 
-            as={Link} 
+            as={Link}
             to="/" 
             className={location.pathname === '/' ? styles.active : styles.inactive}
           >
