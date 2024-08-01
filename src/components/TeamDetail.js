@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom'; // Update import
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Table, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
-import styles from './css/BranchDetail.module.css';
+import styles from './css/TeamDetail.module.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const BranchDetail = () => {
-  const { branchName } = useParams(); // URL 파라미터에서 지점 이름을 가져옴
-  const [teamData, setTeamData] = useState([]); // 팀 데이터를 저장할 상태
+const TeamDetail = () => {
+  const { branchName, teamName } = useParams(); // URL 파라미터에서 지점 및 팀 이름을 가져옴
+  const [employeeData, setEmployeeData] = useState([]); // 직원 데이터를 저장할 상태
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태를 저장할 상태
   const [error, setError] = useState(null); // 에러 메시지를 저장할 상태
 
   useEffect(() => {
-    const fetchTeamData = async () => {
+    const fetchEmployeeData = async () => {
       try {
-        // API 요청을 통해 팀 데이터를 가져옴
-        const response = await axios.get(`${API_URL}/user/team`, {
-          params: { branch: branchName }
+        // API 요청을 통해 직원 데이터를 가져옴
+        const response = await axios.get(`${API_URL}/user/name`, {
+          params: { branch: branchName, team: teamName }
         });
-        setTeamData(response.data); // 가져온 데이터를 상태에 저장
+        setEmployeeData(response.data); // 가져온 데이터를 상태에 저장
       } catch (error) {
-        setError("팀 데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
-        console.error("Error fetching team data:", error); // 콘솔에 에러 로그 출력
+        setError("직원 데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
+        console.error("Error fetching employee data:", error); // 콘솔에 에러 로그 출력
       } finally {
         setLoading(false); // 데이터 로딩 상태를 false로 설정
       }
     };
 
-    fetchTeamData();
-  }, [branchName]); // branchName이 변경될 때마다 데이터를 다시 가져옴
+    fetchEmployeeData();
+  }, [branchName, teamName]); // branchName과 teamName이 변경될 때마다 데이터를 다시 가져옴
 
   return (
     <div>
@@ -39,7 +39,7 @@ const BranchDetail = () => {
       <Container>
         <Row>
           <Col>
-            <h4>{branchName} 지점의 팀 목록</h4>
+            <h4>{branchName} 지점 - {teamName} 팀의 직원 목록</h4>
             {loading ? (
               // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">
@@ -51,11 +51,11 @@ const BranchDetail = () => {
               // 에러가 발생했을 때 에러 메시지 표시
               <Alert variant="danger">{error}</Alert>
             ) : (
-              // 데이터 로딩이 완료되고 에러가 없을 때 팀 목록 표시
+              // 데이터 로딩이 완료되고 에러가 없을 때 직원 목록 표시
               <Table bordered className={styles.table_custom}>
                 <thead>
                   <tr>
-                    <th>팀</th>
+                    <th>이름</th>
                     <th>아이디</th>
                     <th>생년월일 / 성별</th>
                     <th>핸드폰</th>
@@ -67,25 +67,25 @@ const BranchDetail = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {teamData.length > 0 ? (
-                    // 팀 데이터가 있을 경우 테이블에 데이터 표시
-                    teamData.map((team, index) => (
+                  {employeeData.length > 0 ? (
+                    // 직원 데이터가 있을 경우 테이블에 데이터 표시
+                    employeeData.map((employee, index) => (
                       <tr key={index}>
-                        <td><Link to="#">{team.team}</Link></td>
-                        <td><Link to="#">{team.username}</Link></td>
-                        <td><Link to="#">{team.birthdateGender}</Link></td>
-                        <td>{team.mobilePhone}</td>
-                        <td>{team.phone}</td>
-                        <td>{team.fax}</td>
-                        <td>{team.carSettlement}</td>
-                        <td>{team.longTermSettlement}</td>
-                        <td>{team.lifeSettlement}</td>
+                        <td>{employee.manager}</td>
+                        <td>{employee.username}</td>
+                        <td>{employee.birthdateGender}</td>
+                        <td>{employee.mobilePhone}</td>
+                        <td>{employee.phone}</td>
+                        <td>{employee.fax}</td>
+                        <td>{employee.carSettlement}</td>
+                        <td>{employee.longTermSettlement}</td>
+                        <td>{employee.lifeSettlement}</td>
                       </tr>
                     ))
                   ) : (
-                    // 팀 데이터가 없을 경우 '팀 정보가 없습니다' 메시지 표시
+                    // 직원 데이터가 없을 경우 '직원 정보가 없습니다' 메시지 표시
                     <tr>
-                      <td colSpan="9" className="text-center">팀 정보가 없습니다.</td>
+                      <td colSpan="9" className="text-center">직원 정보가 없습니다.</td>
                     </tr>
                   )}
                 </tbody>
@@ -98,4 +98,4 @@ const BranchDetail = () => {
   );
 };
 
-export default BranchDetail;
+export default TeamDetail;

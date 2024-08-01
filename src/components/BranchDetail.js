@@ -71,7 +71,7 @@ const BranchDetail = () => {
                     // 팀 데이터가 있을 경우 테이블에 데이터 표시
                     teamData.map((team, index) => (
                       <tr key={index}>
-                        <td><Link to="#">{team.team}</Link></td>
+                        <td><Link to={`/employee/${branchName}/${team.team}`}>{team.team}</Link></td>
                         <td><Link to="#">{team.username}</Link></td>
                         <td><Link to="#">{team.birthdateGender}</Link></td>
                         <td>{team.mobilePhone}</td>

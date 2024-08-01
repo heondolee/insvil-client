@@ -18,8 +18,8 @@ function App() {
       <Route path="/car" element={<Car/>} />
       <Route path="/normal" element={<Normal/>} />
       <Route path="/employee" element={<Employee />} />
-      <Route path="/employee/:branchName" element={<BranchDetail />} />
       <Route path="/employee/:branchName/:teamName" element={<TeamDetail />} />
+      <Route path="/employee/:branchName" element={<BranchDetail />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </Router>
