@@ -5,6 +5,7 @@ import Car from './components/Car';
 import Home from './components/Home';
 import Normal from './components/Normal';
 import Employee from './components/Employee';
+import BranchDetail from './components/BranchDetail';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/car" element={<Car/>} />
       <Route path="/normal" element={<Normal/>} />
       <Route path="/employee" element={<Employee />} />
+      <Route path="/employee/:branchName" element={<BranchDetail />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   </Router>

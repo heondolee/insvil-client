@@ -40,7 +40,6 @@ const Employee = () => {
     <div>
       <Navigation />
       <Container>
-        {/* 지점별 테이블 */}
         <Row>
           <Col>
             <Table bordered className={styles.table_custom}>
@@ -61,7 +60,7 @@ const Employee = () => {
                 {Object.keys(branchData).map((branch) => (
                   branchData[branch].map((user, index) => (
                     <tr key={`${branch}-${index}`}>
-                      <td><Link to="#">{branch}</Link></td>
+                      <td><Link to={`/employee/${branch}`}>{branch}</Link></td>
                       <td><Link to="#">{user.username}</Link></td>
                       <td>{user.birthdateGender}</td>
                       <td>{user.mobilePhone}</td>
