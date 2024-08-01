@@ -29,8 +29,11 @@ const Long = () => {
 
   // 숫자를 1,000 단위로 구분하는 함수
   const formatNumber = (num) => {
-    const formattedNum = new Intl.NumberFormat().format(num * 1000);
-    return formattedNum;
+    const parts = num.toString().split('.');
+    const integerPart = parts[0];
+    const decimalPart = parts[1] || '000'; // 소수점 이하가 없는 경우 .000으로 표시
+    const formattedIntegerPart = new Intl.NumberFormat().format(integerPart);
+    return `${formattedIntegerPart}.${decimalPart}`;
   };
 
   // 회차를 0/120 형식으로 변환하는 함수
@@ -72,23 +75,23 @@ const Long = () => {
         <Table striped bordered hover className="table-custom">
           <thead>
             <tr>
-              <th>계약일</th>
-              <th>보험회사</th>
+              <th className="contract-date">계약일</th>
+              <th className="insurance-company">보험회사</th>
               <th>보험상품</th>
-              <th>생년월일 / 성별</th>
-              <th>피보험자</th>
-              <th>계약자</th>
+              <th className="birth-gender">생년월일 / 성별</th>
+              <th className='name'>피보험자</th>
+              <th className='name'>계약자</th>
               <th>증권번호</th>
               <th>지점</th>
               <th>팀</th>
-              <th>담당</th>
+              <th className='name'>담당</th>
               <th>납입보</th>
               <th>수정보</th>
-              <th>납입</th>
-              <th>상태</th>
+              <th className='name'>납입</th>
+              <th className='name'>상태</th>
               <th>회차</th>
-              <th>업무</th>
-              <th>자필서명</th>
+              <th className='name'>업무</th>
+              <th className='sign'>자필서명</th>
             </tr>
           </thead>
           <tbody>

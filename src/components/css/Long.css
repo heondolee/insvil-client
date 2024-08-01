@@ -1,4 +1,26 @@
 /* Long.css */
 .table-custom {
-  font-size: 10px;
+  font-size: 12px;
 }
+
+/* Long.css */
+.table-custom th.contract-date {
+  width: 7%; /* 원하는 너비로 설정 */
+}
+
+.table-custom th.insurance-company {
+  width: 5%; /* 원하는 너비로 설정 */
+}
+
+.table-custom th.birth-gender {
+  width: 7%;
+}
+
+.table-custom th.name {
+  width: 4%;
+}
+
+.table-custom th.sign {
+  width: 5%;
+}
+
