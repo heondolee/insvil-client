@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Long from './components/Long';
 import Car from './components/Car';
+import Home from './components/Home';
 import Normal from './components/Normal';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/long" element={<Long />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/car" element={<Car/>} />
       <Route path="/normal" element={<Normal/>} />
       <Route path="*" element={<Navigate to="/" />} />
