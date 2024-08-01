@@ -39,7 +39,7 @@ const BranchDetail = () => {
       <Container>
         <Row>
           <Col>
-            <h4>{branchName} 지점의 팀 목록</h4>
+            <h4><Link to={`/employee`}>{branchName}</Link> 지점의 팀 목록</h4>
             {loading ? (
               // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">

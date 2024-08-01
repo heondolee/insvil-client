@@ -39,7 +39,7 @@ const TeamDetail = () => {
       <Container>
         <Row>
           <Col>
-            <h4>{branchName} 지점 - {teamName} 팀의 직원 목록</h4>
+            <h4>{branchName}지점 - <Link to={`/employee/${branchName}`}>{teamName}</Link>의 직원 목록</h4>
             {loading ? (
               // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">
@@ -72,8 +72,8 @@ const TeamDetail = () => {
                     employeeData.map((employee, index) => (
                       <tr key={index}>
                         <td>{employee.manager}</td>
-                        <td>{employee.username}</td>
-                        <td>{employee.birthdateGender}</td>
+                        <td><Link to="#">{employee.username}</Link></td>
+                        <td><Link to="#">{employee.birthdateGender}</Link></td>
                         <td>{employee.mobilePhone}</td>
                         <td>{employee.phone}</td>
                         <td>{employee.fax}</td>
