@@ -7,12 +7,12 @@ const Navigation = () => {
 
   return (
     <div className="App">
-      <Nav defaultActiveKey="/home">
+      <Nav className={styles.nav} defaultActiveKey="/home">
         <Nav.Item>
           <Nav.Link 
             as={Link} 
             to="/long" 
-            className={location.pathname === '/long' ? styles.active : styles.inactive}
+            className={`${styles.navLink} ${location.pathname === '/long' ? styles.active : styles.inactive}`}
           >
             장기 보험
           </Nav.Link>
@@ -21,7 +21,7 @@ const Navigation = () => {
           <Nav.Link 
             as={Link} 
             to="/car" 
-            className={location.pathname === '/car' ? styles.active : styles.inactive}
+            className={`${styles.navLink} ${location.pathname === '/car' ? styles.active : styles.inactive}`}
           >
             자동차 보험
           </Nav.Link>
@@ -30,7 +30,7 @@ const Navigation = () => {
           <Nav.Link 
             as={Link} 
             to="/normal" 
-            className={location.pathname === '/normal' ? styles.active : styles.inactive}
+            className={`${styles.navLink} ${location.pathname === '/normal' ? styles.active : styles.inactive}`}
           >
             일반 보험
           </Nav.Link>
@@ -39,7 +39,7 @@ const Navigation = () => {
           <Nav.Link 
             as={Link}
             to="/employee" 
-            className={location.pathname === '/employee' ? styles.active : styles.inactive}
+            className={`${styles.navLink} ${location.pathname === '/employee' ? styles.active : styles.inactive}`}
           >
             사용자 관리
           </Nav.Link>
@@ -48,7 +48,7 @@ const Navigation = () => {
           <Nav.Link 
             as={Link}
             to="/" 
-            className={location.pathname === '/' ? styles.active : styles.inactive}
+            className={`${styles.navLink} ${location.pathname === '/' ? styles.active : styles.inactive}`}
           >
             로그아웃
           </Nav.Link>

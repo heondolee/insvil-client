@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Form, Button, Table, Container, Row, Col, InputGroup } from 'react-bootstrap';
+import { Form, Button, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from './css/Long.module.css'; // 모듈 import
@@ -10,18 +10,20 @@ const Long = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState('2024-07-31');
   const [endDate, setEndDate] = useState('2024-07-31');
+  const [dateType, setDateType] = useState('contractDate'); // 날짜 유형 상태 추가
 
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.post(`${API_URL}/long/date-range`, {
         startDate,
-        endDate
+        endDate,
+        dateType, // 날짜 유형을 요청에 포함
       });
       setData(response.data.longs);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, dateType]);
 
   useEffect(() => {
     fetchData();
@@ -42,12 +44,25 @@ const Long = () => {
     <div>
       <Navigation />
       <Container>
-        <h1>장기 보험 페이지</h1>
         <Form>
           <Row className="align-items-center">
             <Col>
               <Form.Group controlId="formDateRange">
-                <Form.Label>계약일</Form.Label>
+                {/* <Form.Label>날짜 유형</Form.Label> */}
+                <DropdownButton
+                  variant="outline-secondary"
+                  title={dateType === 'contractDate' ? '계약일' : dateType === 'expiryDate' ? '만기일' : '개시일'}
+                  onSelect={(eventKey) => setDateType(eventKey)}
+                >
+                  <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
+                  <Dropdown.Item eventKey="startDate">개시일</Dropdown.Item>
+                  <Dropdown.Item eventKey="expiryDate">만기일</Dropdown.Item>
+                </DropdownButton>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="formDateRange">
+                {/* <Form.Label>기간 선택</Form.Label> */}
                 <InputGroup>
                   <Form.Control
                     type="date"
@@ -61,11 +76,6 @@ const Long = () => {
                   />
                 </InputGroup>
               </Form.Group>
-            </Col>
-            <Col>
-              <Button variant="primary" onClick={fetchData}>
-                조회
-              </Button>
             </Col>
           </Row>
         </Form>
