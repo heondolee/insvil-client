@@ -39,7 +39,7 @@ const TeamDetail = () => {
       <Container>
         <Row>
           <Col>
-            <h4><Link to={`/employee`}>인스빌</Link> ➡️ <Link to={`/employee/${branchName}`}>'{branchName}' 지점</Link> ➡️ '{teamName}' 팀</h4>
+            <h4><Link to={`/employee`}>인스빌</Link> ➡️ <Link to={`/employee/${branchName}`}>{branchName}</Link> 지점 ➡️ {teamName} 팀</h4>
             {loading ? (
               // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">

@@ -62,7 +62,7 @@ const Employee = () => {
                   branchData[branch].map((user, index) => (
                     <tr key={`${branch}-${index}`}>
                       <td><Link to={`/employee/${branch}`}>{branch}</Link></td>
-                      <td><Link to="#">{user.username}</Link></td>
+                      <td><Link to={`/employee/${branch}/''/${user.username}`}>{user.username}</Link></td>
                       <td>{user.birthdateGender}</td>
                       <td>{user.mobilePhone}</td>
                       <td>{user.phone}</td>
@@ -96,7 +96,7 @@ const Employee = () => {
                 {managerData.map((user, index) => (
                   <tr key={`manager-${index}`}>
                     <td>{user.name}</td>
-                    <td><Link to="#">{user.username}</Link></td>
+                    <td><Link to={`/employee/${user.branch}/${user.team}/${user.username}`}>{user.username}</Link></td>
                     <td>{user.birthdateGender}</td>
                     <td>{user.mobilePhone}</td>
                     <td>{user.phone}</td>
