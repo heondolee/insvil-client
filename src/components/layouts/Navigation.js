@@ -47,6 +47,22 @@ const Navigation = () => {
         <Nav.Item>
           <Nav.Link 
             as={Link}
+            to="/customer" 
+            className={`${styles.navLink} ${location.pathname === '/customer' ? styles.active : styles.inactive}`}
+          >
+            사용자 관리
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Link 
+            as={Link} 
+            to="/reference" 
+            className={`${styles.navLink} ${location.pathname === '/reference' ? styles.active : styles.inactive}`}
+          >
+            자료실
+          </Nav.Link>
+        <Nav.Item>
+          <Nav.Link 
+            as={Link}
             to="/" 
             className={`${styles.navLink} ${location.pathname === '/' ? styles.active : styles.inactive}`}
           >

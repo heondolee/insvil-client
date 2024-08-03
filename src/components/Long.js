@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Form, Button, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from './css/Long.module.css'; // 모듈 import
@@ -7,9 +7,18 @@ import styles from './css/Long.module.css'; // 모듈 import
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Long = () => {
+  // 현재 날짜를 가져오는 함수
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState('2024-07-31');
-  const [endDate, setEndDate] = useState('2024-07-31');
+  const [startDate, setStartDate] = useState(getCurrentDate()); // 기본값을 현재 날짜로 설정
+  const [endDate, setEndDate] = useState(getCurrentDate()); // 기본값을 현재 날짜로 설정
   const [dateType, setDateType] = useState('contractDate'); // 날짜 유형 상태 추가
 
   const fetchData = useCallback(async () => {
@@ -55,7 +64,7 @@ const Long = () => {
                   onSelect={(eventKey) => setDateType(eventKey)}
                 >
                   <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
-                  <Dropdown.Item eventKey="startDate">개시일</Dropdown.Item>
+                  <Dropdown.Item eventKey="coverageStartDate">개시일</Dropdown.Item>
                   <Dropdown.Item eventKey="expiryDate">만기일</Dropdown.Item>
                 </DropdownButton>
               </Form.Group>

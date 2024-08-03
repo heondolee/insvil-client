@@ -5,7 +5,7 @@ const Car = () => {
   return (
     <div>
       <Navigation />
-      <h1>자동차 보험 페이지</h1>
+      <h1>자료실</h1>
     </div>
   );
 };
