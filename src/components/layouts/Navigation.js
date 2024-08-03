@@ -50,7 +50,7 @@ const Navigation = () => {
             to="/customer" 
             className={`${styles.navLink} ${location.pathname === '/customer' ? styles.active : styles.inactive}`}
           >
-            사용자 관리
+            고객 관리
           </Nav.Link>
         </Nav.Item>
         <Nav.Link 
