@@ -5,8 +5,8 @@
 }
 
 .active {
-  font-weight: bold !important;
-  color: #007bff !important;
+  font-weight: bold;
+  color: #007bff;
 }
 
 .inactive {
