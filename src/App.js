@@ -6,6 +6,7 @@ import Normal from './components/Normal';
 import Employee from './components/Employee';
 import BranchDetail from './components/BranchDetail';
 import TeamDetail from './components/TeamDetail';
+import InfoDetail from './components/InfoDetail';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/car" element={<Car/>} />
       <Route path="/normal" element={<Normal/>} />
       <Route path="/employee" element={<Employee />} />
+      <Route path="/employee/:branchName/:teamName/:userName" element={<InfoDetail />} />
       <Route path="/employee/:branchName/:teamName" element={<TeamDetail />} />
       <Route path="/employee/:branchName" element={<BranchDetail />} />
       <Route path="*" element={<Navigate to="/" />} />

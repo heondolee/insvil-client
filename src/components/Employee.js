@@ -96,8 +96,8 @@ const Employee = () => {
                 {managerData.map((user, index) => (
                   <tr key={`manager-${index}`}>
                     <td>{user.name}</td>
-                    <td>{user.username}</td>
-                    <td><Link to="#">{user.birthdateGender}</Link></td>
+                    <td><Link to="#">{user.username}</Link></td>
+                    <td>{user.birthdateGender}</td>
                     <td>{user.mobilePhone}</td>
                     <td>{user.phone}</td>
                     <td>{user.fax}</td>
