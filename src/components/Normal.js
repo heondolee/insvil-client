@@ -4,8 +4,8 @@ import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포
 const Normal = () => {
   return (
     <div>
-      <h1>일반 보험 페이지</h1>
       <Navigation />
+      <h1>일반 보험 페이지</h1>
     </div>
   );
 };
