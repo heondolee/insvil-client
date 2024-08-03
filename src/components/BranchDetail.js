@@ -73,7 +73,7 @@ const BranchDetail = () => {
                       <tr key={index}>
                         <td><Link to={`/employee/${branchName}/${team.team}`}>{team.team}</Link></td>
                         <td><Link to="#">{team.username}</Link></td>
-                        <td><Link to="#">{team.birthdateGender}</Link></td>
+                        <td>{team.birthdateGender}</td>
                         <td>{team.mobilePhone}</td>
                         <td>{team.phone}</td>
                         <td>{team.fax}</td>

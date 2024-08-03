@@ -72,8 +72,8 @@ const TeamDetail = () => {
                     employeeData.map((employee, index) => (
                       <tr key={index}>
                         <td>{employee.manager}</td>
-                        <td><Link to="#">{employee.username}</Link></td>
-                        <td><Link to="#">{employee.birthdateGender}</Link></td>
+                        <td><Link to={`/employee/${branchName}/${teamName}/${employee.username}`}>{employee.username}</Link></td>
+                        <td>{employee.birthdateGender}</td>
                         <td>{employee.mobilePhone}</td>
                         <td>{employee.phone}</td>
                         <td>{employee.fax}</td>
