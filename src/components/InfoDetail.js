@@ -94,7 +94,7 @@ const InfoDetail = () => {
                       </tr>
                       <tr>
                         <td>은행명</td>
-                        <td>{userData.bankName}</td>
+                        <td>{userData.bank}</td>
                       </tr>
                       <tr>
                         <td>계좌번호</td>
