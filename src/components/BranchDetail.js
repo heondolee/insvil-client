@@ -39,7 +39,7 @@ const BranchDetail = () => {
       <Container>
         <Row>
           <Col>
-            <h4><Link to={`/employee`}>인스빌</Link> ➡️ '{branchName}' 지점</h4>
+            <h4><Link to={`/employee`}>인스빌</Link> ➡️ {branchName} 지점</h4>
             {loading ? (
               // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">
@@ -72,7 +72,7 @@ const BranchDetail = () => {
                     teamData.map((team, index) => (
                       <tr key={index}>
                         <td><Link to={`/employee/${branchName}/${team.team}`}>{team.team}</Link></td>
-                        <td><Link to="#">{team.username}</Link></td>
+                        <td><Link to={`/employee/${branchName}/${team.team}/${team.username}`}>{team.username}</Link></td>
                         <td>{team.birthdateGender}</td>
                         <td>{team.mobilePhone}</td>
                         <td>{team.phone}</td>
