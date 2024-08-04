@@ -57,30 +57,30 @@ const Long = () => {
         <Form>
           <Row className="align-items-center">
             <Col xs="auto">
-              <Form.Label>검색일</Form.Label>
-            </Col>
-            <Col>
-              <Form.Group controlId="formDateRange">
-                <DropdownButton
-                  variant="outline-secondary"
-                  title={dateType === 'contractDate' ? '계약일' : dateType === 'paymentEndDate' ? '만기일' : '개시일'}
-                  onSelect={(eventKey) => setDateType(eventKey)}
-                >
-                  <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
-                  <Dropdown.Item eventKey="paymentStartDate">개시일</Dropdown.Item>
-                  <Dropdown.Item eventKey="paymentEndDate">만기일</Dropdown.Item>
-                </DropdownButton>
-              </Form.Group>
+            <Form.Group controlId="formDateRange">
+              <DropdownButton
+                variant="outline-secondary"
+                title={
+                  "검색일 : " + 
+                  (dateType === 'contractDate' ? '계약일' : 
+                  dateType === 'paymentEndDate' ? '만기일' : 
+                  '개시일')
+                }
+                onSelect={(eventKey) => setDateType(eventKey)}
+              >
+                <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
+                <Dropdown.Item eventKey="paymentStartDate">개시일</Dropdown.Item>
+                <Dropdown.Item eventKey="paymentEndDate">만기일</Dropdown.Item>
+              </DropdownButton>
+            </Form.Group>
             </Col>
             <Col xs="auto">
-              <Form.Label>계약상태</Form.Label>
-            </Col>
-            <Col>
               <Form.Group controlId="formDateRange">
                 <DropdownButton
                   variant="outline-secondary"
                   title={
-                    contractStatus === 'statusAll'
+                    "계약상태 : " +
+                    (contractStatus === 'statusAll'
                       ? '전체'
                       : contractStatus === 'statusMaintain'
                       ? '유지'
@@ -94,7 +94,7 @@ const Long = () => {
                       ? '취소'
                       : contractStatus === 'statusExpire'
                       ? '만기'
-                      : '전체'
+                      : '전체')
                   }
                   onSelect={(eventKey) => setContractStatus(eventKey)}
                 >
@@ -108,7 +108,12 @@ const Long = () => {
                 </DropdownButton>
               </Form.Group>
             </Col>
-            <Col>
+            < Col xs="auto">
+              <Form.Group controlId="formDateRange">
+                <Form.Control type="password" placeholder="Password" />
+              </Form.Group>
+            </Col>
+            <Col xs="auto">
               <Form.Group controlId="formDateRange">
                 <InputGroup>
                   <Form.Control
