@@ -43,9 +43,13 @@ const Long = () => {
   }, [startDate, endDate, dateType, contractStatus, contractor, policyNumber]);
 
   const formatNumber = (num) => {
-    const formattedNum = new Intl.NumberFormat().format(num * 1000);
-    return formattedNum;
-  };
+    if (!num.includes(',')) {
+      const formattedNum = new Intl.NumberFormat().format(num * 1000);
+      return formattedNum;
+    }
+    else
+      return num;
+  };  
 
   const formatTerm = (totalTerm) => {
     return `0/${totalTerm}`;
@@ -166,7 +170,9 @@ const Long = () => {
             <Table striped bordered hover className={styles.table_custom}>
               <thead>
                 <tr>
-                  <th className={styles.contract_date}>{dateType === 'contractDate' ? '계약일' : dateType === 'paymentEndDate' ? '만기일' : '개시일'}</th>
+                  <th className={styles.contract_date}>계약일</th>
+                  <th className={styles.contract_date}>개시일</th>
+                  <th className={styles.contract_date}>만기일</th>
                   <th className={styles.insurance_company}>보험회사</th>
                   <th>보험상품</th>
                   <th className={styles.birth_gender}>생년월일 / 성별</th>
@@ -187,7 +193,9 @@ const Long = () => {
               <tbody>
                 {data.map((item, index) => (
                   <tr key={index}>
-                    <td>{dateType === 'contractDate' ? item.contractDate : dateType === 'paymentEndDate' ? item.paymentEndDate : item.paymentStartDate}</td>
+                    <td>{item.contractDate}</td>
+                    <td>{item.paymentStartDate}</td>
+                    <td>{item.paymentEndDate}</td>
                     <td>{item.contractCompany}</td>
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdate_gender}</td>
