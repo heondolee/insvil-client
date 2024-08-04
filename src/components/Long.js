@@ -56,6 +56,9 @@ const Long = () => {
       <Container>
         <Form>
           <Row className="align-items-center">
+            <Col xs="auto">
+              <Form.Label>검색일</Form.Label>
+            </Col>
             <Col>
               <Form.Group controlId="formDateRange">
                 <DropdownButton
@@ -68,6 +71,9 @@ const Long = () => {
                   <Dropdown.Item eventKey="paymentEndDate">만기일</Dropdown.Item>
                 </DropdownButton>
               </Form.Group>
+            </Col>
+            <Col xs="auto">
+              <Form.Label>계약상태</Form.Label>
             </Col>
             <Col>
               <Form.Group controlId="formDateRange">
