@@ -60,12 +60,12 @@ const Long = () => {
                 {/* <Form.Label>날짜 유형</Form.Label> */}
                 <DropdownButton
                   variant="outline-secondary"
-                  title={dateType === 'contractDate' ? '계약일' : dateType === 'expiryDate' ? '만기일' : '개시일'}
+                  title={dateType === 'contractDate' ? '계약일' : dateType === 'paymentEndDate' ? '만기일' : '개시일'}
                   onSelect={(eventKey) => setDateType(eventKey)}
                 >
                   <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
-                  <Dropdown.Item eventKey="coverageStartDate">개시일</Dropdown.Item>
-                  <Dropdown.Item eventKey="expiryDate">만기일</Dropdown.Item>
+                  <Dropdown.Item eventKey="paymentStartDate">개시일</Dropdown.Item>
+                  <Dropdown.Item eventKey="paymentEndDate">만기일</Dropdown.Item>
                 </DropdownButton>
               </Form.Group>
             </Col>
@@ -91,7 +91,7 @@ const Long = () => {
         <Table striped bordered hover className={styles.table_custom}>
           <thead>
             <tr>
-              <th className={styles.contract_date}>계약일</th>
+              <th className={styles.contract_date}>{data.dateType === 'contractDate' ? '계약일' : dateType === 'paymentEndDate' ? '만기일' : '개시일'}</th>
               <th className={styles.insurance_company}>보험회사</th>
               <th>보험상품</th>
               <th className={styles.birth_gender}>생년월일 / 성별</th>
@@ -100,20 +100,19 @@ const Long = () => {
               <th>증권번호</th>
               <th>지점</th>
               <th>팀</th>
-              <th className={styles.name}>담당</th>
+              <th>담당</th>
               <th>납입보</th>
               <th>수정보</th>
               <th className={styles.name}>납입</th>
               <th className={styles.name}>상태</th>
               <th>회차</th>
               <th className={styles.name}>업무</th>
-              <th className={styles.sign}>자필서명</th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
               <tr key={index}>
-                <td>{item.contractDate}</td>
+                <td>{data.dateType === 'contractDate' ? item.contractDate : dateType === 'paymentEndDate' ? item.paymentEndDate : item.paymentStartDate}</td>
                 <td>{item.contractCompany}</td>
                 <td>{item.longTermProduct}</td>
                 <td>{item.birthdate_gender}</td>
@@ -129,7 +128,6 @@ const Long = () => {
                 <td>{item.contractStatus}</td>
                 <td>{formatTerm(item.totalTerm)}</td>
                 <td>{item.counselor}</td>
-                <td>{item.customerCounselingContent}</td>
               </tr>
             ))}
           </tbody>
