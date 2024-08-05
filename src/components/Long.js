@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner } from 'react-bootstrap';
+import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from './css/Long.module.css'; // 모듈 import
@@ -24,6 +24,9 @@ const Long = () => {
   const [policyNumber, setPolicyNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const fetchData = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -36,6 +39,7 @@ const Long = () => {
         policyNumber
       });
       setData(response.data.longs);
+      setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -53,6 +57,16 @@ const Long = () => {
 
   const formatTerm = (totalTerm) => {
     return `0/${totalTerm}`;
+  };
+
+  // 현재 페이지에 맞는 데이터 슬라이싱
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -191,7 +205,7 @@ const Long = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => (
+                {currentItems.map((item, index) => (
                   <tr key={index}>
                     <td>{item.contractDate}</td>
                     <td>{item.paymentStartDate}</td>
@@ -215,6 +229,17 @@ const Long = () => {
                 ))}
               </tbody>
             </Table>
+            <Pagination>
+              <Pagination.First onClick={() => handlePageChange(1)} />
+              <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
+              {[...Array(Math.ceil(data.length / itemsPerPage)).keys()].map(number => (
+                <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageChange(number + 1)}>
+                  {number + 1}
+                </Pagination.Item>
+              ))}
+              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(data.length / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
+              <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
+            </Pagination>
           </div>
         )}
       </Container>
