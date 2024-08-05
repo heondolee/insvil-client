@@ -43,7 +43,7 @@ const Employee = () => {
         <h4>인스빌</h4>
         <Row>
           <Col>
-            <Table bordered className={styles.table_custom}>
+            <Table bordered striped className={styles.table_custom}>
               <thead>
                 <tr>
                   <th>지점</th>
@@ -81,7 +81,7 @@ const Employee = () => {
         {/* 업무담당 테이블 추가 */}
         <Row>
           <Col>
-            <Table bordered className={styles.table_custom}>
+            <Table bordered striped className={styles.table_custom}>
               <thead>
                 <tr>
                   <th>업무담당</th>
