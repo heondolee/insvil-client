@@ -1,106 +1,163 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
-import styles from './css/Employee.module.css'; // 모듈 import
-import { Link } from 'react-router-dom'; // Update import
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const Employee = () => {
-  const [branchData, setBranchData] = useState([]);
-  const [managerData, setManagerData] = useState([]); // 업무담당 데이터 상태 추가
+const Customer = () => {
+  const [customers, setCustomers] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    담당: '',
+    이름: '',
+    생년월일: '',
+    전화번호: '',
+    핸드폰: '',
+    등록일: ''
+  });
 
-  // 지점별 데이터 가져오기
   useEffect(() => {
-    const fetchBranchData = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/user/branch`);
-        setBranchData(response.data);
-      } catch (error) {
-        console.error("Error fetching branch data:", error);
-      }
-    };
-
-    // 업무담당 데이터 가져오기
-    const fetchManagerData = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/user/manager`);
-        setManagerData(response.data);
-      } catch (error) {
-        console.error("Error fetching manager data:", error);
-      }
-    };
-
-    fetchBranchData();
-    fetchManagerData();
+    // Initial data load
+    fetchCustomers();
   }, []);
+
+  const fetchCustomers = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/customer/list`);
+      setCustomers(response.data);
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/customer/list`, { params: searchParams });
+      setCustomers(response.data);
+    } catch (error) {
+      console.error("Error searching customers:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams({ ...searchParams, [name]: value });
+  };
 
   return (
     <div>
       <Navigation />
       <Container>
-        <h4>인스빌</h4>
-        <Row>
+        <Row className="my-3">
           <Col>
-            <Table bordered className={styles.table_custom}>
-              <thead>
-                <tr>
-                  <th>지점</th>
-                  <th>아이디</th>
-                  <th>생년월일 / 성별</th>
-                  <th>핸드폰</th>
-                  <th>전화</th>
-                  <th>팩스</th>
-                  <th>자동차정산</th>
-                  <th>장기정산</th>
-                  <th>생명정산</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.keys(branchData).map((branch) => (
-                  branchData[branch].map((user, index) => (
-                    <tr key={`${branch}-${index}`}>
-                      <td><Link to={`/employee/${branch}`}>{branch}</Link></td>
-                      <td><Link to={`/employee/${branch}/''/${user.username}`}>{user.username}</Link></td>
-                      <td>{user.birthdateGender}</td>
-                      <td>{user.mobilePhone}</td>
-                      <td>{user.phone}</td>
-                      <td>{user.fax}</td>
-                      <td>{user.carSettlement}</td>
-                      <td>{user.longTermSettlement}</td>
-                      <td>{user.lifeSettlement}</td>
-                    </tr>
-                  ))
-                ))}
-              </tbody>
-            </Table>
+            <Form>
+              <Row>
+                <Col>
+                  <Form.Group controlId="formManager">
+                    <Form.Label>담당</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="담당"
+                      value={searchParams.담당}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formName">
+                    <Form.Label>이름</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="이름"
+                      value={searchParams.이름}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formBirthdate">
+                    <Form.Label>생년월일</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="생년월일"
+                      value={searchParams.생년월일}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formPhoneNumber">
+                    <Form.Label>전화번호</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="전화번호"
+                      value={searchParams.전화번호}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formMobile">
+                    <Form.Label>핸드폰</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="핸드폰"
+                      value={searchParams.핸드폰}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="formRegistrationDate">
+                    <Form.Label>등록일</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="등록일"
+                      value={searchParams.등록일}
+                      onChange={handleInputChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col>
+                  <Button variant="primary" onClick={handleSearch}>검색</Button>
+                </Col>
+              </Row>
+            </Form>
           </Col>
         </Row>
 
-        {/* 업무담당 테이블 추가 */}
         <Row>
           <Col>
-            <Table bordered className={styles.table_custom}>
+            <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>업무담당</th>
-                  <th>아이디</th>
-                  <th>생년월일 / 성별</th>
-                  <th>핸드폰</th>
+                  <th>이름</th>
+                  <th>생년월일/성별</th>
                   <th>전화</th>
+                  <th>핸드폰</th>
+                  <th>회사명</th>
+                  <th>회사번호</th>
+                  <th>이메일</th>
                   <th>팩스</th>
+                  <th>담당</th>
+                  <th>등록일</th>
                 </tr>
               </thead>
               <tbody>
-                {managerData.map((user, index) => (
-                  <tr key={`manager-${index}`}>
-                    <td>{user.name}</td>
-                    <td><Link to={`/employee/${user.branch}/${user.team}/${user.username}`}>{user.username}</Link></td>
-                    <td>{user.birthdateGender}</td>
-                    <td>{user.mobilePhone}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.fax}</td>
+                {customers.map((customer, index) => (
+                  <tr key={index}>
+                    <td>{customer.customerName}</td>
+                    <td>{customer.birthdate}/{customer.gender}</td>
+                    <td>{customer.phone}</td>
+                    <td>{customer.mobilePhone}</td>
+                    <td>{customer.companyName}</td>
+                    <td>{customer.companyPhone}</td>
+                    <td>{customer.email}</td>
+                    <td>{customer.fax}</td>
+                    <td>{customer.responsibleName}</td>
+                    <td>{customer.registrationDate}</td>
                   </tr>
                 ))}
               </tbody>
@@ -112,4 +169,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Customer;
