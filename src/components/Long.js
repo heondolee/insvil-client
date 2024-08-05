@@ -50,10 +50,10 @@ const Long = () => {
     if (!num.includes(',')) {
       const formattedNum = new Intl.NumberFormat().format(num * 1000);
       return formattedNum;
-    }
-    else
+    } else {
       return num;
-  };  
+    }
+  };
 
   const formatTerm = (totalTerm) => {
     return `0/${totalTerm}`;
@@ -67,6 +67,48 @@ const Long = () => {
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const renderPaginationItems = () => {
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const maxPageNumbersToShow = 10;
+    const paginationItems = [];
+
+    let startPage = 1;
+    let endPage = totalPages;
+
+    if (totalPages > maxPageNumbersToShow) {
+      if (currentPage <= Math.ceil(maxPageNumbersToShow / 2)) {
+        endPage = maxPageNumbersToShow;
+      } else if (currentPage + Math.floor(maxPageNumbersToShow / 2) >= totalPages) {
+        startPage = totalPages - maxPageNumbersToShow + 1;
+      } else {
+        startPage = currentPage - Math.floor(maxPageNumbersToShow / 2);
+        endPage = currentPage + Math.floor(maxPageNumbersToShow / 2);
+      }
+    }
+
+    for (let number = startPage; number <= endPage; number++) {
+      paginationItems.push(
+        <Pagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => handlePageChange(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+
+    if (startPage > 1) {
+      paginationItems.unshift(<Pagination.Ellipsis key="start-ellipsis" disabled />);
+    }
+
+    if (endPage < totalPages) {
+      paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
+    }
+
+    return paginationItems;
   };
 
   return (
@@ -232,11 +274,7 @@ const Long = () => {
             <Pagination>
               <Pagination.First onClick={() => handlePageChange(1)} />
               <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
-              {[...Array(Math.ceil(data.length / itemsPerPage)).keys()].map(number => (
-                <Pagination.Item key={number + 1} active={number + 1 === currentPage} onClick={() => handlePageChange(number + 1)}>
-                  {number + 1}
-                </Pagination.Item>
-              ))}
+              {renderPaginationItems()}
               <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(data.length / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
               <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
             </Pagination>
