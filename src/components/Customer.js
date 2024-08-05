@@ -3,6 +3,7 @@ import { Table, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
 import styles from './css/Customer.module.css'; // 모듈 import
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Update import
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -24,7 +25,8 @@ const Customer = () => {
     }
   };
 
-  const handleSearch = async () => {
+  const handleSearch = async (event) => {
+    event.preventDefault(); // 폼 제출 기본 동작을 막습니다.
     try {
       const response = await axios.post(`${API_URL}/customer/list`, {
         customerName
@@ -41,7 +43,7 @@ const Customer = () => {
       <Container>
         <Row className="my-3">
           <Col>
-            <Form>
+            <Form onSubmit={handleSearch}> {/* onSubmit 이벤트 핸들러 추가 */}
               <Row>
                 <Col xs={12} md="auto">
                   <Form.Label>이름</Form.Label>
@@ -57,7 +59,7 @@ const Customer = () => {
                   </Form.Group>
                 </Col>
                 <Col>
-                  <Button variant="primary" onClick={handleSearch}>검색</Button>
+                  <Button variant="primary" type="submit">검색</Button> {/* 버튼 타입을 submit으로 변경 */}
                 </Col>
               </Row>
               <Row className="mt-3">
@@ -86,7 +88,7 @@ const Customer = () => {
               <tbody>
                 {customers.map((customer, index) => (
                   <tr key={index}>
-                    <td>{customer.customerName}</td>
+                    <td><Link to={`/customer/${customer.customerName}`}>{customer.customerName}</Link></td>
                     <td>{customer.birthdate}/{customer.gender}</td>
                     <td>{customer.phone}</td>
                     <td>{customer.mobilePhone}</td>

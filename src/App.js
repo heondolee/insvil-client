@@ -9,6 +9,7 @@ import TeamDetail from './components/TeamDetail';
 import InfoDetail from './components/InfoDetail';
 import Reference from './components/Reference';
 import Customer from './components/Customer';
+import CustomerDetail from './components/CustomerDetail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/normal" element={<Normal/>} />
       <Route path="/employee" element={<Employee />} />
       <Route path="/customer" element={<Customer />} />
+      <Route path="/customer/:customerName" element={<CustomerDetail />} />
       <Route path="/employee/:branchName/:teamName/:userName" element={<InfoDetail />} />
       <Route path="/employee/:branchName/:teamName" element={<TeamDetail />} />
       <Route path="/employee/:branchName" element={<BranchDetail />} />
