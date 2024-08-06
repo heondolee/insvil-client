@@ -3,6 +3,7 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from './css/Long.module.css'; // 모듈 import
+import { Link } from 'react-router-dom';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -256,7 +257,7 @@ const Long = () => {
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdate_gender}</td>
                     <td>{item.insuredPerson}</td>
-                    <td>{item.contractor}</td>
+                    <td><Link to={`/customer/${item.contractor}`}>{item.contractor}</Link></td>
                     <td>{item.policyNumber}</td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>

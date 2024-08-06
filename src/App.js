@@ -10,6 +10,7 @@ import InfoDetail from './components/InfoDetail';
 import Reference from './components/Reference';
 import Customer from './components/Customer';
 import CustomerDetail from './components/CustomerDetail';
+import LongDetail from './components/LongDetail';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/long" element={<Long />} />
+      <Route path="/long/:contractorName" element={<LongDetail/>} />
       <Route path="/car" element={<Car/>} />
       <Route path="/reference" element={<Reference/>} />
       <Route path="/normal" element={<Normal/>} />
