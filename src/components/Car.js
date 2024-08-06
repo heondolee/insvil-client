@@ -18,10 +18,12 @@ const Car = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState(getCurrentDate());
   const [endDate, setEndDate] = useState(getCurrentDate());
-  const [dateType, setDateType] = useState('contractDate');
-  const [contractStatus, setContractStatus] = useState('statusAll');
+  const [dateType, setDateType] = useState('inputDate');
+
   const [contractor, setContractor] = useState('');
+  const [responsibilityName, setResponsibilityName] = useState('');
   const [carNumber, setcarNumber] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +36,8 @@ const Car = () => {
         startDate,
         endDate,
         dateType,
-        contractStatus,
         contractor,
+        responsibilityName,
         carNumber
       });
       setData(response.data.cars);
@@ -44,20 +46,7 @@ const Car = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, contractor, carNumber]);
-
-  const formatNumber = (num) => {
-    if (!num.includes(',')) {
-      const formattedNum = new Intl.NumberFormat().format(num * 1000);
-      return formattedNum;
-    } else {
-      return num;
-    }
-  };
-
-  const formatTerm = (totalTerm) => {
-    return `0/${totalTerm}`;
-  };
+  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber]);
 
   // 현재 페이지에 맞는 데이터 슬라이싱
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -123,51 +112,19 @@ const Car = () => {
                 <DropdownButton
                   variant="outline-secondary"
                   title={
-                    dateType === 'contractDate' ? '계약일' : 
-                    dateType === 'paymentEndDate' ? '만기일' : 
-                    '개시일'
+                    dateType === 'inputDate' ? '입력일' : 
+                    dateType === 'startDate' ? '개시일' : 
+                    '만기일'
                   }
                   onSelect={(eventKey) => setDateType(eventKey)}
                 >
-                  <Dropdown.Item eventKey="contractDate">계약일</Dropdown.Item>
-                  <Dropdown.Item eventKey="paymentStartDate">개시일</Dropdown.Item>
-                  <Dropdown.Item eventKey="paymentEndDate">만기일</Dropdown.Item>
+                  <Dropdown.Item eventKey="inputDate">입력일</Dropdown.Item>
+                  <Dropdown.Item eventKey="startDate">개시일</Dropdown.Item>
+                  <Dropdown.Item eventKey="endDate">만기일</Dropdown.Item>
                 </DropdownButton>
               </Form.Group>
             </Col>
             <Col xs={12} md="auto">
-              <Form.Group controlId="formContractStatus">
-                <Form.Label>계약상태 :</Form.Label>
-                <DropdownButton
-                  variant="outline-secondary"
-                  title={
-                    contractStatus === 'statusAll'
-                      ? '전체'
-                      : contractStatus === 'statusMaintain'
-                      ? '유지'
-                      : contractStatus === 'statusLapse'
-                      ? '실효'
-                      : contractStatus === 'statusTerminate'
-                      ? '해지'
-                      : contractStatus === 'statusWithdraw'
-                      ? '철회'
-                      : contractStatus === 'statusCancel'
-                      ? '취소'
-                      : contractStatus === 'statusExpire'
-                      ? '만기'
-                      : '전체'
-                  }
-                  onSelect={(eventKey) => setContractStatus(eventKey)}
-                >
-                  <Dropdown.Item eventKey="statusAll">전체</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusMaintain">유지</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusLapse">실효</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusTerminate">해지</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusWithdraw">철회</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusCancel">취소</Dropdown.Item>
-                  <Dropdown.Item eventKey="statusExpire">만기</Dropdown.Item>
-                </DropdownButton>
-              </Form.Group>
             </Col>
             <Col xs={12} md="auto">
               <Form.Group controlId="formContractor">
@@ -189,6 +146,18 @@ const Car = () => {
                   placeholder='차량번호:'
                   value={carNumber}
                   onChange={(e) => setcarNumber(e.target.value)}
+                  className={styles.form_control_custom}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} md="auto">
+              <Form.Group controlId="formResponsibility">
+                <Form.Label>담당자 :</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder='담당자 이름:'
+                  value={responsibilityName}
+                  onChange={(e) => setResponsibilityName(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
@@ -226,11 +195,35 @@ const Car = () => {
             <Table striped bordered hover className={styles.table_custom}>
               <thead>
                 <tr>
+                  <th>입력일</th>
+                  <th>개시일</th>
+                  <th>만기일</th>
+                  <th>보험기간</th>
+                  <th>전계약사</th>
+                  <th>생년월일/성별</th>
+                  <th>피보험자</th>
+                  <th>계약자</th>
+                  <th>차량번호</th>
+                  <th>지점</th>
+                  <th>팀</th>
+                  <th>담당</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((item, index) => (
                   <tr key={index}>
+                    <td>{item.inputDate}</td>
+                    <td>{item.startDate}</td>
+                    <td>{item.endDate}</td>
+                    <td>{`${item.startDate} ~ ${item.endDate}`}</td>
+                    <td>{item.previousContractCompany}</td>
+                    <td>{item.insuredBirthGender}</td>
+                    <td>{item.insured}</td>
+                    <td>{item.contractor}</td>
+                    <td>{item.carNumber}</td>
+                    <td>{item.branch}</td>
+                    <td>{item.team}</td>
+                    <td>{item.personInCharge}</td>
                   </tr>
                 ))}
               </tbody>
