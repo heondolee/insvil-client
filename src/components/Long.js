@@ -22,6 +22,7 @@ const Long = () => {
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
   const [contractor, setContractor] = useState('');
+  const [responsibleName, setResponsibleName] = useState('');
   const [policyNumber, setPolicyNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +37,7 @@ const Long = () => {
         endDate,
         dateType,
         contractStatus,
+        responsibleName,
         contractor,
         policyNumber
       });
@@ -45,7 +47,7 @@ const Long = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, contractor, policyNumber]);
+  }, [startDate, endDate, dateType, contractStatus, contractor, responsibleName, policyNumber]);
 
   const formatNumber = (num) => {
     if (!num.includes(',')) {
@@ -190,6 +192,18 @@ const Long = () => {
                   placeholder='증권번호:'
                   value={policyNumber}
                   onChange={(e) => setPolicyNumber(e.target.value)}
+                  className={styles.form_control_custom}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} md="auto">
+              <Form.Group controlId="formResponsible">
+                <Form.Label>담당자 :</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder='담당자 이름:'
+                  value={responsibleName}
+                  onChange={(e) => setResponsibleName(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
