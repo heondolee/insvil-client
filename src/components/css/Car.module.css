@@ -1,0 +1,38 @@
+/* Long.module.css */
+.table_custom {
+  font-size: 12px;
+}
+
+.table_custom th.contract_date {
+  width: 7%; /* 원하는 너비로 설정 */
+}
+
+.table_custom th.insurance_company {
+  width: 5%; /* 원하는 너비로 설정 */
+}
+
+.table_custom th.birth_gender {
+  width: 7%;
+}
+
+.table_custom th.name {
+  width: 4%;
+}
+
+.table_custom th.sign {
+  width: 5%;
+}
+
+/* 모바일 화면에서 테이블을 스크롤 가능하게 하기 위한 스타일 */
+@media (max-width: 768px) {
+  .table_custom {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .form_control_custom, .input_group_custom, .button_custom {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
