@@ -12,7 +12,6 @@ const Customer = () => {
   const [customerName, setCustomerName] = useState('');
 
   useEffect(() => {
-    // Initial data load
     fetchCustomers();
   }, []);
 
