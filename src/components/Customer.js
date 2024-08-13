@@ -62,8 +62,6 @@ const Customer = () => {
                   <Button variant="primary" type="submit">검색</Button> {/* 버튼 타입을 submit으로 변경 */}
                 </Col>
               </Row>
-              <Row className="mt-3">
-              </Row>
             </Form>
           </Col>
         </Row>
