@@ -7,9 +7,10 @@ import Navigation from './layouts/Navigation';
 const API_URL = process.env.REACT_APP_API_URL;
 
 const ReferenceDetail = () => {
+  const [file, setFile] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [reference, setReference] = useState({ title: '', content: '' });
+  const [reference, setReference] = useState({ title: '', content: '', fileUrl: '', fileName: '' });
 
   useEffect(() => {
     if (id) {
@@ -32,16 +33,21 @@ const ReferenceDetail = () => {
   };
 
   const handleSave = async () => {
+    const formData = new FormData();
+    formData.append('title', reference.Title);
+    formData.append('content', reference.Content);
+    if (file) {
+      formData.append('file', file);
+    }
+    
     try {
       if (id) {
-        await axios.put(`${API_URL}/dataroom/${id}`, {
-          title: reference.Title,
-          content: reference.Content,
+        await axios.put(`${API_URL}/dataroom/${id}`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
-        await axios.post(`${API_URL}/dataroom/new`, {
-          title: reference.Title,
-          content: reference.Content,
+        await axios.post(`${API_URL}/dataroom/new`, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
         });
       }
       navigate('/reference');
@@ -49,6 +55,7 @@ const ReferenceDetail = () => {
       console.error("Error saving reference:", error);
     }
   };
+  
 
   const handleCancel = () => {
     navigate('/reference');
@@ -62,6 +69,17 @@ const ReferenceDetail = () => {
       }
     } catch (error) {
       console.error("Error deleting reference:", error);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleDownload = () => {
+    if (reference.FileUrl) {
+      const filename = reference.FileUrl.split('/').pop();
+      window.location.href = `${API_URL}/dataroom/download/${filename}`;
     }
   };
 
@@ -89,6 +107,22 @@ const ReferenceDetail = () => {
               onChange={handleInputChange}
             />
           </Form.Group>
+          <Form.Group controlId="formFile">
+            <Form.Label>파일 업로드</Form.Label>
+            <Form.Control type="file" onChange={handleFileChange} />
+            {reference.FileUrl && (
+              <div style={{ marginTop: '10px' }}>
+                <Form.Text>업로드된 파일: {reference.FileUrl}</Form.Text>
+                <Button
+                  variant="link"
+                  onClick={handleDownload}
+                >
+                  파일 다운로드
+                </Button>
+              </div>
+            )}
+          </Form.Group>
+
           <Button variant="primary" onClick={handleSave}>
             저장
           </Button>
