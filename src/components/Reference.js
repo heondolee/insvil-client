@@ -37,7 +37,7 @@ const Reference = () => {
       const response = await axios.post(`${API_URL}/dataroom`, {
         searchKeyword
       });
-      setSearchKeyword(response.data);
+      setPosts(response.data);
     } catch (error) {
       console.error("Error searching posts:", error);
     }
@@ -60,7 +60,7 @@ const Reference = () => {
                       type="text"
                       name="제목"
                       value={searchKeyword}
-                      onChange={(e) => searchKeyword(e.target.value)}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
                     />
                   </Form.Group>
                 </Col>
