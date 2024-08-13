@@ -9,7 +9,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const Customer = () => {
   const [customers, setCustomers] = useState([]);
-  const [customerName, setcustomerName] = useState('');
+  const [customerName, setCustomerName] = useState('');
 
   useEffect(() => {
     // Initial data load
@@ -54,7 +54,7 @@ const Customer = () => {
                       type="text"
                       name="이름"
                       value={customerName}
-                      onChange={(e) => setcustomerName(e.target.value)}
+                      onChange={(e) => setCustomerName(e.target.value)}
                     />
                   </Form.Group>
                 </Col>
