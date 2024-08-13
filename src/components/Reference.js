@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Table, Container, Row, Col, Form, Button, Pagination } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
 import styles from './css/Reference.module.css'; // 모듈 import
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Update import
+import { Link, useNavigate } from 'react-router-dom'; // Update import
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Reference = () => {
   const [posts, setPosts] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [currentPage, setCurrentPage] = useState(1); // 페이지 번호 상태 추가
+  const itemsPerPage = 13; // 페이지당 아이템 수
+
+  const navigate = useNavigate(); // useHistory 대신 useNavigate 사용
 
   useEffect(() => {
     fetchPosts();
@@ -38,9 +42,58 @@ const Reference = () => {
         searchKeyword
       });
       setPosts(response.data);
+      setCurrentPage(1); // 검색 결과가 나올 때 페이지를 첫 페이지로 초기화
     } catch (error) {
       console.error("Error searching posts:", error);
     }
+  };
+
+  const handleCreateNew = () => {
+    navigate('/reference/new');
+  };
+
+  // 페이지에 맞는 데이터 슬라이싱
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = posts.slice(indexOfFirstItem, indexOfLastItem);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const renderPaginationItems = () => {
+    const totalPages = Math.ceil(posts.length / itemsPerPage);
+    const maxPageNumbersToShow = 10;
+    const paginationItems = [];
+
+    let startPage = 1;
+    let endPage = totalPages;
+
+    if (totalPages > maxPageNumbersToShow) {
+      if (currentPage <= Math.ceil(maxPageNumbersToShow / 2)) {
+        endPage = maxPageNumbersToShow;
+      } else if (currentPage + Math.floor(maxPageNumbersToShow / 2) >= totalPages) {
+        startPage = totalPages - maxPageNumbersToShow + 1;
+      } else {
+        startPage = currentPage - Math.floor(maxPageNumbersToShow / 2);
+        endPage = currentPage + Math.floor(maxPageNumbersToShow / 2);
+      }
+    }
+
+    for (let number = startPage; number <= endPage; number++) {
+      paginationItems.push(
+        <Pagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => handlePageChange(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+
+    return paginationItems;
   };
 
   return (
@@ -67,6 +120,9 @@ const Reference = () => {
                 <Col>
                   <Button variant="primary" type="submit">검색</Button> 
                 </Col>
+                <Col>
+                  <Button onClick={handleCreateNew}>작성</Button>
+                </Col>
               </Row>
             </Form>
           </Col>
@@ -82,7 +138,7 @@ const Reference = () => {
                 </tr>
               </thead>
               <tbody>
-                {posts.map((post, index) => (
+                {currentItems.map((post, index) => (
                   <tr key={index}>
                     <td><Link to={`/reference/${post.id}`}>{post.Title}</Link></td>
                     <td>{truncateContent(post.Content, 80)}</td>
@@ -91,6 +147,13 @@ const Reference = () => {
                 ))}
               </tbody>
             </Table>
+            <Pagination>
+              <Pagination.First onClick={() => handlePageChange(1)} />
+              <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
+              {renderPaginationItems()}
+              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(posts.length / itemsPerPage) ? currentPage + 1 : Math.ceil(posts.length / itemsPerPage))} />
+              <Pagination.Last onClick={() => handlePageChange(Math.ceil(posts.length / itemsPerPage))} />
+            </Pagination>
           </Col>
         </Row>
       </Container>
