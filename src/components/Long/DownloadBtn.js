@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -42,7 +44,7 @@ function DownloadButton({ modelName, initialPart }) {
     let part = initialPart || 1;
     let hasMoreData = true;
 
-    while (hasMoreData) {
+    if (hasMoreData) {
       const success = await downloadPart(part);
       if (success) {
         part += 1;
@@ -56,7 +58,7 @@ function DownloadButton({ modelName, initialPart }) {
 
   return (
     <div>
-      <button onClick={handleDownload}>Download {modelName} Excel</button>
+      <Button onClick={handleDownload}>{modelName} {initialPart} 다운</Button>
     </div>
   );
 }
