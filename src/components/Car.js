@@ -3,6 +3,7 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from './css/Car.module.css'; // 모듈 import
+import DownloadButton from './Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -126,19 +127,19 @@ const Car = () => {
             </Col>
             <Col xs={12} md="auto">
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={1}>
               <Form.Group controlId="formContractor">
                 <Form.Label>계약자 :</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder='계약자 이름:'
+                  placeholder='계약자:'
                   value={contractor}
                   onChange={(e) => setContractor(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={2}>
               <Form.Group controlId="formcarNumber">
                 <Form.Label>차량번호 :</Form.Label>
                 <Form.Control
@@ -150,12 +151,12 @@ const Car = () => {
                 />
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={1}>
               <Form.Group controlId="formResponsibility">
                 <Form.Label>담당자 :</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder='담당자 이름:'
+                  placeholder='이름:'
                   value={responsibilityName}
                   onChange={(e) => setResponsibilityName(e.target.value)}
                   className={styles.form_control_custom}
@@ -181,6 +182,9 @@ const Car = () => {
             </Col>
             <Col xs={12} md="auto">
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
+            </Col>
+            <Col xs={12} md="auto">
+            <DownloadButton modelName="car" initialPart={1} />
             </Col>
           </Row>
         </Form>
