@@ -58,7 +58,7 @@ function DownloadButton({ modelName, initialPart }) {
 
   return (
     <div>
-      <Button onClick={handleDownload}>{modelName} {initialPart} 다운</Button>
+      <Button onClick={handleDownload}>{modelName} 엑셀 다운</Button>
     </div>
   );
 }

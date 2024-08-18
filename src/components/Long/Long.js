@@ -232,12 +232,6 @@ const Long = () => {
             <Col xs={12} md="auto">
             <DownloadButton modelName="long" initialPart={1} />
             </Col>
-            <Col xs={12} md="auto">
-            <DownloadButton modelName="long" initialPart={2} />
-            </Col>
-            <Col xs={12} md="auto">
-            <DownloadButton modelName="long" initialPart={3} />
-            </Col>
           </Row>
         </Form>
         {isLoading ? (
