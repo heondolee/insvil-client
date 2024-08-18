@@ -173,19 +173,19 @@ const Long = () => {
                 </DropdownButton>
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={1}>
               <Form.Group controlId="formContractor">
                 <Form.Label>계약자 :</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder='계약자 이름:'
+                  placeholder='계약자:'
                   value={contractor}
                   onChange={(e) => setContractor(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={2}>
               <Form.Group controlId="formPolicyNumber">
                 <Form.Label>증권번호 :</Form.Label>
                 <Form.Control
@@ -197,12 +197,12 @@ const Long = () => {
                 />
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col xs={12} md={1}>
               <Form.Group controlId="formResponsible">
                 <Form.Label>담당자 :</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder='담당자 이름:'
+                  placeholder='이름:'
                   value={responsibleName}
                   onChange={(e) => setResponsibleName(e.target.value)}
                   className={styles.form_control_custom}
@@ -231,7 +231,11 @@ const Long = () => {
             </Col>
             <Col xs={12} md="auto">
             <DownloadButton modelName="long" initialPart={1} />
+            </Col>
+            <Col xs={12} md="auto">
             <DownloadButton modelName="long" initialPart={2} />
+            </Col>
+            <Col xs={12} md="auto">
             <DownloadButton modelName="long" initialPart={3} />
             </Col>
           </Row>
