@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
-import Long from './components/Long';
+import Long from './components/Long/Long';
 import Car from './components/Car';
 import Normal from './components/Normal';
 import Employee from './components/Employee';

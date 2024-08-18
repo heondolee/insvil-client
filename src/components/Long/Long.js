@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
-import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
+import Navigation from '../layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
-import styles from './css/Long.module.css'; // 모듈 import
+import styles from '../css/Long.module.css'; // 모듈 import
 import { Link } from 'react-router-dom';
+import DownloadButton from './DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -227,6 +228,11 @@ const Long = () => {
             </Col>
             <Col xs={12} md="auto">
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
+            </Col>
+            <Col xs={12} md="auto">
+            <DownloadButton modelName="long" initialPart={1} />
+            <DownloadButton modelName="long" initialPart={2} />
+            <DownloadButton modelName="long" initialPart={3} />
             </Col>
           </Row>
         </Form>
