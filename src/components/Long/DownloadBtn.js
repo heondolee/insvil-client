@@ -7,9 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 function DownloadButton({ modelName, initialPart }) {
   const downloadPart = async (part) => {
-    console.log('안녕');
     try {
-      console.log(`Starting download for part ${part}`); // 디버깅용 콘솔 로그
       const response = await axios({
         url: `${API_URL}/download-excel/${part}`,
         method: 'POST',
@@ -34,13 +32,11 @@ function DownloadButton({ modelName, initialPart }) {
 
       return true;
     } catch (error) {
-      console.error(`Download error for part ${part}:`, error);
       return false;
     }
   };
 
   const handleDownload = async () => {
-    console.log('Download process started'); // 디버깅용 콘솔 로그
     let part = initialPart || 1;
     let hasMoreData = true;
 
@@ -49,11 +45,9 @@ function DownloadButton({ modelName, initialPart }) {
       if (success) {
         part += 1;
       } else {
-        console.log(`No more data to download after part ${part}`); // 디버깅용 콘솔 로그
         hasMoreData = false;
       }
     }
-    console.log('Download process finished'); // 디버깅용 콘솔 로그
   };
 
   return (
