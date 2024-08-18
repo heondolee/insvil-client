@@ -226,7 +226,7 @@ const Long = () => {
                 </InputGroup>
               </Form.Group>
             </Col>
-            <Col xs={12} md="auto">
+            <Col>
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
             </Col>
             <Col xs={12} md="auto">
