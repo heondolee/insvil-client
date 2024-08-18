@@ -4,6 +4,7 @@ import Navigation from './layouts/Navigation';
 import styles from './css/Reference.module.css'; // 모듈 import
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Update import
+import DownloadButton from './Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -120,7 +121,10 @@ const Reference = () => {
                 <Col>
                   <Button variant="primary" type="submit">검색</Button> 
                 </Col>
-                <Col>
+                <Col xs={12} md="auto">
+                  <DownloadButton modelName="reference" initialPart={1} />
+                </Col>
+                <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>
                 </Col>
               </Row>

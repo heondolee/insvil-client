@@ -64,8 +64,12 @@ const ReferenceDetail = () => {
   const handleDelete = async () => {
     try {
       if (id) {
-        await axios.delete(`${API_URL}/dataroom/${id}`);
-        navigate('/reference'); // 삭제 후 목록으로 이동
+        const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+        if (confirmDelete) {
+          await axios.delete(`${API_URL}/dataroom/${id}`);
+          window.alert("삭제되었습니다.");
+          navigate('/reference'); // 삭제 후 목록으로 이동
+        }
       }
     } catch (error) {
       console.error("Error deleting reference:", error);
@@ -102,7 +106,7 @@ const ReferenceDetail = () => {
             <Form.Control
               as="textarea"
               name="Content"
-              rows={10}
+              rows={20}
               value={reference.Content || ''}
               onChange={handleInputChange}
             />

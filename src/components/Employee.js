@@ -4,6 +4,7 @@ import Navigation from './layouts/Navigation';
 import styles from './css/Employee.module.css'; // 모듈 import
 import { Link } from 'react-router-dom'; // Update import
 import axios from 'axios';
+import DownloadButton from './Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -40,7 +41,14 @@ const Employee = () => {
     <div>
       <Navigation />
       <Container>
-        <h4>인스빌</h4>
+        <Row>
+          <Col>
+            <h4>인스빌</h4>
+          </Col>
+          <Col xs={12} md="auto">
+            <DownloadButton modelName="user" initialPart={1} />
+          </Col>
+        </Row>
         <Row>
           <Col>
             <Table bordered striped className={styles.table_custom}>
