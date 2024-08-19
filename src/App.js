@@ -12,6 +12,7 @@ import Customer from './components/Customer';
 import CustomerDetail from './components/CustomerDetail';
 import LongDetail from './components/LongDetail';
 import ReferenceDetail from './components/ReferenceDetail';
+import NormalDetail from './components/NormalDetail';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       <Route path="/reference/:id" element={<ReferenceDetail/>} />
       <Route path="/reference/new" element={<ReferenceDetail />} />
       <Route path="/normal" element={<Normal/>} />
+      <Route path="/normal/:normalName" element={<NormalDetail />} />
       <Route path="/employee" element={<Employee />} />
       <Route path="/customer" element={<Customer />} />
       <Route path="/customer/:customerName" element={<CustomerDetail />} />
