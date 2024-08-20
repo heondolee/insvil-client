@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const BATCH_SIZE = 2000; // 한번에 처리할 레코드 수
+const BATCH_SIZE = 1000; // 한번에 처리할 레코드 수
 
 function DownloadButton({ modelName }) {
   const [isDownloading, setIsDownloading] = useState(false);
