@@ -221,7 +221,7 @@ const Normal = () => {
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
             </Col>
             <Col xs={12} md="auto">
-            <DownloadButton modelName="long" initialPart={1} />
+            <DownloadButton modelName="normal"/>
             </Col>
           </Row>
         </Form>

@@ -184,7 +184,7 @@ const Car = () => {
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
             </Col>
             <Col xs={12} md="auto">
-            <DownloadButton modelName="car" initialPart={1} />
+            <DownloadButton modelName="car"/>
             </Col>
           </Row>
         </Form>

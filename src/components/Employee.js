@@ -46,7 +46,7 @@ const Employee = () => {
             <h4>인스빌</h4>
           </Col>
           <Col xs={12} md="auto">
-            <DownloadButton modelName="user" initialPart={1} />
+            <DownloadButton modelName="user"/>
           </Col>
         </Row>
         <Row>
