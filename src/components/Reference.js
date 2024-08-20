@@ -122,7 +122,7 @@ const Reference = () => {
                   <Button variant="primary" type="submit">검색</Button> 
                 </Col>
                 <Col xs={12} md="auto">
-                  <DownloadButton modelName="reference" initialPart={1} />
+                  <DownloadButton modelName="reference"/>
                 </Col>
                 <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>

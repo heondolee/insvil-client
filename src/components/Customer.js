@@ -62,7 +62,7 @@ const Customer = () => {
                   <Button variant="primary" type="submit">검색</Button> {/* 버튼 타입을 submit으로 변경 */}
                 </Col>
                 <Col xs={12} md="auto">
-                  <DownloadButton modelName="customer" initialPart={1} />
+                  <DownloadButton modelName="customer"/>
                 </Col>
               </Row>
             </Form>

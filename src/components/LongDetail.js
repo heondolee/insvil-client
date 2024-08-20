@@ -19,7 +19,6 @@ const LongDetail = () => {
         // API 요청을 통해 long 데이터를 가져옴
         const response = await axios.post(`${API_URL}/long/detail`, { longName });
         setLongData(response.data); // 가져온 데이터를 상태에 저장
-        console.log(response.data);
       } catch (error) {
         setError("데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
         console.error("Error fetching long data:", error); // 콘솔에 에러 로그 출력
