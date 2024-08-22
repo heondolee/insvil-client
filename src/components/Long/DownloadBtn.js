@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import Loading from 'react-loading'; // 로딩 스피너 추가
 
 const API_URL = process.env.REACT_APP_API_URL;
 const BATCH_SIZE = 1000; // 한번에 처리할 레코드 수
@@ -77,12 +78,19 @@ function DownloadButton({ modelName }) {
 
   return (
     <div>
-      <Select
-        options={options} // 드롭다운에 표시할 옵션 리스트
-        onChange={handleChange} // 선택된 옵션에 대한 처리
-        isDisabled={isDownloading} // 다운로드 중일 때 비활성화
-        placeholder="엑셀 다운로드 범위 선택" // 플레이스홀더 텍스트
-      />
+      {isDownloading ? (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 0' }}>
+          <Loading type="spin" color="#000" height={50} width={50} />
+          <span style={{ marginLeft: '10px' }}>다운로드 중입니다...</span>
+        </div>
+      ) : (
+        <Select
+          options={options} // 드롭다운에 표시할 옵션 리스트
+          onChange={handleChange} // 선택된 옵션에 대한 처리
+          isDisabled={isDownloading} // 다운로드 중일 때 비활성화
+          placeholder="엑셀 다운로드 범위 선택" // 플레이스홀더 텍스트
+        />
+      )}
     </div>
   );
 }
