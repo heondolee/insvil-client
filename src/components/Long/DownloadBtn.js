@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import Select from 'react-select';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const BATCH_SIZE = 1000; // 한번에 처리할 레코드 수
 
 function DownloadButton({ modelName }) {
   const [isDownloading, setIsDownloading] = useState(false);
-  const [buttonRanges, setButtonRanges] = useState([]);
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
     const fetchRowCount = async () => {
@@ -21,12 +21,12 @@ function DownloadButton({ modelName }) {
 
         for (let i = 0; i < rowCount; i += BATCH_SIZE) {
           ranges.push({
-            start: i + 1,
-            end: Math.min(i + BATCH_SIZE, rowCount),
+            value: `${i + 1}~${Math.min(i + BATCH_SIZE, rowCount)}`,
+            label: `${i + 1} ~ ${Math.min(i + BATCH_SIZE, rowCount)} 엑셀 다운`,
           });
         }
 
-        setButtonRanges(ranges);
+        setOptions(ranges);
       } catch (error) {
         console.error('Failed to fetch row count', error);
       }
@@ -68,17 +68,21 @@ function DownloadButton({ modelName }) {
     }
   };
 
+  const handleChange = (selectedOption) => {
+    if (selectedOption) {
+      const [start, end] = selectedOption.value.split('~').map(Number);
+      handleDownload(start, end);
+    }
+  };
+
   return (
     <div>
-      {buttonRanges.map((range, index) => (
-        <Button
-          key={index}
-          onClick={() => handleDownload(range.start, range.end)}
-          disabled={isDownloading}
-        >
-          {`${range.start} ~ ${range.end} 엑셀 다운`}
-        </Button>
-      ))}
+      <Select
+        options={options} // 드롭다운에 표시할 옵션 리스트
+        onChange={handleChange} // 선택된 옵션에 대한 처리
+        isDisabled={isDownloading} // 다운로드 중일 때 비활성화
+        placeholder="엑셀 다운로드 범위 선택" // 플레이스홀더 텍스트
+      />
     </div>
   );
 }
