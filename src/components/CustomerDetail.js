@@ -45,7 +45,6 @@ const CustomerDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log(customerName);
     if (customerName !== undefined) {
       const fetchCustomerData = async () => {
         try {

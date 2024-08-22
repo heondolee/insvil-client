@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Container, Row, Col } from 'react-bootstrap';
+import { Table, Container, Row, Col, Button, Form } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
 import styles from './css/Employee.module.css'; // 모듈 import
 import { Link } from 'react-router-dom'; // Update import
@@ -11,6 +11,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 const Employee = () => {
   const [branchData, setBranchData] = useState([]);
   const [managerData, setManagerData] = useState([]); // 업무담당 데이터 상태 추가
+  const [managerName, setManagerName] = useState('');
+  const [searchData, setSearchData] = useState([]); // 업무담당 이름 상태 추가
 
   // 지점별 데이터 가져오기
   useEffect(() => {
@@ -36,6 +38,18 @@ const Employee = () => {
     fetchBranchData();
     fetchManagerData();
   }, []);
+
+  const handleSearch = async (event) => {
+    event.preventDefault(); // 폼 제출 기본 동작을 막습니다.
+    try {
+      const response = await axios.post(`${API_URL}/user/list`, {
+        managerName
+      });
+      setSearchData(response.data);
+    } catch (error) {
+      console.error("Error searching managers:", error);
+    }
+  };
 
   return (
     <div>
@@ -85,7 +99,6 @@ const Employee = () => {
             </Table>
           </Col>
         </Row>
-
         {/* 업무담당 테이블 추가 */}
         <Row>
           <Col>
@@ -111,6 +124,67 @@ const Employee = () => {
                     <td>{user.fax}</td>
                   </tr>
                 ))}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Form onSubmit={handleSearch}> {/* onSubmit 이벤트 핸들러 추가 */}
+              <Row>
+                <Col xs={12} md="auto">
+                  <Form.Label>이름</Form.Label>
+                </Col>
+                <Col xs={12} md="auto">
+                  <Form.Group controlId="formName">
+                    <Form.Control
+                      type="text"
+                      name="이름"
+                      placeholder="검색 이름을 입력하세요."
+                      value={managerName}
+                      onChange={(e) => setManagerName(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Button variant="primary" type="submit">검색</Button> {/* 버튼 타입을 submit으로 변경 */}
+                </Col>
+              </Row>
+            </Form>
+            <h4>검색결과</h4>
+            <Table bordered striped className={styles.table_custom}>
+              <thead>
+                <tr>
+                  <th>이름</th>
+                  <th>아이디</th>
+                  <th>지점</th>
+                  <th>팀</th>
+                  <th>생년월일 / 성별</th>
+                  <th>핸드폰</th>
+                  <th>전화</th>
+                  <th>팩스</th>
+                  <th>자동차정산</th>
+                  <th>장기정산</th>
+                  <th>생명정산</th>
+                </tr>
+              </thead>
+              <tbody>
+                {managerName && (
+                  searchData.map((user, index) => (
+                    <tr key={`search-${index}`}>
+                      <td>{user.manager}</td>
+                      <td><Link to={`/employee/${user.branch}/${user.team}/${user.username}`}>{user.username}</Link></td>                    <td>{user.branch}</td>
+                      <td>{user.team}</td>
+                      <td>{user.birthdateGender}</td>
+                      <td>{user.mobilePhone}</td>
+                      <td>{user.phone}</td>
+                      <td>{user.fax}</td>
+                      <td>{user.carSettlement}</td>
+                      <td>{user.longTermSettlement}</td>
+                      <td>{user.lifeSettlement}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </Table>
           </Col>
