@@ -59,6 +59,7 @@ const Customer = () => {
                     <Form.Control
                       type="text"
                       name="이름"
+                      placeholder="빈칸에 엔터->전체검색"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
                     />

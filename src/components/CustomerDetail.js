@@ -94,6 +94,22 @@ const CustomerDetail = () => {
     navigate('/customer');
   };
 
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+      if (confirmDelete) {
+        await axios.delete(`${API_URL}/customer/delete`, {
+          data: { id: customerData.id },
+        });
+        navigate('/customer');
+        alert("사용자 데이터가 삭제되었습니다.");
+      }
+    } catch (error) {
+      setError("사용자 데이터를 삭제하는 중 오류가 발생했습니다.");
+      console.error("Error deleting user data:", error);
+    }
+  };
+  
   return (
     <div>
       <Navigation />
@@ -485,6 +501,11 @@ const CustomerDetail = () => {
                 <Button variant="secondary" onClick={handleCancel} className="ml-2">
                   취소
                 </Button>
+                {customerName && (
+                  <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                    삭제
+                  </Button>
+                )}
               </Form>
             )}
           </Col>
