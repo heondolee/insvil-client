@@ -3,7 +3,7 @@ import { Table, Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Navigation from './layouts/Navigation';
 import styles from './css/Customer.module.css'; // 모듈 import
 import axios from 'axios';
-import { Link } from 'react-router-dom'; // Update import
+import { Link, useNavigate } from 'react-router-dom'; // Update import
 import DownloadButton from './Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -11,6 +11,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 const Customer = () => {
   const [customers, setCustomers] = useState([]);
   const [customerName, setCustomerName] = useState('');
+
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchCustomers();
@@ -35,6 +37,10 @@ const Customer = () => {
     } catch (error) {
       console.error("Error searching customers:", error);
     }
+  };
+
+  const handleCreateNew = () => {
+    navigate('/customer/new');
   };
 
   return (
@@ -63,6 +69,9 @@ const Customer = () => {
                 </Col>
                 <Col xs={12} md="auto">
                   <DownloadButton modelName="customer"/>
+                </Col>
+                <Col xs={12} md="auto">
+                  <Button onClick={handleCreateNew}>작성</Button>
                 </Col>
               </Row>
             </Form>
