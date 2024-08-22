@@ -130,6 +130,7 @@ const Employee = () => {
         </Row>
         <Row>
           <Col>
+            <h4>사용자 검색</h4>
             <Form onSubmit={handleSearch}> {/* onSubmit 이벤트 핸들러 추가 */}
               <Row>
                 <Col xs={12} md="auto">
@@ -140,7 +141,7 @@ const Employee = () => {
                     <Form.Control
                       type="text"
                       name="이름"
-                      placeholder="검색 이름을 입력하세요."
+                      placeholder="이름 입력 후 엔터"
                       value={managerName}
                       onChange={(e) => setManagerName(e.target.value)}
                     />
@@ -151,7 +152,6 @@ const Employee = () => {
                 </Col>
               </Row>
             </Form>
-            <h4>검색결과</h4>
             <Table bordered striped className={styles.table_custom}>
               <thead>
                 <tr>
