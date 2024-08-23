@@ -288,7 +288,7 @@ const Long = () => {
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdate_gender}</td>
                     <td>{item.insuredPerson}</td>
-                    <td><Link to={`/customer/${item.contractor}`}>{item.contractor}</Link></td>
+                    <td><Link to={`/long/${item.id}`}>{item.contractor}</Link></td>
                     <td>{item.policyNumber}</td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>

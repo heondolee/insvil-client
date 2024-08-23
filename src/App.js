@@ -20,7 +20,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/long" element={<Long />} />
-      <Route path="/long/:contractorName" element={<LongDetail/>} />
+      <Route path="/long/:id" element={<LongDetail/>} />
       <Route path="/car" element={<Car/>} />
       <Route path="/reference" element={<Reference/>} />
       <Route path="/reference/:id" element={<ReferenceDetail/>} />
