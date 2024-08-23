@@ -3,12 +3,14 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Car = () => {
+  const navigate = useNavigate(); 
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -53,6 +55,10 @@ const Car = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleCreateNew = () => {
+    navigate('/car/new');
+  };
 
   // 현재 페이지에 맞는 데이터 슬라이싱
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -252,6 +258,9 @@ const Car = () => {
               {renderPaginationItems()}
               <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(data.length / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
               <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
+              <Col xs={12} md="auto">
+                  <Button onClick={handleCreateNew}>작성</Button>
+              </Col>
             </Pagination>
           </div>
         )}
