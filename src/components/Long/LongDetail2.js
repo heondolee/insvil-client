@@ -8,7 +8,7 @@ import styles from '../../css/Detail.module.css';
 const API_URL = process.env.REACT_APP_API_URL;
 
 const LongDetail = () => {
-  const { id } = useParams(); // URL 파라미터에서 longName을 가져옴
+  const { longName } = useParams(); // URL 파라미터에서 longName을 가져옴
   const [longData, setLongData] = useState(null); // long 데이터를 저장할 상태
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태를 저장할 상태
   const [error, setError] = useState(null); // 에러 메시지를 저장할 상태
@@ -17,7 +17,7 @@ const LongDetail = () => {
     const fetchLongData = async () => {
       try {
         // API 요청을 통해 long 데이터를 가져옴
-        const response = await axios.post(`${API_URL}/long/detail`, { id });
+        const response = await axios.post(`${API_URL}/long/detail`, { longName });
         setLongData(response.data); // 가져온 데이터를 상태에 저장
       } catch (error) {
         setError("데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
@@ -26,8 +26,9 @@ const LongDetail = () => {
         setLoading(false); // 데이터 로딩 상태를 false로 설정
       }
     };
+
     fetchLongData();
-  }, [id]); // longName이 변경될 때마다 데이터를 다시 가져옴
+  }, [longName]); // longName이 변경될 때마다 데이터를 다시 가져옴
 
   return (
     <div>

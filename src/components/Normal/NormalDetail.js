@@ -19,7 +19,6 @@ const CustomerDetail = () => {
         // API 요청을 통해 사용자 데이터를 가져옴
         const response = await axios.post(`${API_URL}/normal/detail`, { normalName });
         setNormalData(response.data); // 가져온 데이터를 상태에 저장
-        console.log(response.data);
       } catch (error) {
         setError("사용자 데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
         console.error("Error fetching user data:", error); // 콘솔에 에러 로그 출력
