@@ -99,7 +99,7 @@ const Customer = () => {
               <tbody>
                 {customers.map((customer, index) => (
                   <tr key={index}>
-                    <td><Link to={`/customer/${customer.customerName}`}>{customer.customerName}</Link></td>
+                    <td><Link to={`/customer/${customer.id}`}>{customer.customerName}</Link></td>
                     <td>{customer.birthdate}/{customer.gender}</td>
                     <td>{customer.phone}</td>
                     <td>{customer.mobilePhone}</td>
