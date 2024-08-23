@@ -23,7 +23,7 @@ function DownloadButton({ modelName }) {
         for (let i = 0; i < rowCount; i += BATCH_SIZE) {
           ranges.push({
             value: `${i + 1}~${Math.min(i + BATCH_SIZE, rowCount)}`,
-            label: `${i + 1} ~ ${Math.min(i + BATCH_SIZE, rowCount)} 엑셀 다운`,
+            label: `${i + 1} ~ ${Math.min(i + BATCH_SIZE, rowCount)}`,
           });
         }
 
@@ -88,7 +88,7 @@ function DownloadButton({ modelName }) {
           options={options} // 드롭다운에 표시할 옵션 리스트
           onChange={handleChange} // 선택된 옵션에 대한 처리
           isDisabled={isDownloading} // 다운로드 중일 때 비활성화
-          placeholder="엑셀 다운로드 범위 선택" // 플레이스홀더 텍스트
+          placeholder="엑셀 다운" // 플레이스홀더 텍스트
         />
       )}
     </div>

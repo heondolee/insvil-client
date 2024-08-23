@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from '../layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
@@ -18,8 +18,8 @@ const Long = () => {
   };
 
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState(getCurrentDate());
-  const [endDate, setEndDate] = useState(getCurrentDate());
+  const [startDate, setStartDate] = useState('2022-01-01');
+  const [endDate, setEndDate] = useState('2100-12-31');
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
   const [contractor, setContractor] = useState('');
@@ -49,6 +49,10 @@ const Long = () => {
     }
     setIsLoading(false);
   }, [startDate, endDate, dateType, contractStatus, contractor, responsibleName, policyNumber]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const formatNumber = (num) => {
     if (!num.includes(',')) {
@@ -226,8 +230,17 @@ const Long = () => {
                 </InputGroup>
               </Form.Group>
             </Col>
-            <Col>
+            <Col xs={12} md="auto">
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
+            </Col>
+            <Col>
+              <Button
+                onClick={() => {
+                  setStartDate(getCurrentDate());
+                  setEndDate(getCurrentDate());
+                }}
+                className={styles.button_custom}
+              >오늘날짜</Button>            
             </Col>
             <Col xs={12} md="auto">
             <DownloadButton modelName="long"/>
@@ -237,7 +250,7 @@ const Long = () => {
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
-              <span className="sr-only">로딩 중...</span>
+              <span className="sr-only"></span>
             </Spinner>
           </div>
         ) : (
