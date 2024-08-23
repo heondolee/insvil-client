@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
@@ -17,8 +17,8 @@ const Car = () => {
   };
 
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState(getCurrentDate());
-  const [endDate, setEndDate] = useState(getCurrentDate());
+  const [startDate, setStartDate] = useState('2024-08-01');
+  const [endDate, setEndDate] = useState('2024-12-31');
   const [dateType, setDateType] = useState('inputDate');
 
   const [contractor, setContractor] = useState('');
@@ -48,6 +48,10 @@ const Car = () => {
     }
     setIsLoading(false);
   }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // 현재 페이지에 맞는 데이터 슬라이싱
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -180,8 +184,17 @@ const Car = () => {
                 </InputGroup>
               </Form.Group>
             </Col>
-            <Col>
+            <Col xs={12} md="auto">
               <Button onClick={fetchData} className={styles.button_custom}>검색</Button>
+            </Col>
+            <Col>
+              <Button
+                onClick={() => {
+                  setStartDate(getCurrentDate());
+                  setEndDate(getCurrentDate());
+                }}
+                className={styles.button_custom}
+              >오늘날짜</Button>            
             </Col>
             <Col xs={12} md="auto">
             <DownloadButton modelName="car"/>
@@ -191,7 +204,7 @@ const Car = () => {
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
-              <span className="sr-only">로딩 중...</span>
+              <span className="sr-only"></span>
             </Spinner>
           </div>
         ) : (
