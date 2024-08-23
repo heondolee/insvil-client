@@ -1,18 +1,18 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './components/Login';
+import Login from './components/Alayouts/Login';
 import Long from './components/Long/Long';
-import Car from './components/Car';
-import Normal from './components/Normal';
-import Employee from './components/Employee';
-import BranchDetail from './components/BranchDetail';
-import TeamDetail from './components/TeamDetail';
-import InfoDetail from './components/InfoDetail';
-import Reference from './components/Reference';
-import Customer from './components/Customer';
-import CustomerDetail from './components/CustomerDetail';
-import LongDetail from './components/LongDetail';
-import ReferenceDetail from './components/ReferenceDetail';
-import NormalDetail from './components/NormalDetail';
+import Car from './components/Car/Car';
+import Normal from './components/Normal/Normal';
+import Employee from './components/Employee/Employee';
+import BranchDetail from './components/Employee/BranchDetail';
+import TeamDetail from './components/Employee/TeamDetail';
+import InfoDetail from './components/Employee/InfoDetail';
+import Reference from './components/Reference/Reference';
+import Customer from './components/Customer/Customer';
+import CustomerDetail from './components/Customer/CustomerDetail';
+import LongDetail from './components/Long/LongDetail';
+import ReferenceDetail from './components/Reference/ReferenceDetail';
+import NormalDetail from './components/Normal/NormalDetail';
 
 function App() {
   return (

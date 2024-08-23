@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
-import Navigation from './layouts/Navigation'; // Navigation 컴포넌트 임포트
+import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
-import styles from './css/Normal.module.css'; // 모듈 import
+import styles from '../../css/Effect.module.css'; // 모듈 import
 import { Link } from 'react-router-dom';
-import DownloadButton from './Long/DownloadBtn';
+import DownloadButton from '../Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 

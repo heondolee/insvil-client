@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Container, Row, Col, Form, Button, Pagination } from 'react-bootstrap';
-import Navigation from './layouts/Navigation';
-import styles from './css/Reference.module.css'; // 모듈 import
+import Navigation from '../Alayouts/Navigation';
+import styles from '../../css/Effect.module.css'; // 모듈 import
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Update import
-import DownloadButton from './Long/DownloadBtn';
+import DownloadButton from '../Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
