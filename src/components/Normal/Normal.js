@@ -278,7 +278,7 @@ const Normal = () => {
                     <td>{item.contractCompany}</td>
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdateGender}</td>
-                    <td><Link to={`/normal/${item.insuredPerson}`}>{item.insuredPerson}</Link></td>
+                    <td><Link to={`/normal/${item.id}`}>{item.insuredPerson}</Link></td>
                     <td>{item.policyholder}</td>
                     <td>{item.policyNumber}</td>
                     <td>{item.branch}</td>

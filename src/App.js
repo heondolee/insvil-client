@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './components/Alayouts/Login';
 import Long from './components/Long/Long';
 import Car from './components/Car/Car';
+import CarDetail from './components/Car/CarDetail';
 import Normal from './components/Normal/Normal';
 import Employee from './components/Employee/Employee';
 import BranchDetail from './components/Employee/BranchDetail';
@@ -22,11 +23,12 @@ function App() {
       <Route path="/long" element={<Long />} />
       <Route path="/long/:id" element={<LongDetail/>} />
       <Route path="/car" element={<Car/>} />
+      <Route path="/car/:id" element={<CarDetail/>} />
       <Route path="/reference" element={<Reference/>} />
       <Route path="/reference/:id" element={<ReferenceDetail/>} />
       <Route path="/reference/new" element={<ReferenceDetail />} />
       <Route path="/normal" element={<Normal/>} />
-      <Route path="/normal/:normalName" element={<NormalDetail />} />
+      <Route path="/normal/:id" element={<NormalDetail />} />
       <Route path="/employee" element={<Employee />} />
       <Route path="/customer/new" element={<CustomerDetail />} />
       <Route path="/customer/:customerName" element={<CustomerDetail />} />
