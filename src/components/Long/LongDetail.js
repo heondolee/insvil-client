@@ -1,304 +1,926 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Table, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
-import styles from '../../css/Detail.module.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const LongDetail = () => {
-  const { id } = useParams(); // URL 파라미터에서 longName을 가져옴
-  const [longData, setLongData] = useState(null); // long 데이터를 저장할 상태
-  const [loading, setLoading] = useState(true); // 데이터 로딩 상태를 저장할 상태
-  const [error, setError] = useState(null); // 에러 메시지를 저장할 상태
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [longData, setLongData] = useState({
+    branch: '',
+    team: '',
+    responsible: '',
+    responsibleName: '',
+    userId: '',
+    realUser: '',
+    contractCompany: '',
+    longTermProduct: '',
+    productName: '',
+    paymentInsurance: '',
+    correctedInsurance: '',
+    correctionRate: '',
+    insuredPerson: '',
+    birthdate_gender: '',
+    contractor: '',
+    contractor_birthdate_gender: '',
+    policyNumber: '',
+    plan: '',
+    counselingStatus: '',
+    contractStatus: '',
+    paymentStartDate: '',
+    paymentEndDate: '',
+    paymentPeriod: '',
+    contractDate: '',
+    paymentDate: '',
+    coverageStartDate: '',
+    coverageEndDate: '',
+    counselingRoute: '',
+    other1: '',
+    paymentMethod: '',
+    paymentTerm: '',
+    totalTerm: '',
+    counselor: '',
+    percent: '',
+    cyberMoney: '',
+    gift: '',
+    policyDispatchDate: '',
+    handwrittenSignatureDate: '',
+    changeContent1: '',
+    changeDate1: '',
+    changeContent2: '',
+    changeDate2: '',
+    changeContent3: '',
+    changeDate3: '',
+    changeContent4: '',
+    changeDate4: '',
+    changeContent5: '',
+    changeDate5: '',
+    insuredPostalCode: '',
+    insuredAddress1: '',
+    insuredAddress2: '',
+    contractorPostalCode: '',
+    contractorAddress1: '',
+    contractorAddress2: '',
+    relationshipWithInsured: '',
+    occupation: '',
+    entryDate: '',
+    customerCounselingContent: '',
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchLongData = async () => {
-      try {
-        // API 요청을 통해 long 데이터를 가져옴
-        const response = await axios.post(`${API_URL}/long/detail`, { id });
-        setLongData(response.data); // 가져온 데이터를 상태에 저장
-      } catch (error) {
-        setError("데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
-        console.error("Error fetching long data:", error); // 콘솔에 에러 로그 출력
-      } finally {
-        setLoading(false); // 데이터 로딩 상태를 false로 설정
-      }
-    };
-    fetchLongData();
-  }, [id]); // longName이 변경될 때마다 데이터를 다시 가져옴
+    if (id !== undefined) {
+      const fetchLongData = async () => {
+        try {
+          const response = await axios.post(`${API_URL}/long/detail`, { id });
+          setLongData(response.data);
+        } catch (error) {
+          setError("데이터를 가져오는 중 오류가 발생했습니다.");
+          console.error("Error fetching long data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchLongData();
+    } else {
+      setLoading(false);
+    }
+  }, [id]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLongData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!longData.contractor || longData.contractor.trim() === "") {
+        alert("계약자를 입력하세요.");
+        return;
+      }
+
+      if (!longData.contractDate || longData.contractDate.trim() === "") {
+        alert("계약일을 입력하세요.");
+        return;
+      }
+
+      if (!longData.paymentStartDate || longData.paymentStartDate.trim() === "") {
+        alert("개시일을 입력하세요.");
+        return;
+      }
+
+      if (!longData.paymentEndDate || longData.paymentEndDate.trim() === "") {
+        alert("만기일을 입력하세요.");
+        return;
+      }
+  
+      const endpoint = id === undefined ? '/long/create' : '/long/update';
+      await axios.post(`${API_URL}${endpoint}`, longData);
+      navigate('/long');
+      alert("데이터가 저장되었습니다.");
+    } catch (error) {
+      setError("데이터를 저장하는 중 오류가 발생했습니다.");
+      console.error("Error saving data:", error);
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/long');
+  };
+
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+      if (confirmDelete) {
+        await axios.delete(`${API_URL}/long/delete`, {
+          data: { id: longData.id },
+        });
+        navigate('/long');
+        alert("데이터가 삭제되었습니다.");
+      }
+    } catch (error) {
+      setError("데이터를 삭제하는 중 오류가 발생했습니다.");
+      console.error("Error deleting data:", error);
+    }
+  };
+  
   return (
     <div>
-      <Navigation /> {/* 네비게이션 컴포넌트 */}
+      <Navigation />
       <Container>
         <Row>
           <Col>
             {loading ? (
-              // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">
                 <Spinner animation="border" role="status">
                   <span className="sr-only">Loading...</span>
                 </Spinner>
               </div>
             ) : error ? (
-              // 에러가 발생했을 때 에러 메시지 표시
               <Alert variant="danger">{error}</Alert>
             ) : (
-              // 데이터 로딩이 완료되고 에러가 없을 때 long 상세 정보 표시
-              <Table bordered className={styles.table_custom}>
-                <thead>
-                  <tr>
-                    <th>항목</th>
-                    <th>내용</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {longData ? (
-                    // long 데이터가 있을 경우 테이블에 데이터 표시
-                    <>
-                      <tr>
-                        <td>지점</td>
-                        <td>{longData.branch}</td>
-                      </tr>
-                      <tr>
-                        <td>팀</td>
-                        <td>{longData.team}</td>
-                      </tr>
-                      <tr>
-                        <td>책임자</td>
-                        <td>{longData.responsible}</td>
-                      </tr>
-                      <tr>
-                        <td>책임자 이름</td>
-                        <td>{longData.responsibleName}</td>
-                      </tr>
-                      <tr>
-                        <td>사용자 ID</td>
-                        <td>{longData.userId}</td>
-                      </tr>
-                      <tr>
-                        <td>실제 사용자</td>
-                        <td>{longData.realUser}</td>
-                      </tr>
-                      <tr>
-                        <td>계약 회사</td>
-                        <td>{longData.contractCompany}</td>
-                      </tr>
-                      <tr>
-                        <td>장기 제품</td>
-                        <td>{longData.longTermProduct}</td>
-                      </tr>
-                      <tr>
-                        <td>제품 이름</td>
-                        <td>{longData.productName}</td>
-                      </tr>
-                      <tr>
-                        <td>보험료</td>
-                        <td>{longData.paymentInsurance}</td>
-                      </tr>
-                      <tr>
-                        <td>수정 보험료</td>
-                        <td>{longData.correctedInsurance}</td>
-                      </tr>
-                      <tr>
-                        <td>수정 비율</td>
-                        <td>{longData.correctionRate}</td>
-                      </tr>
-                      <tr>
-                        <td>피보험자</td>
-                        <td>{longData.insuredPerson}</td>
-                      </tr>
-                      <tr>
-                        <td>생년월일/성별</td>
-                        <td>{longData.birthdate_gender}</td>
-                      </tr>
-                      <tr>
-                        <td>계약자</td>
-                        <td>{longData.contractor}</td>
-                      </tr>
-                      <tr>
-                        <td>계약자 생년월일/성별</td>
-                        <td>{longData.contractor_birthdate_gender}</td>
-                      </tr>
-                      <tr>
-                        <td>정책 번호</td>
-                        <td>{longData.policyNumber}</td>
-                      </tr>
-                      <tr>
-                        <td>계획</td>
-                        <td>{longData.plan}</td>
-                      </tr>
-                      <tr>
-                        <td>상담 상태</td>
-                        <td>{longData.counselingStatus}</td>
-                      </tr>
-                      <tr>
-                        <td>계약 상태</td>
-                        <td>{longData.contractStatus}</td>
-                      </tr>
-                      <tr>
-                        <td>납입 시작일</td>
-                        <td>{longData.paymentStartDate}</td>
-                      </tr>
-                      <tr>
-                        <td>납입 종료일</td>
-                        <td>{longData.paymentEndDate}</td>
-                      </tr>
-                      <tr>
-                        <td>납입 기간</td>
-                        <td>{longData.paymentPeriod}</td>
-                      </tr>
-                      <tr>
-                        <td>계약일</td>
-                        <td>{longData.contractDate}</td>
-                      </tr>
-                      <tr>
-                        <td>납입일</td>
-                        <td>{longData.paymentDate}</td>
-                      </tr>
-                      <tr>
-                        <td>보장 시작일</td>
-                        <td>{longData.coverageStartDate}</td>
-                      </tr>
-                      <tr>
-                        <td>보장 종료일</td>
-                        <td>{longData.coverageEndDate}</td>
-                      </tr>
-                      <tr>
-                        <td>상담 경로</td>
-                        <td>{longData.counselingRoute}</td>
-                      </tr>
-                      <tr>
-                        <td>기타 1</td>
-                        <td>{longData.other1}</td>
-                      </tr>
-                      <tr>
-                        <td>납입 방법</td>
-                        <td>{longData.paymentMethod}</td>
-                      </tr>
-                      <tr>
-                        <td>납입 조건</td>
-                        <td>{longData.paymentTerm}</td>
-                      </tr>
-                      <tr>
-                        <td>총 기간</td>
-                        <td>{longData.totalTerm}</td>
-                      </tr>
-                      <tr>
-                        <td>상담원</td>
-                        <td>{longData.counselor}</td>
-                      </tr>
-                      <tr>
-                        <td>퍼센트</td>
-                        <td>{longData.percent}</td>
-                      </tr>
-                      <tr>
-                        <td>사이버 머니</td>
-                        <td>{longData.cyberMoney}</td>
-                      </tr>
-                      <tr>
-                        <td>선물</td>
-                        <td>{longData.gift}</td>
-                      </tr>
-                      <tr>
-                        <td>정책 발송일</td>
-                        <td>{longData.policyDispatchDate}</td>
-                      </tr>
-                      <tr>
-                        <td>자필 서명일</td>
-                        <td>{longData.handwrittenSignatureDate}</td>
-                      </tr>
-                      <tr>
-                        <td>변경 내용 1</td>
-                        <td>{longData.changeContent1}</td>
-                      </tr>
-                      <tr>
-                        <td>변경일 1</td>
-                        <td>{longData.changeDate1}</td>
-                      </tr>
-                      <tr>
-                        <td>변경 내용 2</td>
-                        <td>{longData.changeContent2}</td>
-                      </tr>
-                      <tr>
-                        <td>변경일 2</td>
-                        <td>{longData.changeDate2}</td>
-                      </tr>
-                      <tr>
-                        <td>변경 내용 3</td>
-                        <td>{longData.changeContent3}</td>
-                      </tr>
-                      <tr>
-                        <td>변경일 3</td>
-                        <td>{longData.changeDate3}</td>
-                      </tr>
-                      <tr>
-                        <td>변경 내용 4</td>
-                        <td>{longData.changeContent4}</td>
-                      </tr>
-                      <tr>
-                        <td>변경일 4</td>
-                        <td>{longData.changeDate4}</td>
-                      </tr>
-                      <tr>
-                        <td>변경 내용 5</td>
-                        <td>{longData.changeContent5}</td>
-                      </tr>
-                      <tr>
-                        <td>변경일 5</td>
-                        <td>{longData.changeDate5}</td>
-                      </tr>
-                      <tr>
-                        <td>피보험자 우편번호</td>
-                        <td>{longData.insuredPostalCode}</td>
-                      </tr>
-                      <tr>
-                        <td>피보험자 주소 1</td>
-                        <td>{longData.insuredAddress1}</td>
-                      </tr>
-                      <tr>
-                        <td>피보험자 주소 2</td>
-                        <td>{longData.insuredAddress2}</td>
-                      </tr>
-                      <tr>
-                        <td>계약자 우편번호</td>
-                        <td>{longData.contractorPostalCode}</td>
-                      </tr>
-                      <tr>
-                        <td>계약자 주소 1</td>
-                        <td>{longData.contractorAddress1}</td>
-                      </tr>
-                      <tr>
-                        <td>계약자 주소 2</td>
-                        <td>{longData.contractorAddress2}</td>
-                      </tr>
-                      <tr>
-                        <td>피보험자와의 관계</td>
-                        <td>{longData.relationshipWithInsured}</td>
-                      </tr>
-                      <tr>
-                        <td>직업</td>
-                        <td>{longData.occupation}</td>
-                      </tr>
-                      <tr>
-                        <td>가입일</td>
-                        <td>{longData.entryDate}</td>
-                      </tr>
-                      <tr>
-                        <td>고객 상담 내용</td>
-                        <td>{longData.customerCounselingContent}</td>
-                      </tr>
-                    </>
-                  ) : (
-                    // long 데이터가 없을 경우 '데이터가 없습니다' 메시지 표시
-                    <tr>
-                      <td colSpan="2" className="text-center">데이터가 없습니다.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+              <Form>
+                <Form.Group as={Row} controlId="formBranch">
+                  <Form.Label column sm={2}>지점</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="branch"
+                      value={longData.branch}
+                      onChange={handleChange}
+                      placeholder="지점을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formTeam">
+                  <Form.Label column sm={2}>팀</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="team"
+                      value={longData.team}
+                      onChange={handleChange}
+                      placeholder="팀을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formResponsible">
+                  <Form.Label column sm={2}>책임자</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="responsible"
+                      value={longData.responsible}
+                      onChange={handleChange}
+                      placeholder="책임자를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formResponsibleName">
+                  <Form.Label column sm={2}>책임자 이름</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="responsibleName"
+                      value={longData.responsibleName}
+                      onChange={handleChange}
+                      placeholder="책임자 이름을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formUserId">
+                  <Form.Label column sm={2}>사용자 ID</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="userId"
+                      value={longData.userId}
+                      onChange={handleChange}
+                      placeholder="사용자 ID를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formRealUser">
+                  <Form.Label column sm={2}>실제 사용자</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="realUser"
+                      value={longData.realUser}
+                      onChange={handleChange}
+                      placeholder="실제 사용자를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractCompany">
+                  <Form.Label column sm={2}>계약 회사</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractCompany"
+                      value={longData.contractCompany}
+                      onChange={handleChange}
+                      placeholder="계약 회사를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formLongTermProduct">
+                  <Form.Label column sm={2}>장기 제품</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="longTermProduct"
+                      value={longData.longTermProduct}
+                      onChange={handleChange}
+                      placeholder="장기 제품을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formProductName">
+                  <Form.Label column sm={2}>제품 이름</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="productName"
+                      value={longData.productName}
+                      onChange={handleChange}
+                      placeholder="제품 이름을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentInsurance">
+                  <Form.Label column sm={2}>보험료</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="paymentInsurance"
+                      value={longData.paymentInsurance}
+                      onChange={handleChange}
+                      placeholder="보험료를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCorrectedInsurance">
+                  <Form.Label column sm={2}>수정 보험료</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="correctedInsurance"
+                      value={longData.correctedInsurance}
+                      onChange={handleChange}
+                      placeholder="수정 보험료를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCorrectionRate">
+                  <Form.Label column sm={2}>수정 비율</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="correctionRate"
+                      value={longData.correctionRate}
+                      onChange={handleChange}
+                      placeholder="수정 비율을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formInsuredPerson">
+                  <Form.Label column sm={2}>피보험자</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="insuredPerson"
+                      value={longData.insuredPerson}
+                      onChange={handleChange}
+                      placeholder="피보험자를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formBirthdateGender">
+                  <Form.Label column sm={2}>생년월일/성별</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="birthdate_gender"
+                      value={longData.birthdate_gender}
+                      onChange={handleChange}
+                      placeholder="생년월일/성별을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractor">
+                  <Form.Label column sm={2} style={{ color: 'blue' }}>계약자</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractor"
+                      value={longData.contractor}
+                      onChange={handleChange}
+                      placeholder="계약자를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractorBirthdateGender">
+                  <Form.Label column sm={2}>계약자 생년월일/성별</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractor_birthdate_gender"
+                      value={longData.contractor_birthdate_gender}
+                      onChange={handleChange}
+                      placeholder="계약자 생년월일/성별을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPolicyNumber">
+                  <Form.Label column sm={2}>정책 번호</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="policyNumber"
+                      value={longData.policyNumber}
+                      onChange={handleChange}
+                      placeholder="정책 번호를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPlan">
+                  <Form.Label column sm={2}>계획</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="plan"
+                      value={longData.plan}
+                      onChange={handleChange}
+                      placeholder="계획을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCounselingStatus">
+                  <Form.Label column sm={2}>상담 상태</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="counselingStatus"
+                      value={longData.counselingStatus}
+                      onChange={handleChange}
+                      placeholder="상담 상태를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractStatus">
+                  <Form.Label column sm={2}>계약 상태</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractStatus"
+                      value={longData.contractStatus}
+                      onChange={handleChange}
+                      placeholder="계약 상태를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractDate">
+                  <Form.Label column sm={2} style={{ color: 'blue' }}>계약일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="contractDate"
+                      value={longData.contractDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentStartDate">
+                  <Form.Label column sm={2} style={{ color: 'blue' }}>개시일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="paymentStartDate"
+                      value={longData.paymentStartDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentEndDate">
+                  <Form.Label column sm={2} style={{ color: 'blue' }}>만기일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="paymentEndDate"
+                      value={longData.paymentEndDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentPeriod">
+                  <Form.Label column sm={2}>납입 기간</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="paymentPeriod"
+                      value={longData.paymentPeriod}
+                      onChange={handleChange}
+                      placeholder="납입 기간을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentDate">
+                  <Form.Label column sm={2}>납입일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="paymentDate"
+                      value={longData.paymentDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCoverageStartDate">
+                  <Form.Label column sm={2}>보장 시작일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="coverageStartDate"
+                      value={longData.coverageStartDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCoverageEndDate">
+                  <Form.Label column sm={2}>보장 종료일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="coverageEndDate"
+                      value={longData.coverageEndDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCounselingRoute">
+                  <Form.Label column sm={2}>상담 경로</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="counselingRoute"
+                      value={longData.counselingRoute}
+                      onChange={handleChange}
+                      placeholder="상담 경로를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formOther1">
+                  <Form.Label column sm={2}>기타 1</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="other1"
+                      value={longData.other1}
+                      onChange={handleChange}
+                      placeholder="기타 정보를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentMethod">
+                  <Form.Label column sm={2}>납입 방법</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="paymentMethod"
+                      value={longData.paymentMethod}
+                      onChange={handleChange}
+                      placeholder="납입 방법을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPaymentTerm">
+                  <Form.Label column sm={2}>납입 조건</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="paymentTerm"
+                      value={longData.paymentTerm}
+                      onChange={handleChange}
+                      placeholder="납입 조건을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formTotalTerm">
+                  <Form.Label column sm={2}>총 기간</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="totalTerm"
+                      value={longData.totalTerm}
+                      onChange={handleChange}
+                      placeholder="총 기간을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCounselor">
+                  <Form.Label column sm={2}>상담원</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="counselor"
+                      value={longData.counselor}
+                      onChange={handleChange}
+                      placeholder="상담원을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPercent">
+                  <Form.Label column sm={2}>퍼센트</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="percent"
+                      value={longData.percent}
+                      onChange={handleChange}
+                      placeholder="퍼센트를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCyberMoney">
+                  <Form.Label column sm={2}>사이버 머니</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="cyberMoney"
+                      value={longData.cyberMoney}
+                      onChange={handleChange}
+                      placeholder="사이버 머니를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formGift">
+                  <Form.Label column sm={2}>선물</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="gift"
+                      value={longData.gift}
+                      onChange={handleChange}
+                      placeholder="선물을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPolicyDispatchDate">
+                  <Form.Label column sm={2}>정책 발송일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="policyDispatchDate"
+                      value={longData.policyDispatchDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formHandwrittenSignatureDate">
+                  <Form.Label column sm={2}>자필 서명일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="handwrittenSignatureDate"
+                      value={longData.handwrittenSignatureDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeContent1">
+                  <Form.Label column sm={2}>변경 내용 1</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="changeContent1"
+                      value={longData.changeContent1}
+                      onChange={handleChange}
+                      placeholder="변경 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeDate1">
+                  <Form.Label column sm={2}>변경일 1</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="changeDate1"
+                      value={longData.changeDate1}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeContent2">
+                  <Form.Label column sm={2}>변경 내용 2</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="changeContent2"
+                      value={longData.changeContent2}
+                      onChange={handleChange}
+                      placeholder="변경 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeDate2">
+                  <Form.Label column sm={2}>변경일 2</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="changeDate2"
+                      value={longData.changeDate2}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeContent3">
+                  <Form.Label column sm={2}>변경 내용 3</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="changeContent3"
+                      value={longData.changeContent3}
+                      onChange={handleChange}
+                      placeholder="변경 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeDate3">
+                  <Form.Label column sm={2}>변경일 3</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="changeDate3"
+                      value={longData.changeDate3}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeContent4">
+                  <Form.Label column sm={2}>변경 내용 4</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="changeContent4"
+                      value={longData.changeContent4}
+                      onChange={handleChange}
+                      placeholder="변경 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeDate4">
+                  <Form.Label column sm={2}>변경일 4</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="changeDate4"
+                      value={longData.changeDate4}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeContent5">
+                  <Form.Label column sm={2}>변경 내용 5</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="changeContent5"
+                      value={longData.changeContent5}
+                      onChange={handleChange}
+                      placeholder="변경 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formChangeDate5">
+                  <Form.Label column sm={2}>변경일 5</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="changeDate5"
+                      value={longData.changeDate5}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formInsuredPostalCode">
+                  <Form.Label column sm={2}>피보험자 우편번호</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="insuredPostalCode"
+                      value={longData.insuredPostalCode}
+                      onChange={handleChange}
+                      placeholder="피보험자 우편번호를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formInsuredAddress1">
+                  <Form.Label column sm={2}>피보험자 주소 1</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="insuredAddress1"
+                      value={longData.insuredAddress1}
+                      onChange={handleChange}
+                      placeholder="피보험자 주소를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formInsuredAddress2">
+                  <Form.Label column sm={2}>피보험자 주소 2</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="insuredAddress2"
+                      value={longData.insuredAddress2}
+                      onChange={handleChange}
+                      placeholder="피보험자 상세 주소를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractorPostalCode">
+                  <Form.Label column sm={2}>계약자 우편번호</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractorPostalCode"
+                      value={longData.contractorPostalCode}
+                      onChange={handleChange}
+                      placeholder="계약자 우편번호를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractorAddress1">
+                  <Form.Label column sm={2}>계약자 주소 1</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractorAddress1"
+                      value={longData.contractorAddress1}
+                      onChange={handleChange}
+                      placeholder="계약자 주소를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formContractorAddress2">
+                  <Form.Label column sm={2}>계약자 주소 2</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="contractorAddress2"
+                      value={longData.contractorAddress2}
+                      onChange={handleChange}
+                      placeholder="계약자 상세 주소를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formRelationshipWithInsured">
+                  <Form.Label column sm={2}>피보험자와의 관계</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="relationshipWithInsured"
+                      value={longData.relationshipWithInsured}
+                      onChange={handleChange}
+                      placeholder="피보험자와의 관계를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formOccupation">
+                  <Form.Label column sm={2}>직업</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="text"
+                      name="occupation"
+                      value={longData.occupation}
+                      onChange={handleChange}
+                      placeholder="직업을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formEntryDate">
+                  <Form.Label column sm={2}>가입일</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      type="date"
+                      name="entryDate"
+                      value={longData.entryDate}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCustomerCounselingContent">
+                  <Form.Label column sm={2}>고객 상담 내용</Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      name="customerCounselingContent"
+                      value={longData.customerCounselingContent}
+                      onChange={handleChange}
+                      placeholder="고객 상담 내용을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Button variant="primary" onClick={handleSave}>
+                  저장
+                </Button>
+                <Button variant="secondary" onClick={handleCancel} className="ml-2">
+                  취소
+                </Button>
+                {id && (
+                  <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                    삭제
+                  </Button>
+                )}
+              </Form>
             )}
           </Col>
         </Row>

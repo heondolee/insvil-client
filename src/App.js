@@ -21,6 +21,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/long" element={<Long />} />
+      <Route path="/long/new" element={<LongDetail />} />
       <Route path="/long/:id" element={<LongDetail/>} />
       <Route path="/car" element={<Car/>} />
       <Route path="/car/:id" element={<CarDetail/>} />
@@ -31,7 +32,7 @@ function App() {
       <Route path="/normal/:id" element={<NormalDetail />} />
       <Route path="/employee" element={<Employee />} />
       <Route path="/customer/new" element={<CustomerDetail />} />
-      <Route path="/customer/:customerName" element={<CustomerDetail />} />
+      <Route path="/customer/:id" element={<CustomerDetail />} />
       <Route path="/customer" element={<Customer />} />
       <Route path="/employee/:branchName/:teamName/:userName" element={<InfoDetail />} />
       <Route path="/employee/:branchName/:teamName" element={<TeamDetail />} />

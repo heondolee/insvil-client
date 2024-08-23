@@ -7,7 +7,7 @@ import Navigation from '../Alayouts/Navigation';
 const API_URL = process.env.REACT_APP_API_URL;
 
 const CustomerDetail = () => {
-  const { customerName } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [customerData, setCustomerData] = useState({
     customerName: '',
@@ -45,10 +45,10 @@ const CustomerDetail = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (customerName !== undefined) {
+    if (id !== undefined) {
       const fetchCustomerData = async () => {
         try {
-          const response = await axios.post(`${API_URL}/customer/detail`, { customerName });
+          const response = await axios.post(`${API_URL}/customer/detail`, { id });
           setCustomerData(response.data);
         } catch (error) {
           setError("사용자 데이터를 가져오는 중 오류가 발생했습니다.");
@@ -61,7 +61,7 @@ const CustomerDetail = () => {
     } else {
       setLoading(false);
     }
-  }, [customerName]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +78,7 @@ const CustomerDetail = () => {
         return; // 이름이 입력되지 않으면 저장 작업을 중지
       }
   
-      const endpoint = customerName === undefined ? '/customer/create' : '/customer/update';
+      const endpoint = id === undefined ? '/customer/create' : '/customer/update';
       await axios.post(`${API_URL}${endpoint}`, customerData);
       navigate('/customer');
       alert("사용자 데이터가 저장되었습니다.");
@@ -500,7 +500,7 @@ const CustomerDetail = () => {
                 <Button variant="secondary" onClick={handleCancel} className="ml-2">
                   취소
                 </Button>
-                {customerName && (
+                {id && (
                   <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
                     삭제
                   </Button>
