@@ -73,6 +73,14 @@ const LongDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
     if (id !== undefined) {
       const fetchLongData = async () => {
@@ -434,7 +442,7 @@ const LongDetail = () => {
                     <Form.Control
                       type="date"
                       name="contractDate"
-                      value={longData.contractDate}
+                      value={getCurrentDate()}
                       onChange={handleChange}
                     />
                   </Col>

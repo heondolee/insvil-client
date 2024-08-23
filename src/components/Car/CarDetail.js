@@ -99,6 +99,14 @@ const CarDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getCurrentDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
     if (id !== undefined) {
       const fetchCarData = async () => {
@@ -473,7 +481,7 @@ const CarDetail = () => {
                     <Form.Control
                       type="date"
                       name="inputDate"
-                      value={carData.inputDate}
+                      value={getCurrentDate()}
                       onChange={handleChange}
                     />
                   </Col>
