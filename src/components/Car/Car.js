@@ -3,6 +3,7 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
+import { Link } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -236,7 +237,7 @@ const Car = () => {
                     <td>{item.previousContractCompany}</td>
                     <td>{item.insuredBirthGender}</td>
                     <td>{item.insured}</td>
-                    <td>{item.contractor}</td>
+                    <td><Link to={`/car/${item.id}`}>{item.contractor}</Link></td>
                     <td>{item.carNumber}</td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
