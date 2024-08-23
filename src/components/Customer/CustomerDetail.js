@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
-import Navigation from './layouts/Navigation';
+import Navigation from '../Alayouts/Navigation';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
