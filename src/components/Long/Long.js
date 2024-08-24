@@ -317,7 +317,7 @@ const Long = () => {
               <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
               <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>
-                </Col>
+              </Col>
             </Pagination>
           </div>
         )}
