@@ -82,7 +82,7 @@ const LongDetail = () => {
   };
 
   useEffect(() => {
-    if (id !== undefined) {
+    if (id !== undefined) { // 왜 id !== 'new'로 하면 안될까?
       const fetchLongData = async () => {
         try {
           const response = await axios.post(`${API_URL}/long/detail`, { id });
@@ -96,6 +96,10 @@ const LongDetail = () => {
       };
       fetchLongData();
     } else {
+      setLongData((prevData) => ({
+        ...prevData,
+        contractDate: getCurrentDate(),
+      }));
       setLoading(false);
     }
   }, [id]);
@@ -115,7 +119,7 @@ const LongDetail = () => {
         return;
       }
 
-      if (!longData.contractDate || longData.contractDate.trim() === "") {
+      if (!longData.contractDate) {
         alert("계약일을 입력하세요.");
         return;
       }
@@ -442,7 +446,7 @@ const LongDetail = () => {
                     <Form.Control
                       type="date"
                       name="contractDate"
-                      value={getCurrentDate()}
+                      value={longData.contractDate}
                       onChange={handleChange}
                     />
                   </Col>
