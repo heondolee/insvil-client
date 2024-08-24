@@ -108,7 +108,7 @@ const CarDetail = () => {
   };
 
   useEffect(() => {
-    if (id !== undefined) {
+    if (id !== "new") {
       const fetchCarData = async () => {
         try {
           const response = await axios.post(`${API_URL}/car/detail`, { id });
@@ -122,6 +122,10 @@ const CarDetail = () => {
       };
       fetchCarData();
     } else {
+      setCarData((prevData) => ({
+        ...prevData,
+        inputDate: getCurrentDate()
+      }));
       setLoading(false);
     }
   }, [id]);
@@ -481,7 +485,7 @@ const CarDetail = () => {
                     <Form.Control
                       type="date"
                       name="inputDate"
-                      value={getCurrentDate()}
+                      value={carData.inputDate}
                       onChange={handleChange}
                     />
                   </Col>
