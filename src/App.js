@@ -29,6 +29,7 @@ function App() {
       <Route path="/reference/:id" element={<ReferenceDetail/>} />
       <Route path="/reference/new" element={<ReferenceDetail />} />
       <Route path="/normal" element={<Normal/>} />
+      <Route path="/normal/new" element={<NormalDetail />} />
       <Route path="/normal/:id" element={<NormalDetail />} />
       <Route path="/employee" element={<Employee />} />
       <Route path="/customer/new" element={<CustomerDetail />} />
