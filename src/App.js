@@ -20,6 +20,7 @@ function App() {
   <Router>
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/long" element={<Long />} />
       <Route path="/long/new" element={<LongDetail />} />
       <Route path="/long/:id" element={<LongDetail/>} />
