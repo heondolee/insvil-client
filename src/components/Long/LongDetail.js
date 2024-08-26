@@ -207,27 +207,28 @@ const LongDetail = () => {
                 </Form.Group>
 
                 <Form.Group as={Row} controlId="formResponsible">
-                  <Form.Label column sm={4}>책임자</Form.Label>
+                  <Form.Label column sm={4}>담당자</Form.Label>
                   <Col sm={8}>
                     <Form.Control
                       type="text"
                       name="responsible"
                       value={longData.responsible}
                       onChange={handleChange}
-                      placeholder="책임자를 입력하세요"
+                      placeholder="담당자를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} controlId="formResponsibleName">
-                  <Form.Label column sm={4}>책임자 이름</Form.Label>
+                  <Form.Label column sm={4}>담당자 이름</Form.Label>
                   <Col sm={8}>
                     <Form.Control
                       type="text"
                       name="responsibleName"
                       value={longData.responsibleName}
                       onChange={handleChange}
-                      placeholder="책임자 이름을 입력하세요"
+                      placeholder="담당자 이름을 입력하세요"
                     />
                   </Col>
                 </Form.Group>
@@ -267,19 +268,21 @@ const LongDetail = () => {
                       value={longData.contractCompany}
                       onChange={handleChange}
                       placeholder="계약 회사를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} controlId="formLongTermProduct">
-                  <Form.Label column sm={4}>장기 제품</Form.Label>
+                  <Form.Label column sm={4}>상품 이름</Form.Label>
                   <Col sm={8}>
                     <Form.Control
                       type="text"
                       name="longTermProduct"
                       value={longData.longTermProduct}
                       onChange={handleChange}
-                      placeholder="장기 제품을 입력하세요"
+                      placeholder="상품 이름을 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
@@ -306,6 +309,7 @@ const LongDetail = () => {
                       value={longData.paymentInsurance}
                       onChange={handleChange}
                       placeholder="보험료를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
@@ -345,6 +349,7 @@ const LongDetail = () => {
                       value={longData.insuredPerson}
                       onChange={handleChange}
                       placeholder="피보험자를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
@@ -366,6 +371,7 @@ const LongDetail = () => {
                   <Form.Label column sm={4} style={{ color: 'blue' }}>계약자</Form.Label>
                   <Col sm={8}>
                     <Form.Control
+                      style={{ backgroundColor: '#fbff88' }}
                       type="text"
                       name="contractor"
                       value={longData.contractor}
@@ -389,14 +395,15 @@ const LongDetail = () => {
                 </Form.Group>
 
                 <Form.Group as={Row} controlId="formPolicyNumber">
-                  <Form.Label column sm={4}>정책 번호</Form.Label>
+                  <Form.Label column sm={4}>증권 번호</Form.Label>
                   <Col sm={8}>
                     <Form.Control
                       type="text"
                       name="policyNumber"
                       value={longData.policyNumber}
                       onChange={handleChange}
-                      placeholder="정책 번호를 입력하세요"
+                      placeholder="증권 번호를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
@@ -436,6 +443,7 @@ const LongDetail = () => {
                       value={longData.contractStatus}
                       onChange={handleChange}
                       placeholder="계약 상태를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
                     />
                   </Col>
                 </Form.Group>
@@ -463,6 +471,7 @@ const LongDetail = () => {
                   name="contractDate"
                   value={longData.contractDate}
                   onChange={handleChange}
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
@@ -475,6 +484,7 @@ const LongDetail = () => {
                   name="paymentStartDate"
                   value={longData.paymentStartDate}
                   onChange={handleChange}
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
@@ -487,6 +497,7 @@ const LongDetail = () => {
                   name="paymentEndDate"
                   value={longData.paymentEndDate}
                   onChange={handleChange}
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
@@ -500,6 +511,7 @@ const LongDetail = () => {
                   value={longData.paymentPeriod}
                   onChange={handleChange}
                   placeholder="납입 기간을 입력하세요"
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
@@ -575,6 +587,7 @@ const LongDetail = () => {
                   value={longData.paymentMethod}
                   onChange={handleChange}
                   placeholder="납입 방법을 입력하세요"
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
