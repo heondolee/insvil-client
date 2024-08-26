@@ -22,7 +22,7 @@ const Car = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState('2024-08-01');
   const [endDate, setEndDate] = useState('2024-12-31');
-  const [dateType, setDateType] = useState('inputDate');
+  const [dateType, setDateType] = useState('receiptDate');
 
   const [contractor, setContractor] = useState('');
   const [responsibilityName, setResponsibilityName] = useState('');
@@ -124,13 +124,13 @@ const Car = () => {
                 <DropdownButton
                   variant="outline-secondary"
                   title={
-                    dateType === 'inputDate' ? '입력일' : 
+                    dateType === 'receiptDate' ? '영수일' : 
                     dateType === 'startDate' ? '개시일' : 
                     '만기일'
                   }
                   onSelect={(eventKey) => setDateType(eventKey)}
                 >
-                  <Dropdown.Item eventKey="inputDate">입력일</Dropdown.Item>
+                  <Dropdown.Item eventKey="receiptDate">영수일</Dropdown.Item>
                   <Dropdown.Item eventKey="startDate">개시일</Dropdown.Item>
                   <Dropdown.Item eventKey="endDate">만기일</Dropdown.Item>
                 </DropdownButton>
@@ -219,7 +219,7 @@ const Car = () => {
             <Table striped bordered hover className={styles.table_custom}>
               <thead>
                 <tr>
-                  <th>입력일</th>
+                  <th>영수일</th>
                   <th>개시일</th>
                   <th>만기일</th>
                   <th>보험기간</th>
@@ -236,7 +236,7 @@ const Car = () => {
               <tbody>
                 {currentItems.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.inputDate}</td>
+                    <td>{item.receiptDate}</td>
                     <td>{item.startDate}</td>
                     <td>{item.endDate}</td>
                     <td>{`${item.startDate} ~ ${item.endDate}`}</td>
