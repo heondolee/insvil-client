@@ -11,3 +11,15 @@ const apiClient = axios.create({
 });
 
 export default apiClient;
+
+// async function fetchData() {
+//   try {
+//     const response = await apiClient.get('/data');
+//     console.log(response.data);
+//   } catch (error) {
+//     console.error('There was an error!', error);
+//   }
+// }
+
+// // 함수 호출
+// fetchData();

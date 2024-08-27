@@ -2,8 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
-import axios from 'axios';
-
+import apiClient from './ApiClient';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,18 +10,16 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
-
-
-  const API_URL = process.env.REACT_APP_API_URL;
-
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
+    
     if (!username || !password) {
       setModalMessage('아이디와 비밀번호를 모두 입력하세요.');
       setShowModal(true);
     } else {
       try {
-        const response = await axios.post(`${API_URL}/login`, { username, password });
+        const response = await apiClient.post('/login', { username, password });
+        
         if (response.data.success) {
           navigate('/long');
         } else {
@@ -33,7 +30,7 @@ const Login = () => {
       }
       setShowModal(true);
     }
-  }, [username, password, API_URL, navigate]); // API_URL을 의존성 배열에 추가
+  }, [username, password, navigate]);
 
   const handleClose = () => setShowModal(false);
 

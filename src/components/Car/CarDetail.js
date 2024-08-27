@@ -145,7 +145,7 @@ const CarDetail = () => {
         return;
       }
 
-      if (!carData.inputDreceiptDateate || carData.receiptDate.trim() === "") {
+      if (!carData.receiptDate || carData.receiptDate.trim() === "") {
         alert("영수일을 입력하세요.");
         return;
       }
