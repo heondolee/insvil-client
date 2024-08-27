@@ -1,138 +1,347 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Table, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
-import styles from '../../css/Detail.module.css';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const InfoDetail = () => {
-  const { branchName, teamName, userName  } = useParams(); // URL 파라미터에서 사용자 이름을 가져옴
-  const [userData, setUserData] = useState(null); // 사용자 데이터를 저장할 상태
-  const [loading, setLoading] = useState(true); // 데이터 로딩 상태를 저장할 상태
-  const [error, setError] = useState(null); // 에러 메시지를 저장할 상태
+  const { branchName, teamName, userName } = useParams();
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    username: '',
+    branch: '',
+    team: '',
+    manager: '',
+    birthdateGender: '',
+    mobilePhone: '',
+    phone: '',
+    fax: '',
+    bank: '',
+    accountNumber: '',
+    accountHolder: '',
+    address: '',
+    carSettlement: '',
+    longTermSettlement: '',
+    lifeSettlement: '',
+    other: '',
+  });
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // API 요청을 통해 사용자 데이터를 가져옴
-        const response = await axios.post(`${API_URL}/user/detail`, { userName });
-        setUserData(response.data); // 가져온 데이터를 상태에 저장
-      } catch (error) {
-        setError("사용자 데이터를 가져오는 중 오류가 발생했습니다."); // 에러 메시지를 상태에 저장
-        console.error("Error fetching user data:", error); // 콘솔에 에러 로그 출력
-      } finally {
-        setLoading(false); // 데이터 로딩 상태를 false로 설정
-      }
-    };
+    if (userName !== undefined) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.post(`${API_URL}/user/detail`, { userName });
+          setUserData(response.data);
+        } catch (error) {
+          setError("사용자 데이터를 가져오는 중 오류가 발생했습니다.");
+          console.error("Error fetching user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchUserData();
+    } else {
+      setLoading(false);
+    }
+  }, [userName]);
 
-    fetchUserData();
-  }, [userName]); // username이 변경될 때마다 데이터를 다시 가져옴
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      if (!userData.username || userData.username.trim() === "") {
+        alert("아이디를 입력하세요.");
+        return;
+      }
+  
+      const endpoint = userName === undefined ? '/user/create' : '/user/update';
+      await axios.post(`${API_URL}${endpoint}`, userData);
+      navigate('/employee');
+      alert("사용자 데이터가 저장되었습니다.");
+    } catch (error) {
+      setError("사용자 데이터를 저장하는 중 오류가 발생했습니다.");
+      console.error("Error saving user data:", error);
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/employee');
+  };
+
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+      if (confirmDelete) {
+        await axios.delete(`${API_URL}/user/delete`, {
+          data: { id: userData.id },
+        });
+        navigate('/employee');
+        alert("사용자 데이터가 삭제되었습니다.");
+      }
+    } catch (error) {
+      setError("사용자 데이터를 삭제하는 중 오류가 발생했습니다.");
+      console.error("Error deleting user data:", error);
+    }
+  };
 
   return (
     <div>
-      <Navigation /> {/* 네비게이션 컴포넌트 */}
+      <Navigation />
       <Container>
         <Row>
           <Col>
-            <h4><Link to={`/employee`}>인스빌</Link> ➡️ <Link to={`/employee/${branchName}`}>{branchName}</Link> 지점 ➡️ <Link to={`/employee/${branchName}`}>{teamName}</Link> 팀</h4>
+            <h4>
+              <Link to={`/employee`}>인스빌</Link> ➡️{' '}
+              <Link to={`/employee/${branchName}`}>{branchName}</Link> 지점 ➡️{' '}
+              <Link to={`/employee/${branchName}/${teamName}`}>{teamName}</Link> 팀
+            </h4>
             {loading ? (
-              // 데이터 로딩 중일 때 스피너 표시
               <div className="text-center">
                 <Spinner animation="border" role="status">
                   <span className="sr-only">Loading...</span>
                 </Spinner>
               </div>
             ) : error ? (
-              // 에러가 발생했을 때 에러 메시지 표시
               <Alert variant="danger">{error}</Alert>
             ) : (
-              // 데이터 로딩이 완료되고 에러가 없을 때 사용자 상세 정보 표시
-              <Table bordered className={styles.table_custom}>
-                <thead>
-                  <tr>
-                    <th>항목</th>
-                    <th>내용</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userData ? (
-                    // 사용자 데이터가 있을 경우 테이블에 데이터 표시
-                    <>
-                      <tr>
-                        <td>아이디</td>
-                        <td>{userData.username}</td>
-                      </tr>
-                      <tr>
-                        <td>지점</td>
-                        <td>{userData.branch}</td>
-                      </tr>
-                      <tr>
-                        <td>팀</td>
-                        <td>{userData.team}</td>
-                      </tr>
-                      <tr>
-                        <td>이름</td>
-                        <td>{userData.manager}</td>
-                      </tr>
-                      <tr>
-                        <td>생년월일 / 성별</td>
-                        <td>{userData.birthdateGender}</td>
-                      </tr>
-                      <tr>
-                        <td>핸드폰</td>
-                        <td>{userData.mobilePhone}</td>
-                      </tr>
-                      <tr>
-                        <td>전화</td>
-                        <td>{userData.phone}</td>
-                      </tr>
-                      <tr>
-                        <td>팩스</td>
-                        <td>{userData.fax}</td>
-                      </tr>
-                      <tr>
-                        <td>은행명</td>
-                        <td>{userData.bank}</td>
-                      </tr>
-                      <tr>
-                        <td>계좌번호</td>
-                        <td>{userData.accountNumber}</td>
-                      </tr>
-                      <tr>
-                        <td>예금주</td>
-                        <td>{userData.accountHolder}</td>
-                      </tr>
-                      <tr>
-                        <td>주소</td>
-                        <td>{userData.address}</td>
-                      </tr>
-                      <tr>
-                        <td>자동차정산</td>
-                        <td>{userData.carSettlement}</td>
-                      </tr>
-                      <tr>
-                        <td>장기정산</td>
-                        <td>{userData.longTermSettlement}</td>
-                      </tr>
-                      <tr>
-                        <td>생명정산</td>
-                        <td>{userData.lifeSettlement}</td>
-                      </tr>
-                      <tr>
-                        <td>기타</td>
-                        <td>{userData.other}</td>
-                      </tr>
-                    </>
-                  ) : (
-                    // 사용자 데이터가 없을 경우 '사용자 정보가 없습니다' 메시지 표시
-                    <tr>
-                      <td colSpan="2" className="text-center">사용자 정보가 없습니다.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
+              <Form>
+                <Form.Group as={Row} controlId="formUsername">
+                  <Form.Label column sm={2}>아이디</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      value={userData.username}
+                      onChange={handleChange}
+                      placeholder="아이디를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formBranch">
+                  <Form.Label column sm={2}>지점</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="branch"
+                      value={userData.branch}
+                      onChange={handleChange}
+                      placeholder="지점을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formTeam">
+                  <Form.Label column sm={2}>팀</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="team"
+                      value={userData.team}
+                      onChange={handleChange}
+                      placeholder="팀을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formManager">
+                  <Form.Label column sm={2}>이름</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="manager"
+                      value={userData.manager}
+                      onChange={handleChange}
+                      placeholder="이름을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formBirthdateGender">
+                  <Form.Label column sm={2}>생년월일 / 성별</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="birthdateGender"
+                      value={userData.birthdateGender}
+                      onChange={handleChange}
+                      placeholder="생년월일과 성별을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formMobilePhone">
+                  <Form.Label column sm={2}>핸드폰</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="mobilePhone"
+                      value={userData.mobilePhone}
+                      onChange={handleChange}
+                      placeholder="핸드폰 번호를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPhone">
+                  <Form.Label column sm={2}>전화</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="phone"
+                      value={userData.phone}
+                      onChange={handleChange}
+                      placeholder="전화번호를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formFax">
+                  <Form.Label column sm={2}>팩스</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="fax"
+                      value={userData.fax}
+                      onChange={handleChange}
+                      placeholder="팩스 번호를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formBank">
+                  <Form.Label column sm={2}>은행명</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="bank"
+                      value={userData.bank}
+                      onChange={handleChange}
+                      placeholder="은행명을 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formAccountNumber">
+                  <Form.Label column sm={2}>계좌번호</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="accountNumber"
+                      value={userData.accountNumber}
+                      onChange={handleChange}
+                      placeholder="계좌번호를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formAccountHolder">
+                  <Form.Label column sm={2}>예금주</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="accountHolder"
+                      value={userData.accountHolder}
+                      onChange={handleChange}
+                      placeholder="예금주를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formAddress">
+                  <Form.Label column sm={2}>주소</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="address"
+                      value={userData.address}
+                      onChange={handleChange}
+                      placeholder="주소를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formCarSettlement">
+                  <Form.Label column sm={2}>자동차정산</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="carSettlement"
+                      value={userData.carSettlement}
+                      onChange={handleChange}
+                      placeholder="자동차정산 정보를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formLongTermSettlement">
+                  <Form.Label column sm={2}>장기정산</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="longTermSettlement"
+                      value={userData.longTermSettlement}
+                      onChange={handleChange}
+                      placeholder="장기정산 정보를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formLifeSettlement">
+                  <Form.Label column sm={2}>생명정산</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="lifeSettlement"
+                      value={userData.lifeSettlement}
+                      onChange={handleChange}
+                      placeholder="생명정산 정보를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formOther">
+                  <Form.Label column sm={2}>기타</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="other"
+                      value={userData.other}
+                      onChange={handleChange}
+                      placeholder="기타 정보를 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Button variant="primary" onClick={handleSave}>
+                  저장
+                </Button>
+                <Button variant="secondary" onClick={handleCancel} className="ml-2">
+                  취소
+                </Button>
+                {userName && (
+                  <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                    삭제
+                  </Button>
+                )}
+              </Form>
             )}
           </Col>
         </Row>

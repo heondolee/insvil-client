@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Table, Container, Row, Col, Button, Form } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
 import styles from '../../css/Effect.module.css'; // 모듈 import
-import { Link } from 'react-router-dom'; // Update import
+import { Link, useNavigate } from 'react-router-dom'; // Update import
 import axios from 'axios';
 import DownloadButton from '../Long/DownloadBtn';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Employee = () => {
+  const navigate = useNavigate(); 
+
   const [branchData, setBranchData] = useState([]);
   const [managerData, setManagerData] = useState([]); // 업무담당 데이터 상태 추가
   const [managerName, setManagerName] = useState('');
@@ -51,6 +53,10 @@ const Employee = () => {
     }
   };
 
+  const handleCreateNew = () => {
+    navigate('/employee/new');
+  };
+
   return (
     <div>
       <Navigation />
@@ -58,6 +64,9 @@ const Employee = () => {
         <Row>
           <Col>
             <h4>인스빌</h4>
+          </Col>
+          <Col xs={12} md="auto">
+            <Button onClick={handleCreateNew}>작성</Button>
           </Col>
           <Col xs={12} md="auto">
             <DownloadButton modelName="user"/>
@@ -170,20 +179,28 @@ const Employee = () => {
               </thead>
               <tbody>
                 {managerName && (
-                  searchData.map((user, index) => (
-                    <tr key={`search-${index}`}>
-                      <td>{user.manager}</td>
-                      <td><Link to={`/employee/${user.branch}/${user.team}/${user.username}`}>{user.username}</Link></td>                    <td>{user.branch}</td>
-                      <td>{user.team}</td>
-                      <td>{user.birthdateGender}</td>
-                      <td>{user.mobilePhone}</td>
-                      <td>{user.phone}</td>
-                      <td>{user.fax}</td>
-                      <td>{user.carSettlement}</td>
-                      <td>{user.longTermSettlement}</td>
-                      <td>{user.lifeSettlement}</td>
-                    </tr>
-                  ))
+                  searchData.map((user, index) => {
+                    // 경로를 동적으로 생성하며, 값이 없는 경우 경로에서 생략
+                    const linkPath = `/employee${
+                      user.branch ? `/${user.branch}` : '/undefined'
+                    }${user.team ? `/${user.team}` : '/undefined'}/${user.username}`;
+
+                    return (
+                      <tr key={`search-${index}`}>
+                        <td>{user.manager}</td>
+                        <td><Link to={linkPath}>{user.username}</Link></td>
+                        <td>{user.branch}</td>
+                        <td>{user.team}</td>
+                        <td>{user.birthdateGender}</td>
+                        <td>{user.mobilePhone}</td>
+                        <td>{user.phone}</td>
+                        <td>{user.fax}</td>
+                        <td>{user.carSettlement}</td>
+                        <td>{user.longTermSettlement}</td>
+                        <td>{user.lifeSettlement}</td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </Table>
