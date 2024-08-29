@@ -52,6 +52,12 @@ const ReferenceDetail = () => {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
       } else {
+        if (!reference.Title) {
+          return window.alert("제목을 입력해주세요.");
+        }
+        if (!reference.Content) {
+          return window.alert("내용을 입력해주세요.");
+        }
         await axios.post(`${API_URL}/dataroom/new`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
@@ -113,7 +119,7 @@ const ReferenceDetail = () => {
               onChange={handleContentChange}
               modules={{
                 toolbar: [
-                  [{ 'font': ['굴림', '궁서체', 'sans-serif', 'serif'] }],
+                  [{ 'font': [] }],
                   [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                   ['bold', 'italic', 'underline'],
                   [{ 'color': [] }, { 'background': [] }],
