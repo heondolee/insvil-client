@@ -253,6 +253,9 @@ const Long = () => {
             </Col>
           </Row>
         </Form>
+        <div>
+          <span>[ 납입보험료 합계 :  {}원 ] [ 수정보험료 합계 : {data.length}원 ]</span>
+        </div>
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
