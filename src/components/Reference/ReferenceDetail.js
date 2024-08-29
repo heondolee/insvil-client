@@ -113,7 +113,7 @@ const ReferenceDetail = () => {
               onChange={handleContentChange}
               modules={{
                 toolbar: [
-                  [{ 'font': [] }],
+                  [{ 'font': ['굴림', '궁서체', 'sans-serif', 'serif'] }],
                   [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                   ['bold', 'italic', 'underline'],
                   [{ 'color': [] }, { 'background': [] }],
