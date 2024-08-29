@@ -57,11 +57,14 @@ const Long = () => {
   }, [fetchData]);
 
   const formatNumber = (num) => {
-    if (!num.includes(',')) {
+
+    const numStr = num.toString();
+
+    if (!numStr.includes(',')) {
       const formattedNum = new Intl.NumberFormat().format(num * 1000);
       return formattedNum;
     } else {
-      return num;
+      return numStr;
     }
   };
 
@@ -77,6 +80,24 @@ const Long = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const calculateTotalPaymentInsurance = () => {
+    
+    const total = data.reduce((sum, item) => {
+      let paymentInsurance = item.paymentInsurance;
+      console.log(paymentInsurance);
+  
+      // 문자열로 되어있는 경우 숫자로 변환
+      if (typeof paymentInsurance === 'string') {
+        // 쉼표가 있는 경우 제거하고 숫자로 변환
+        paymentInsurance = Number(paymentInsurance.replace(/,/g, ''));
+      }
+  
+      return sum + paymentInsurance;
+    }, 0);
+  
+    return formatNumber(total);
+  };
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -129,6 +150,9 @@ const Long = () => {
     <div>
       <Navigation />
       <Container>
+        <div>
+          <span>[ 납입보험료 합계 :  {calculateTotalPaymentInsurance()}원 ] [ 수정보험료 합계 : {data.length}원 ]</span>
+        </div>
         <Form>
           <Row className="align-items-center">
             <Col xs={12} md="auto">
@@ -253,9 +277,6 @@ const Long = () => {
             </Col>
           </Row>
         </Form>
-        <div>
-          <span>[ 납입보험료 합계 :  {}원 ] [ 수정보험료 합계 : {data.length}원 ]</span>
-        </div>
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
