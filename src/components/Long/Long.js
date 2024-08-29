@@ -101,7 +101,6 @@ const Long = () => {
   const calculateTotalCorrectedInsurance = () => {
     const total = data.reduce((sum, item) => {
       let correctedInsurance = item.correctedInsurance;
-      console.log(correctedInsurance);
   
       // 문자열로 되어있는 경우 숫자로 변환
       if (typeof correctedInsurance === 'string') {
