@@ -84,7 +84,6 @@ const Long = () => {
   const calculateTotalPaymentInsurance = () => {
     const total = data.reduce((sum, item) => {
       let paymentInsurance = item.paymentInsurance;
-      console.log(paymentInsurance);
   
       // 문자열로 되어있는 경우 숫자로 변환
       if (typeof paymentInsurance === 'string') {

@@ -56,12 +56,17 @@ const Normal = () => {
     fetchData();
   }, [fetchData]);
 
+  console.log(data.length);
+
   const formatNumber = (num) => {
-    if (!num.includes(',')) {
-      const formattedNum = new Intl.NumberFormat().format(num);
+
+    const numStr = num.toString();
+
+    if (!numStr.includes(',')) {
+      const formattedNum = new Intl.NumberFormat().format(num * 1000);
       return formattedNum;
     } else {
-      return num;
+      return numStr;
     }
   };
 
@@ -77,6 +82,23 @@ const Normal = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const calculateTotalInsurancePremium = () => {
+    const total = data.reduce((sum, item) => {
+      let insurancePremium = formatNumber(item.insurancePremium);
+      console.log(insurancePremium);
+  
+      // 문자열로 되어있는 경우 숫자로 변환
+      if (typeof insurancePremium === 'string') {
+        // 쉼표가 있는 경우 제거하고 숫자로 변환
+        insurancePremium = Number(insurancePremium.replace(/,/g, ''))/1000;
+      }
+  
+      return sum + insurancePremium;
+    }, 0);
+  
+    return formatNumber(total);
+  };
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -244,6 +266,9 @@ const Normal = () => {
             </Col>
           </Row>
         </Form>
+        <div>
+          <span>[ 납입보험료 합계 :  {calculateTotalInsurancePremium()}원 ]</span>
+        </div>
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
