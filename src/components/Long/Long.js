@@ -166,9 +166,6 @@ const Long = () => {
     <div>
       <Navigation />
       <Container>
-        <div>
-          <span>[ 납입보험료 합계 :  {calculateTotalPaymentInsurance()}원 ] [ 수정보험료 합계 : {calculateTotalCorrectedInsurance()}원 ]</span>
-        </div>
         <Form>
           <Row className="align-items-center">
             <Col xs={12} md="auto">
@@ -293,6 +290,9 @@ const Long = () => {
             </Col>
           </Row>
         </Form>
+        <div>
+          <span>[ 납입보험료 합계 :  {calculateTotalPaymentInsurance()}원 ] [ 수정보험료 합계 : {calculateTotalCorrectedInsurance()}원 ]</span>
+        </div>
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
