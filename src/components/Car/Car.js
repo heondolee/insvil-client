@@ -21,7 +21,7 @@ const Car = () => {
 
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState('2024-08-01');
-  const [endDate, setEndDate] = useState('2024-12-31');
+  const [endDate, setEndDate] = useState('2024-09-30');
   const [dateType, setDateType] = useState('endDate');
 
   const [contractor, setContractor] = useState('');
