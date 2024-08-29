@@ -284,7 +284,7 @@ const Long = () => {
               >오늘날짜</Button>            
             </Col>
             <Col xs={12} md="auto">
-            <DownloadButton modelName="long"/>
+            <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
             </Col>
           </Row>
         </Form>
