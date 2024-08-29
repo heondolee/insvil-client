@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Form, Button } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Quill 에디터의 기본 스타일
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -10,7 +12,7 @@ const ReferenceDetail = () => {
   const [file, setFile] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [reference, setReference] = useState({ title: '', content: '', fileUrl: '', fileName: '' });
+  const [reference, setReference] = useState({ Title: '', Content: '', FileUrl: '', FileName: '' });
 
   useEffect(() => {
     if (id) {
@@ -32,10 +34,14 @@ const ReferenceDetail = () => {
     setReference({ ...reference, [name]: value });
   };
 
+  const handleContentChange = (Content) => {
+    setReference({ ...reference, Content });
+  };
+
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append('title', reference.Title);
-    formData.append('content', reference.Content);
+    formData.append('title', reference.title);
+    formData.append('Content', reference.Content);
     if (file) {
       formData.append('file', file);
     }
@@ -55,7 +61,6 @@ const ReferenceDetail = () => {
       console.error("Error saving reference:", error);
     }
   };
-  
 
   const handleCancel = () => {
     navigate('/reference');
@@ -96,19 +101,32 @@ const ReferenceDetail = () => {
             <Form.Label>제목</Form.Label>
             <Form.Control
               type="text"
-              name="Title"
+              name="title"
               value={reference.Title || ''}
               onChange={handleInputChange}
             />
           </Form.Group>
           <Form.Group controlId="formContent">
             <Form.Label>내용</Form.Label>
-            <Form.Control
-              as="textarea"
-              name="Content"
-              rows={20}
+            <ReactQuill
               value={reference.Content || ''}
-              onChange={handleInputChange}
+              onChange={handleContentChange}
+              modules={{
+                toolbar: [
+                  [{ 'font': [] }],
+                  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                  ['bold', 'italic', 'underline'],
+                  [{ 'color': [] }, { 'background': [] }],
+                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                  ['link', 'image'],
+                  ['clean']
+                ]
+              }}
+              formats={[
+                'font', 'header', 'bold', 'italic', 'underline',
+                'color', 'background', 'list', 'bullet',
+                'link', 'image'
+              ]}
             />
           </Form.Group>
           <Form.Group controlId="formFile">
