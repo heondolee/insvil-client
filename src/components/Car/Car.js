@@ -211,7 +211,7 @@ const Car = () => {
               >오늘날짜</Button>            
             </Col>
             <Col xs={12} md="auto">
-            <DownloadButton modelName="car"/>
+              <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType}/>
             </Col>
           </Row>
         </Form>

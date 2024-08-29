@@ -47,7 +47,6 @@ function DownloadButton({ modelName, startDate, endDate, dateType }) {
   }, [modelName, startDate, endDate, dateType]);
 
   const handleDownload = async (startDate, endDate, dateType) => {
-    console.log('handleDownload', startDate, endDate, dateType);
     try {
       setIsDownloading(true);
 
@@ -86,7 +85,6 @@ function DownloadButton({ modelName, startDate, endDate, dateType }) {
       const dateRange = selectedOption.value.split(': ')[1];
       const [startDate, endDate] = dateRange.split('~').map(date => date.trim());
   
-      console.log('Selected date range:', startDate, endDate);
       handleDownload(startDate, endDate, dateType);
     }
   };
