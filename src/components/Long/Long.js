@@ -82,7 +82,6 @@ const Long = () => {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const calculateTotalPaymentInsurance = () => {
-    
     const total = data.reduce((sum, item) => {
       let paymentInsurance = item.paymentInsurance;
       console.log(paymentInsurance);
@@ -94,6 +93,23 @@ const Long = () => {
       }
   
       return sum + paymentInsurance;
+    }, 0);
+  
+    return formatNumber(total);
+  };
+
+  const calculateTotalCorrectedInsurance = () => {
+    const total = data.reduce((sum, item) => {
+      let correctedInsurance = item.correctedInsurance;
+      console.log(correctedInsurance);
+  
+      // 문자열로 되어있는 경우 숫자로 변환
+      if (typeof correctedInsurance === 'string') {
+        // 쉼표가 있는 경우 제거하고 숫자로 변환
+        correctedInsurance = Number(correctedInsurance.replace(/,/g, ''));
+      }
+  
+      return sum + correctedInsurance;
     }, 0);
   
     return formatNumber(total);
@@ -151,7 +167,7 @@ const Long = () => {
       <Navigation />
       <Container>
         <div>
-          <span>[ 납입보험료 합계 :  {calculateTotalPaymentInsurance()}원 ] [ 수정보험료 합계 : {data.length}원 ]</span>
+          <span>[ 납입보험료 합계 :  {calculateTotalPaymentInsurance()}원 ] [ 수정보험료 합계 : {calculateTotalCorrectedInsurance()}원 ]</span>
         </div>
         <Form>
           <Row className="align-items-center">
