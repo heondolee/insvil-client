@@ -40,7 +40,7 @@ const ReferenceDetail = () => {
 
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append('title', reference.Title);
+    formData.append('Title', reference.Title);
     formData.append('Content', reference.Content);
     if (file) {
       formData.append('file', file);
@@ -118,32 +118,31 @@ const ReferenceDetail = () => {
                   ['bold', 'italic', 'underline'],
                   [{ 'color': [] }, { 'background': [] }],
                   [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                  ['link', 'image'],
                   ['clean']
                 ]
               }}
               formats={[
                 'font', 'header', 'bold', 'italic', 'underline',
                 'color', 'background', 'list', 'bullet',
-                'link', 'image'
               ]}
+              style={{ height: '500px' }}
             />
           </Form.Group>
           <Form.Group controlId="formFile">
-            <Form.Label>파일 업로드</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
-            {reference.FileUrl && (
-              <div style={{ marginTop: '10px' }}>
-                <Form.Text>업로드된 파일: {reference.FileUrl}</Form.Text>
-                <Button
-                  variant="link"
-                  onClick={handleDownload}
-                >
-                  파일 다운로드
-                </Button>
-              </div>
-            )}
-          </Form.Group>
+          <Form.Label style={{ margin: '4rem 0rem 1rem 0rem' }}>파일 업로드</Form.Label>
+          <Form.Control type="file" onChange={handleFileChange} />
+          {reference.FileUrl && (
+            <div style={{ marginTop: '10px' }}>
+              <Form.Text>업로드된 파일: {reference.FileUrl}</Form.Text>
+              <Button
+                variant="link"
+                onClick={handleDownload}
+              >
+                파일 다운로드
+              </Button>
+            </div>
+          )}
+        </Form.Group>
 
           <Button variant="primary" onClick={handleSave}>
             저장
