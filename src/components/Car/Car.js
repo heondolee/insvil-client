@@ -20,8 +20,8 @@ const Car = () => {
   };
 
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState('2024-08-01');
-  const [endDate, setEndDate] = useState('2024-09-30');
+  const [startDate, setStartDate] = useState(getCurrentDate());
+  const [endDate, setEndDate] = useState(getCurrentDate());
   const [dateType, setDateType] = useState('endDate');
 
   const [contractor, setContractor] = useState('');
@@ -64,6 +64,14 @@ const Car = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const calculateTotalFirstPremium = () => {
+    const total = data.reduce((sum, item) => {
+      console.log(sum);
+      return sum + Number(item.firstPremium);
+    }, 0);
+    return new Intl.NumberFormat().format(total);
+  };
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -208,6 +216,9 @@ const Car = () => {
             </Col>
           </Row>
         </Form>
+        <div>
+          <span>[ 초회보험료 합계 :  {calculateTotalFirstPremium()}원 ]</span>
+        </div>
         {isLoading ? (
           <div className="text-center my-3">
             <Spinner animation="border" role="status">
