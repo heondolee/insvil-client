@@ -4,39 +4,50 @@ import Select from 'react-select';
 import Loading from 'react-loading'; // 로딩 스피너 추가
 
 const API_URL = process.env.REACT_APP_API_URL;
-const BATCH_SIZE = 1000; // 한번에 처리할 레코드 수
 
-function DownloadButton({ modelName }) {
+const customStyles = {
+  option: (provided) => ({
+    ...provided,
+    fontSize: '12px', // 글씨 크기를 12px로 설정
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    fontSize: '12px', // 선택된 값의 글씨 크기를 12px로 설정
+  }),
+};
+
+function DownloadButton({ modelName, startDate, endDate, dateType }) {
+
   const [isDownloading, setIsDownloading] = useState(false);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    const fetchRowCount = async () => {
+    const fetchRanges = async () => {
       try {
         const response = await axios.get(`${API_URL}/download-excel/count`, {
-          params: { modelName }
+          params: { modelName, startDate, endDate, dateType },
         });
-
-        const rowCount = response.data.count;
-        const ranges = [];
-
-        for (let i = 0; i < rowCount; i += BATCH_SIZE) {
-          ranges.push({
-            value: `${i + 1}~${Math.min(i + BATCH_SIZE, rowCount)}`,
-            label: `${i + 1} ~ ${Math.min(i + BATCH_SIZE, rowCount)}`,
-          });
-        }
-
-        setOptions(ranges);
+  
+        // 백엔드에서 받은 ranges 데이터를 그대로 사용
+        const { ranges } = response.data;
+  
+        // 받은 ranges 데이터를 options 형식으로 변환
+        const options = ranges.map((range, index) => ({
+          value: `${index + 1}: ${range[0]} ~ ${range[1]}`,
+          label: `${range[0]} ~ ${range[1]}`,
+        }));
+  
+        setOptions(options);
       } catch (error) {
-        console.error('Failed to fetch row count', error);
+        console.error('Failed to fetch ranges', error);
       }
     };
+  
+    fetchRanges();
+  }, [modelName, startDate, endDate, dateType]);
 
-    fetchRowCount();
-  }, [modelName]);
-
-  const handleDownload = async (start, end) => {
+  const handleDownload = async (startDate, endDate, dateType) => {
+    console.log('handleDownload', startDate, endDate, dateType);
     try {
       setIsDownloading(true);
 
@@ -44,7 +55,7 @@ function DownloadButton({ modelName }) {
         url: `${API_URL}/download-excel`,
         method: 'POST',
         responseType: 'blob',
-        data: { modelName, start, end },
+        data: { modelName, startDate, endDate, dateType },
       });
 
       if (response.status !== 200) {
@@ -54,7 +65,7 @@ function DownloadButton({ modelName }) {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${modelName}_${start}-${end}.xlsx`);
+      link.setAttribute('download', `${modelName}_${startDate}-${endDate}.xlsx`);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
@@ -71,10 +82,15 @@ function DownloadButton({ modelName }) {
 
   const handleChange = (selectedOption) => {
     if (selectedOption) {
-      const [start, end] = selectedOption.value.split('~').map(Number);
-      handleDownload(start, end);
+      // 앞부분의 "1:"를 제거하고 나머지 부분을 처리
+      const dateRange = selectedOption.value.split(': ')[1];
+      const [startDate, endDate] = dateRange.split('~').map(date => date.trim());
+  
+      console.log('Selected date range:', startDate, endDate);
+      handleDownload(startDate, endDate, dateType);
     }
   };
+  
 
   return (
     <div>
@@ -89,6 +105,7 @@ function DownloadButton({ modelName }) {
           onChange={handleChange} // 선택된 옵션에 대한 처리
           isDisabled={isDownloading} // 다운로드 중일 때 비활성화
           placeholder="엑셀 다운" // 플레이스홀더 텍스트
+          styles={customStyles} // customStyles를 적용
         />
       )}
     </div>

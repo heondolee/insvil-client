@@ -56,8 +56,6 @@ const Normal = () => {
     fetchData();
   }, [fetchData]);
 
-  console.log(data.length);
-
   const formatNumber = (num) => {
 
     const numStr = num.toString();
@@ -86,7 +84,6 @@ const Normal = () => {
   const calculateTotalInsurancePremium = () => {
     const total = data.reduce((sum, item) => {
       let insurancePremium = formatNumber(item.insurancePremium);
-      console.log(insurancePremium);
   
       // 문자열로 되어있는 경우 숫자로 변환
       if (typeof insurancePremium === 'string') {
@@ -262,7 +259,7 @@ const Normal = () => {
               >오늘날짜</Button>            
             </Col>
             <Col xs={12} md="auto">
-            <DownloadButton modelName="normal"/>
+            <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType}/>
             </Col>
           </Row>
         </Form>
