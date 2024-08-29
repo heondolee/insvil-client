@@ -40,7 +40,7 @@ const ReferenceDetail = () => {
 
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append('title', reference.title);
+    formData.append('title', reference.Title);
     formData.append('Content', reference.Content);
     if (file) {
       formData.append('file', file);
@@ -101,7 +101,7 @@ const ReferenceDetail = () => {
             <Form.Label>제목</Form.Label>
             <Form.Control
               type="text"
-              name="title"
+              name="Title"
               value={reference.Title || ''}
               onChange={handleInputChange}
             />
