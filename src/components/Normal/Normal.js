@@ -85,7 +85,7 @@ const Normal = () => {
     const total = data.reduce((sum, item) => {
       let value = item[key];
       if (!value.includes(',')) {
-        return sum + value * 1000;
+        return sum + Number(value * 1000);
       } else {
         return sum + Number(value.replace(/,/g, ''));
       }
