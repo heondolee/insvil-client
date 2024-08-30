@@ -937,15 +937,16 @@ const LongDetail = () => {
             </Form.Group>
 
             <Form.Group as={Row} controlId="formCustomerCounselingContent">
-              <Form.Label column sm={4}>고객 상담 내용</Form.Label>
-              <Col sm={8}>
+              <Form.Label column sm={10}>고객 상담 내용(메모)</Form.Label>
+              <Col sm={12}>
                 <Form.Control
                   as="textarea"
-                  rows={3}
+                  rows={10}
                   name="customerCounselingContent"
                   value={longData.customerCounselingContent}
                   onChange={handleChange}
                   placeholder="고객 상담 내용을 입력하세요"
+                  style={{ backgroundColor: '#fbff88' }}
                 />
               </Col>
             </Form.Group>
