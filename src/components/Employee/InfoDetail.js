@@ -317,19 +317,6 @@ const InfoDetail = () => {
                   </Col>
                 </Form.Group>
 
-                <Form.Group as={Row} controlId="formOther">
-                  <Form.Label column sm={2}>기타</Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      type="text"
-                      name="other"
-                      value={userData.other}
-                      onChange={handleChange}
-                      placeholder="기타 정보를 입력하세요"
-                    />
-                  </Col>
-                </Form.Group>
-
                 <Button variant="primary" onClick={handleSave}>
                   저장
                 </Button>
@@ -343,6 +330,22 @@ const InfoDetail = () => {
                 )}
               </Form>
             )}
+          </Col>
+          <Col>
+            <Form.Group as={Row} controlId="formOther">
+              <Form.Label column sm={12}>기타(메모)</Form.Label>
+              <Col sm={12}>
+                <Form.Control
+                  as="textarea"
+                  rows={25}
+                  name="other"
+                  value={userData.other}
+                  onChange={handleChange}
+                  placeholder="기타 정보를 입력하세요"
+                  style={{ backgroundColor: '#fbff88' }}
+                />
+              </Col>
+            </Form.Group>
           </Col>
         </Row>
       </Container>
