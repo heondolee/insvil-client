@@ -67,7 +67,11 @@ const Car = () => {
 
   const calculateTotalFirstPremium = () => {
     const total = data.reduce((sum, item) => {
-      return sum + Number(item.firstPremium.replace(/,/g, ''));
+      if (!item.firstPremium.includes(',')) {
+        return sum + item.firstPremium * 1000;
+      } else {
+        return sum + Number(item.firstPremium.replace(/,/g, ''));
+      }
     }, 0);
     return new Intl.NumberFormat().format(total);
   };

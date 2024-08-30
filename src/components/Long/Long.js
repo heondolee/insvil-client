@@ -84,17 +84,13 @@ const Long = () => {
   const calculateTotalInsurance = (key) => {
     const total = data.reduce((sum, item) => {
       let value = item[key];
-  
-      // 문자열로 되어있는 경우 숫자로 변환
-      if (typeof value === 'string') {
-        // 쉼표가 있는 경우 제거하고 숫자로 변환
-        value = Number(value.replace(/,/g, ''));
+      if (!value.includes(',')) {
+        return sum + value * 1000;
+      } else {
+        return sum + Number(value.replace(/,/g, ''));
       }
-  
-      return sum + value;
     }, 0);
-  
-    return formatNumber(total);
+    return new Intl.NumberFormat().format(total);
   };
 
   // 페이지 변경 핸들러
