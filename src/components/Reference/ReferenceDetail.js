@@ -20,7 +20,10 @@ const ReferenceDetail = () => {
       const fetchReference = async () => {
         try {
           const response = await axios.get(`${API_URL}/dataroom/${id}`);
-          setReference(response.data);
+          
+          // 이전에 저장된 텍스트가 순수 텍스트일 수 있으므로 이를 처리
+          const processedContent = convertNewlinesToBreaks(response.data.Content);
+          setReference({ ...response.data, Content: processedContent });
         } catch (error) {
           console.error("Error fetching reference:", error);
         } finally {
@@ -101,6 +104,14 @@ const ReferenceDetail = () => {
       const filename = reference.FileUrl.split('/').pop();
       window.location.href = `${API_URL}/dataroom/download/${filename}`;
     }
+  };
+
+  // 줄바꿈 문자를 <br>로 변환하는 함수
+  const convertNewlinesToBreaks = (text) => {
+    if (text && typeof text === 'string') {
+      return text.replace(/\n/g, '<br/>');
+    }
+    return text;
   };
 
   if (loading) {
