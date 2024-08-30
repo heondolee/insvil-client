@@ -296,7 +296,7 @@ const Long = () => {
                   <th>증권번호</th>
                   <th>지점</th>
                   <th>팀</th>
-                  <th>담당</th>
+                  <th className={styles.name}>담당</th>
                   <th>납입보</th>
                   <th>수정보</th>
                   <th className={styles.name}>납입</th>

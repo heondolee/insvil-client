@@ -290,7 +290,6 @@ const Normal = () => {
                   <th className={styles.name}>납입</th>
                   <th className={styles.name}>상태</th>
                   <th>회차</th>
-                  <th className={styles.name}>업무</th>
                 </tr>
               </thead>
               <tbody>
@@ -313,7 +312,6 @@ const Normal = () => {
                     <td>{item.paymentMethod}</td>
                     <td>{item.contractStatus}</td>
                     <td>{formatTerm(item.totalPayments)}</td>
-                    <td>{item.counselor}</td>
                   </tr>
                 ))}
               </tbody>
