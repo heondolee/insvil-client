@@ -29,7 +29,7 @@ function DownloadButton({ searchKeyword }) {
       link.href = url;
 
       const fileName = searchKeyword ? `${searchKeyword}_자료실.xlsx` : '전체_자료실.xlsx';
-      
+
       link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
@@ -58,7 +58,7 @@ function DownloadButton({ searchKeyword }) {
           disabled={isDownloading}
           variant="primary" // 부트스트랩 버튼 스타일
         >
-          {searchKeyword ? `'${searchKeyword}' 검색 다운로드` : '전체 다운로드'}
+          {searchKeyword ? `'${searchKeyword}' 검색 엑셀 다운` : '전체 엑셀 다운'}
         </Button>
       )}
     </div>
