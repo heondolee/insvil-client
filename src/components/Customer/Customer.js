@@ -4,7 +4,7 @@ import Navigation from '../Alayouts/Navigation';
 import styles from '../../css/Effect.module.css'; // 모듈 import
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Update import
-import DownloadButton from '../Long/DownloadBtn';
+import DownloadButton from './DownloadBtn3';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -69,10 +69,10 @@ const Customer = () => {
                   <Button variant="primary" type="submit">검색</Button> {/* 버튼 타입을 submit으로 변경 */}
                 </Col>
                 <Col xs={12} md="auto">
-                  <DownloadButton modelName="customer"/>
+                  <Button onClick={handleCreateNew}>작성</Button>
                 </Col>
                 <Col xs={12} md="auto">
-                  <Button onClick={handleCreateNew}>작성</Button>
+                  <DownloadButton modelName="customer"/>
                 </Col>
               </Row>
             </Form>
