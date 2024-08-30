@@ -1070,7 +1070,7 @@ const CarDetail = () => {
               <Col sm={12}>
                 <Form.Control
                   as="textarea"
-                  rows={20}
+                  rows={30}
                   name="customerConsultation"
                   value={carData.customerConsultation}
                   onChange={handleChange}
