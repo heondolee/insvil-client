@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Spinner } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Quill 에디터의 기본 스타일
@@ -13,6 +13,7 @@ const ReferenceDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [reference, setReference] = useState({ Title: '', Content: '', FileUrl: '', FileName: '' });
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   useEffect(() => {
     if (id) {
@@ -22,10 +23,14 @@ const ReferenceDetail = () => {
           setReference(response.data);
         } catch (error) {
           console.error("Error fetching reference:", error);
+        } finally {
+          setLoading(false); // 데이터 로딩 후 로딩 상태 false로 변경
         }
       };
     
       fetchReference();
+    } else {
+      setLoading(false); // id가 없으면 로딩 상태를 바로 false로 설정
     }
   }, [id]);
 
@@ -98,7 +103,17 @@ const ReferenceDetail = () => {
     }
   };
 
-  return (
+  if (loading) {
+    return ( // 로딩 중일 때 보여줄 화면 
+      <Container>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  return ( // 로딩이 끝나면 보여줄 화면
     <div>
       <Navigation />
       <Container>
