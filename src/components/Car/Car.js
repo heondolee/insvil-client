@@ -67,6 +67,7 @@ const Car = () => {
 
   const calculateTotalFirstPremium = () => {
     const total = data.reduce((sum, item) => {
+      console.log(item.firstPremium);
       return sum + Number(item.firstPremium);
     }, 0);
     return new Intl.NumberFormat().format(total);

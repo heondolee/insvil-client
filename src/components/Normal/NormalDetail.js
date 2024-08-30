@@ -448,18 +448,6 @@ const NormalDetail = () => {
                     />
                   </Col>
                 </Form.Group>
-
-                <Button variant="primary" onClick={handleSave}>
-                  저장
-                </Button>
-                <Button variant="secondary" onClick={handleCancel} className="ml-2">
-                  취소
-                </Button>
-                {id && (
-                  <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
-                    삭제
-                  </Button>
-                )}
               </Form>
             )}
           </Col>
@@ -921,22 +909,36 @@ const NormalDetail = () => {
                 />
               </Col>
             </Form.Group>
-
-            <Form.Group as={Row} controlId="formcustomerConsultationContent">
-              <Form.Label column sm={5}>고객 상담 내용(메모)</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="customerConsultationContent"
-                  value={normalData.customerConsultationContent}
-                  onChange={handleChange}
-                  placeholder="고객 상담 내용을 입력하세요"
-                  style={{ backgroundColor: '#fbff88' }}
-                />
-              </Col>
-            </Form.Group>
           </Col>
+        </Row>
+        <Row>
+          <Form.Label column sm={12}>고객 상담 내용(메모)</Form.Label>
+          <Form.Group as={Row} controlId="formcustomerConsultationContent">
+            <Col sm={7}>
+              <Form.Control
+                as="textarea"
+                rows={10}
+                name="customerConsultationContent"
+                value={normalData.customerConsultationContent}
+                onChange={handleChange}
+                placeholder="고객 상담 내용을 입력하세요"
+                style={{ backgroundColor: '#fbff88' }}
+              />
+            </Col>
+            <Col>
+              <Button variant="primary" onClick={handleSave}>
+                저장
+              </Button>
+              <Button variant="secondary" onClick={handleCancel} className="ml-2">
+                취소
+              </Button>
+              {id && (
+                <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                  삭제
+                </Button>
+              )}
+            </Col>
+          </Form.Group>
         </Row>
       </Container>
     </div>
