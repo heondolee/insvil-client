@@ -448,6 +448,19 @@ const NormalDetail = () => {
                     />
                   </Col>
                 </Form.Group>
+                <Col>
+                  <Button variant="primary" onClick={handleSave}>
+                    저장
+                  </Button>
+                  <Button variant="secondary" onClick={handleCancel} className="ml-2">
+                    취소
+                  </Button>
+                  {id && (
+                    <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
+                      삭제
+                    </Button>
+                  )}
+                </Col>
               </Form>
             )}
           </Col>
@@ -606,194 +619,6 @@ const NormalDetail = () => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="formPercent">
-              <Form.Label column sm={5}>퍼센트</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="percent"
-                  value={normalData.percent}
-                  onChange={handleChange}
-                  placeholder="퍼센트를 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formCyberMoney">
-              <Form.Label column sm={5}>사이버 머니</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="CyberMoney"
-                  value={normalData.CyberMoney}
-                  onChange={handleChange}
-                  placeholder="사이버 머니를 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formGift">
-              <Form.Label column sm={5}>선물</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="gift"
-                  value={normalData.gift}
-                  onChange={handleChange}
-                  placeholder="선물을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formPolicyDispatchDate">
-              <Form.Label column sm={5}>보험 발송일</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="policyDispatchDate"
-                  value={normalData.policyDispatchDate}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formSignatureDate">
-              <Form.Label column sm={5}>서명일</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="signatureDate"
-                  value={normalData.signatureDate}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group as={Row} controlId="formChangeContent1">
-              <Form.Label column sm={5}>변경 내용 1</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="changeContent1"
-                  value={normalData.changeContent1}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate1">
-              <Form.Label column sm={5}>변경 날짜 1</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="changeDate1"
-                  value={normalData.changeDate1}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent2">
-              <Form.Label column sm={5}>변경 내용 2</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="changeContent2"
-                  value={normalData.changeContent2}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate2">
-              <Form.Label column sm={5}>변경 날짜 2</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="changeDate2"
-                  value={normalData.changeDate2}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent3">
-              <Form.Label column sm={5}>변경 내용 3</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="changeContent3"
-                  value={normalData.changeContent3}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate3">
-              <Form.Label column sm={5}>변경 날짜 3</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="changeDate3"
-                  value={normalData.changeDate3}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent4">
-              <Form.Label column sm={5}>변경 내용 4</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="changeContent4"
-                  value={normalData.changeContent4}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate4">
-              <Form.Label column sm={5}>변경 날짜 4</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="changeDate4"
-                  value={normalData.changeDate4}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent5">
-              <Form.Label column sm={5}>변경 내용 5</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="text"
-                  name="changeContent5"
-                  value={normalData.changeContent5}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate5">
-              <Form.Label column sm={5}>변경 날짜 5</Form.Label>
-              <Col sm={7}>
-                <Form.Control
-                  type="date"
-                  name="changeDate5"
-                  value={normalData.changeDate5}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
             <Form.Group as={Row} controlId="formInsuredPersonZipcode">
               <Form.Label column sm={5}>피보험자 우편번호</Form.Label>
               <Col sm={7}>
@@ -910,35 +735,22 @@ const NormalDetail = () => {
               </Col>
             </Form.Group>
           </Col>
-        </Row>
-        <Row>
-          <Form.Label column sm={12}>고객 상담 내용(메모)</Form.Label>
-          <Form.Group as={Row} controlId="formcustomerConsultationContent">
-            <Col sm={7}>
-              <Form.Control
-                as="textarea"
-                rows={10}
-                name="customerConsultationContent"
-                value={normalData.customerConsultationContent}
-                onChange={handleChange}
-                placeholder="고객 상담 내용을 입력하세요"
-                style={{ backgroundColor: '#fbff88' }}
-              />
-            </Col>
-            <Col>
-              <Button variant="primary" onClick={handleSave}>
-                저장
-              </Button>
-              <Button variant="secondary" onClick={handleCancel} className="ml-2">
-                취소
-              </Button>
-              {id && (
-                <Button variant="danger" onClick={handleDelete} style={{ marginLeft: '10px' }}>
-                  삭제
-                </Button>
-              )}
-            </Col>
-          </Form.Group>
+          <Col>
+            <Form.Group as={Row} controlId="formcustomerConsultationContent">
+              <Form.Label column sm={12}>고객 상담 내용(메모)</Form.Label>
+              <Col sm={12}>
+                <Form.Control
+                  as="textarea"
+                  rows={30}
+                  name="customerConsultationContent"
+                  value={normalData.customerConsultationContent}
+                  onChange={handleChange}
+                  placeholder="고객 상담 내용을 입력하세요"
+                  style={{ backgroundColor: '#fbff88' }}
+                />
+              </Col>
+            </Form.Group>
+          </Col>
         </Row>
       </Container>
     </div>
