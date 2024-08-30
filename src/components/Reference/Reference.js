@@ -4,7 +4,8 @@ import Navigation from '../Alayouts/Navigation';
 import styles from '../../css/Effect.module.css'; // 모듈 import
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Update import
-import DownloadButton from '../Long/DownloadBtn';
+import DownloadButton2 from './DownloadBtn2';
+import { convert } from 'html-to-text'; // html-to-text의 convert 함수 import
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -30,10 +31,17 @@ const Reference = () => {
   };
 
   const truncateContent = (content, maxLength) => {
-    if (content.length > maxLength) {
-      return content.substring(0, maxLength) + '...';
+    const plainText = convert(content, {
+      wordwrap: 130,
+      limits: {
+        maxInputLength: 5000,
+      },
+    });
+
+    if (plainText.length > maxLength) {
+      return plainText.substring(0, maxLength) + '...';
     }
-    return content;
+    return plainText;
   };
 
   const handleSearch = async (event) => {
@@ -122,7 +130,7 @@ const Reference = () => {
                   <Button variant="primary" type="submit">검색</Button> 
                 </Col>
                 <Col xs={12} md="auto">
-                  <DownloadButton modelName="reference"/>
+                  <DownloadButton2 searchKeyword={searchKeyword}/>
                 </Col>
                 <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>
