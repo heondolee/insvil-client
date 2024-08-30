@@ -234,8 +234,6 @@ const Car = () => {
               <thead>
                 <tr>
                   <th>영수일</th>
-                  <th>개시일</th>
-                  <th>만기일</th>
                   <th>보험기간</th>
                   <th>전계약사</th>
                   <th>생년월일/성별</th>
@@ -245,14 +243,14 @@ const Car = () => {
                   <th>지점</th>
                   <th>팀</th>
                   <th>담당</th>
+                  <th>1년</th>
+                  <th>초회</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.map((item, index) => (
                   <tr key={index}>
                     <td>{item.receiptDate}</td>
-                    <td>{item.startDate}</td>
-                    <td>{item.endDate}</td>
                     <td>{`${item.startDate} ~ ${item.endDate}`}</td>
                     <td>{item.previousContractCompany}</td>
                     <td>{item.insuredBirthGender}</td>
@@ -262,6 +260,8 @@ const Car = () => {
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
                     <td>{item.personInCharge}</td>
+                    <td>{new Intl.NumberFormat().format(item.firstPremium)}</td>
+                    <td>{new Intl.NumberFormat().format(item.oneYearPremium)}</td>
                   </tr>
                 ))}
               </tbody>
