@@ -631,195 +631,6 @@ const LongDetail = () => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="formPercent">
-              <Form.Label column sm={4}>퍼센트</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="percent"
-                  value={longData.percent}
-                  onChange={handleChange}
-                  placeholder="퍼센트를 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formCyberMoney">
-              <Form.Label column sm={4}>사이버 머니</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="cyberMoney"
-                  value={longData.cyberMoney}
-                  onChange={handleChange}
-                  placeholder="사이버 머니를 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formGift">
-              <Form.Label column sm={4}>선물</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="gift"
-                  value={longData.gift}
-                  onChange={handleChange}
-                  placeholder="선물을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formPolicyDispatchDate">
-              <Form.Label column sm={4}>정책 발송일</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="policyDispatchDate"
-                  value={longData.policyDispatchDate}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formHandwrittenSignatureDate">
-              <Form.Label column sm={4}>자필 서명일</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="handwrittenSignatureDate"
-                  value={longData.handwrittenSignatureDate}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent1">
-              <Form.Label column sm={4}>변경 내용 1</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="changeContent1"
-                  value={longData.changeContent1}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate1">
-              <Form.Label column sm={4}>변경일 1</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="changeDate1"
-                  value={longData.changeDate1}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent2">
-              <Form.Label column sm={4}>변경 내용 2</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="changeContent2"
-                  value={longData.changeContent2}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate2">
-              <Form.Label column sm={4}>변경일 2</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="changeDate2"
-                  value={longData.changeDate2}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-          </Col>
-          <Col>
-          <Form.Group as={Row} controlId="formChangeContent3">
-              <Form.Label column sm={4}>변경 내용 3</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="changeContent3"
-                  value={longData.changeContent3}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate3">
-              <Form.Label column sm={4}>변경일 3</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="changeDate3"
-                  value={longData.changeDate3}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent4">
-              <Form.Label column sm={4}>변경 내용 4</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="changeContent4"
-                  value={longData.changeContent4}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate4">
-              <Form.Label column sm={4}>변경일 4</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="changeDate4"
-                  value={longData.changeDate4}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeContent5">
-              <Form.Label column sm={4}>변경 내용 5</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="text"
-                  name="changeContent5"
-                  value={longData.changeContent5}
-                  onChange={handleChange}
-                  placeholder="변경 내용을 입력하세요"
-                />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} controlId="formChangeDate5">
-              <Form.Label column sm={4}>변경일 5</Form.Label>
-              <Col sm={8}>
-                <Form.Control
-                  type="date"
-                  name="changeDate5"
-                  value={longData.changeDate5}
-                  onChange={handleChange}
-                />
-              </Col>
-            </Form.Group>
-
             <Form.Group as={Row} controlId="formInsuredPostalCode">
               <Form.Label column sm={4}>피보험자 우편번호</Form.Label>
               <Col sm={8}>
@@ -935,13 +746,15 @@ const LongDetail = () => {
                 />
               </Col>
             </Form.Group>
+          </Col>
 
+          <Col>
             <Form.Group as={Row} controlId="formCustomerCounselingContent">
               <Form.Label column sm={10}>고객 상담 내용(메모)</Form.Label>
               <Col sm={12}>
                 <Form.Control
                   as="textarea"
-                  rows={10}
+                  rows={30}
                   name="customerCounselingContent"
                   value={longData.customerCounselingContent}
                   onChange={handleChange}
