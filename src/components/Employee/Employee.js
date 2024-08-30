@@ -4,7 +4,7 @@ import Navigation from '../Alayouts/Navigation';
 import styles from '../../css/Effect.module.css'; // 모듈 import
 import { Link, useNavigate } from 'react-router-dom'; // Update import
 import axios from 'axios';
-import DownloadButton from '../Long/DownloadBtn';
+import DownloadButton from './DownloadBtn4';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
