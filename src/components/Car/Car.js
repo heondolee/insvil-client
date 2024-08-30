@@ -65,12 +65,14 @@ const Car = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
-  const calculateTotalFirstPremium = () => {
+  const calculateTotalInsurance = (key) => {
     const total = data.reduce((sum, item) => {
-      if (!item.firstPremium.includes(',')) {
-        return sum + item.firstPremium * 1000;
+      let value = item[key];
+      console.log(value)
+      if (!value.includes(',')) {
+        return sum + Number(value);
       } else {
-        return sum + Number(item.firstPremium.replace(/,/g, ''));
+        return sum + Number(value.replace(/,/g, ''));
       }
     }, 0);
     return new Intl.NumberFormat().format(total);
@@ -220,7 +222,7 @@ const Car = () => {
           </Row>
         </Form>
         <div>
-          <span>[ 초회보험료 합계 :  {calculateTotalFirstPremium()}원 ]</span>
+          <span>[ 초회보험료 합계 :  {calculateTotalInsurance('firstPremium')}원 ]</span>
         </div>
         {isLoading ? (
           <div className="text-center my-3">
