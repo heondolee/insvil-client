@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import apiClient from './ApiClient';
 
@@ -21,6 +20,7 @@ const Login = () => {
         const response = await apiClient.post('/login', { username, password });
         
         if (response.data.success) {
+          localStorage.setItem('insvilToken', response.data.token);
           navigate('/long');
         } else {
           setModalMessage(response.data.message || '로그인 실패');
@@ -64,9 +64,6 @@ const Login = () => {
               Login
             </Button>
           </Form>
-          <div className="mt-3">
-            <Link to="/signup">회원가입하기</Link>
-          </div>
         </Col>
       </Row>
 

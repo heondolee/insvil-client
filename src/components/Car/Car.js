@@ -68,7 +68,6 @@ const Car = () => {
   const calculateTotalInsurance = (key) => {
     const total = data.reduce((sum, item) => {
       let value = item[key];
-      console.log(value)
       if (!value.includes(',')) {
         return sum + Number(value);
       } else {

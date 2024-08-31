@@ -89,7 +89,7 @@ const Employee = () => {
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(branchData).map((branch) => (
+                {Object.keys(branchData).map((branch) =>
                   branchData[branch].map((user, index) => (
                     <tr key={`${branch}-${index}`}>
                       <td><Link to={`/employee/${branch}`}>{branch}</Link></td>
@@ -103,7 +103,7 @@ const Employee = () => {
                       <td>{user.lifeSettlement}</td>
                     </tr>
                   ))
-                ))}
+                )}
               </tbody>
             </Table>
           </Col>
