@@ -1,14 +1,23 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('insvilToken'); // 예시로 로컬 스토리지에서 토큰을 가져옴
 const API_URL = process.env.REACT_APP_API_URL;
 
 const apiClient = axios.create({
   baseURL: API_URL,
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('insvilToken'); // 요청 전에 항상 최신 토큰을 가져옵니다.
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default apiClient;
 

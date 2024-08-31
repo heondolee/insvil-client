@@ -2,7 +2,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import styles from '../../css/Navigation.module.css';
 
+import { useNavigate } from 'react-router-dom';
+
 const Navigation = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   return (
@@ -60,15 +63,19 @@ const Navigation = () => {
           >
             자료실
           </Nav.Link>
-        <Nav.Item>
-          <Nav.Link 
-            as={Link}
-            to="/login" 
-            className={`${styles.navLink} ${location.pathname.startsWith('/login') ? styles.active : styles.inactive}`}
-          >
-            로그아웃
-          </Nav.Link>
-        </Nav.Item>
+          <Nav.Item>
+            <Nav.Link 
+              as={Link}
+              to="/login" 
+              className={`${styles.navLink} ${location.pathname.startsWith('/login') ? styles.active : styles.inactive}`}
+              onClick={() => {
+                localStorage.removeItem('insvilToken'); // 토큰 삭제
+                navigate('/login'); // 로그인 페이지로 이동
+              }}
+            >
+              로그아웃
+            </Nav.Link>
+          </Nav.Item>
       </Nav> 
     </div>
   );

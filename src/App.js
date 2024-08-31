@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { AuthProvider, PrivateRoute } from './components/Context/AuthProvider';
 import Login from './components/Alayouts/Login';
 import Long from './components/Long/Long';
 import Car from './components/Car/Car';
@@ -17,32 +18,177 @@ import NormalDetail from './components/Normal/NormalDetail';
 
 function App() {
   return (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/long" element={<Long />} />
-      <Route path="/long/new" element={<LongDetail />} />
-      <Route path="/long/:id" element={<LongDetail/>} />
-      <Route path="/car" element={<Car/>} />
-      <Route path="/car/:id" element={<CarDetail/>} />
-      <Route path="/reference" element={<Reference/>} />
-      <Route path="/reference/:id" element={<ReferenceDetail/>} />
-      <Route path="/reference/new" element={<ReferenceDetail />} />
-      <Route path="/normal" element={<Normal/>} />
-      <Route path="/normal/new" element={<NormalDetail />} />
-      <Route path="/normal/:id" element={<NormalDetail />} />
-      <Route path="/employee" element={<Employee />} />
-      <Route path="/employee/new" element={<InfoDetail />} />
-      <Route path="/customer/new" element={<CustomerDetail />} />
-      <Route path="/customer/:id" element={<CustomerDetail />} />
-      <Route path="/customer" element={<Customer />} />
-      <Route path="/employee/:branchName/:teamName/:userName" element={<InfoDetail />} />
-      <Route path="/employee/:branchName/:teamName" element={<TeamDetail />} />
-      <Route path="/employee/:branchName" element={<BranchDetail />} />
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
-  </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" 
+            element={
+              <PrivateRoute>
+                <Long />
+              </PrivateRoute>
+            } 
+          />
+          <Route path="/login" 
+            element={
+              <Login />
+            } 
+          />
+          <Route 
+            path="/long" 
+            element={
+              <PrivateRoute>
+                <Long />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/long/new" 
+            element={
+              <PrivateRoute>
+                <LongDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/long/:id" 
+            element={
+              <PrivateRoute>
+                <LongDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/car" 
+            element={
+              <PrivateRoute>
+                <Car />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/car/:id" 
+            element={
+              <PrivateRoute>
+                <CarDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/reference" 
+            element={
+              <PrivateRoute>
+                <Reference />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/reference/:id" 
+            element={
+              <PrivateRoute>
+                <ReferenceDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/reference/new" 
+            element={
+              <PrivateRoute>
+                <ReferenceDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/normal" 
+            element={
+              <PrivateRoute>
+                <Normal />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/normal/new" 
+            element={
+              <PrivateRoute>
+                <NormalDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/normal/:id" 
+            element={
+              <PrivateRoute>
+                <NormalDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/employee" 
+            element={
+              <PrivateRoute>
+                <Employee />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/employee/new" 
+            element={
+              <PrivateRoute>
+                <InfoDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/customer/new" 
+            element={
+              <PrivateRoute>
+                <CustomerDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/customer/:id" 
+            element={
+              <PrivateRoute>
+                <CustomerDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/customer" 
+            element={
+              <PrivateRoute>
+                <Customer />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/employee/:branchName/:teamName/:userName" 
+            element={
+              <PrivateRoute>
+                <InfoDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/employee/:branchName/:teamName" 
+            element={
+              <PrivateRoute>
+                <TeamDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/employee/:branchName" 
+            element={
+              <PrivateRoute>
+                <BranchDetail />
+              </PrivateRoute>
+            } 
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
