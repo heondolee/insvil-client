@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import apiClient from './ApiClient';
+import { useAuth } from '../Context/AuthProvider'; // AuthProvider에서 useAuth 훅을 가져옵니다.
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -9,6 +10,7 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
+  const { setToken } = useAuth(); // useAuth에서 setToken을 가져옵니다.
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     
@@ -20,8 +22,11 @@ const Login = () => {
         const response = await apiClient.post('/login', { username, password });
         
         if (response.data.success) {
-          localStorage.setItem('insvilToken', response.data.token);
+          const token = response.data.token;
+          localStorage.setItem('insvilToken', token);
+          setToken(token);  // AuthContext의 token 상태 업데이트
           navigate('/long');
+          return;
         } else {
           setModalMessage(response.data.message || '로그인 실패');
         }
@@ -30,7 +35,7 @@ const Login = () => {
       }
       setShowModal(true);
     }
-  }, [username, password, navigate]);
+  }, [username, password, navigate, setToken]);
 
   const handleClose = () => setShowModal(false);
 
