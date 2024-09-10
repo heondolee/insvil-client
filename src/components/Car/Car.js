@@ -261,8 +261,14 @@ const Car = () => {
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
                     <td>{item.personInCharge}</td>
-                    <td>{new Intl.NumberFormat().format(item.firstPremium)}</td>
-                    <td>{new Intl.NumberFormat().format(item.oneYearPremium)}</td>
+                    <td>
+                      {typeof item.firstPremium === 'number' || !String(item.firstPremium).includes(',')
+                        ? new Intl.NumberFormat().format(item.firstPremium)
+                        : item.firstPremium}
+                    </td>
+                    <td>{typeof item.oneYearPremium === 'number' || !String(item.oneYearPremium).includes(',')
+                        ? new Intl.NumberFormat().format(item.oneYearPremium)
+                        : item.oneYearPremium}</td>
                   </tr>
                 ))}
               </tbody>
