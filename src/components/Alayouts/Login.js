@@ -10,7 +10,7 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
-  const { setToken } = useAuth(); // useAuth에서 setToken을 가져옵니다.
+  const { setToken, setUser } = useAuth(); // useAuth에서 setToken을 가져옵니다.
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     
@@ -23,9 +23,12 @@ const Login = () => {
         
         if (response.data.success) {
           const token = response.data.token;
+          const user = response.data.user;
+          console.log(user);
           localStorage.setItem('insvilToken', token);
           setToken(token);  // AuthContext의 token 상태 업데이트
-          navigate('/long');
+          setUser(user); // AuthContext의 user 상태 업데이트
+          navigate('/car');
           return;
         } else {
           setModalMessage(response.data.message || '로그인 실패');
@@ -35,7 +38,7 @@ const Login = () => {
       }
       setShowModal(true);
     }
-  }, [username, password, navigate, setToken]);
+  }, [username, password, navigate, setToken, setUser]);
 
   const handleClose = () => setShowModal(false);
 

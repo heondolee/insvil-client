@@ -1,20 +1,16 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 import styles from '../../css/Navigation.module.css';
 import { useAuth } from '../Context/AuthProvider';
 
-import { useNavigate } from 'react-router-dom';
-
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { user } = useAuth();
-
+  const { user, logout } = useAuth();
   return (
     <div className="App">
       <Nav className={styles.nav} defaultActiveKey="/home">
-        {user.role === 1 && (
+        {user.userCode === 1 && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -25,7 +21,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {(user.role === 1 || user.role === 2) && (
+        {(user.userCode === 1 || user.userCode === 2) && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -36,7 +32,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {user.role === 1 && (
+        {user.userCode === 1 && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -47,7 +43,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {user.role === 1 && (
+        {user.userCode === 1 && (
           <Nav.Item>
             <Nav.Link 
               as={Link}
@@ -58,7 +54,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {user.role === 1 && (
+        {user.userCode === 1 && (
           <Nav.Item>
             <Nav.Link 
               as={Link}
@@ -69,7 +65,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {user.role === 1 && (
+        {user.userCode === 1 && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -87,6 +83,7 @@ const Navigation = () => {
               className={`${styles.navLink} ${location.pathname.startsWith('/login') ? styles.active : styles.inactive}`}
               onClick={() => {
                 localStorage.removeItem('insvilToken'); // 토큰 삭제
+                logout();
                 navigate('/login'); // 로그인 페이지로 이동
               }}
             >

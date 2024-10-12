@@ -23,8 +23,8 @@ function App() {
         <Routes>
           <Route path="/" 
             element={
-              <PrivateRoute>
-                <Long />
+              <PrivateRoute role="1">
+                <Car />
               </PrivateRoute>
             } 
           />
@@ -36,7 +36,7 @@ function App() {
           <Route 
             path="/long" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <Long />
               </PrivateRoute>
             } 
@@ -44,7 +44,7 @@ function App() {
           <Route 
             path="/long/new" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <LongDetail />
               </PrivateRoute>
             } 
@@ -52,7 +52,7 @@ function App() {
           <Route 
             path="/long/:id" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <LongDetail />
               </PrivateRoute>
             } 
@@ -60,7 +60,7 @@ function App() {
           <Route 
             path="/car" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1,2">
                 <Car />
               </PrivateRoute>
             } 
@@ -68,7 +68,7 @@ function App() {
           <Route 
             path="/car/:id" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1,2">
                 <CarDetail />
               </PrivateRoute>
             } 
@@ -76,7 +76,7 @@ function App() {
           <Route 
             path="/reference" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <Reference />
               </PrivateRoute>
             } 
@@ -84,7 +84,7 @@ function App() {
           <Route 
             path="/reference/:id" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <ReferenceDetail />
               </PrivateRoute>
             } 
@@ -92,7 +92,7 @@ function App() {
           <Route 
             path="/reference/new" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <ReferenceDetail />
               </PrivateRoute>
             } 
@@ -100,7 +100,7 @@ function App() {
           <Route 
             path="/normal" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <Normal />
               </PrivateRoute>
             } 
@@ -108,7 +108,7 @@ function App() {
           <Route 
             path="/normal/new" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <NormalDetail />
               </PrivateRoute>
             } 
@@ -116,7 +116,7 @@ function App() {
           <Route 
             path="/normal/:id" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <NormalDetail />
               </PrivateRoute>
             } 
@@ -124,7 +124,7 @@ function App() {
           <Route 
             path="/employee" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <Employee />
               </PrivateRoute>
             } 
@@ -132,7 +132,7 @@ function App() {
           <Route 
             path="/employee/new" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <InfoDetail />
               </PrivateRoute>
             } 
@@ -140,7 +140,7 @@ function App() {
           <Route 
             path="/customer/new" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <CustomerDetail />
               </PrivateRoute>
             } 
@@ -148,7 +148,7 @@ function App() {
           <Route 
             path="/customer/:id" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <CustomerDetail />
               </PrivateRoute>
             } 
@@ -156,7 +156,7 @@ function App() {
           <Route 
             path="/customer" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <Customer />
               </PrivateRoute>
             } 
@@ -164,7 +164,7 @@ function App() {
           <Route 
             path="/employee/:branchName/:teamName/:userName" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <InfoDetail />
               </PrivateRoute>
             } 
@@ -172,7 +172,7 @@ function App() {
           <Route 
             path="/employee/:branchName/:teamName" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <TeamDetail />
               </PrivateRoute>
             } 
@@ -180,7 +180,7 @@ function App() {
           <Route 
             path="/employee/:branchName" 
             element={
-              <PrivateRoute>
+              <PrivateRoute role="1">
                 <BranchDetail />
               </PrivateRoute>
             } 

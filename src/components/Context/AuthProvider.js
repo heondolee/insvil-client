@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem('insvilToken');
     setToken(storedToken);
-    
+
     // 토큰이 있을 경우 자동으로 유저 정보를 가져옵니다.
     if (storedToken) {
       fetchUserInfo(storedToken);
@@ -26,27 +26,24 @@ export const AuthProvider = ({ children }) => {
   // 유저 정보를 API를 통해 가져오는 함수
   const fetchUserInfo = async (token) => {
     try {
-      const response = await apiClient.get('/user/info', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await apiClient.get('/login/auto');
+      
       if (response.data.success) {
         setUser(response.data.user); // 유저 정보 저장
       }
     } catch (error) {
       console.error("Failed to fetch user info", error);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // 로딩 상태 해제
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>; // 로딩 중일 때 빈 화면 또는 스피너를 표시
-  }
+  const logout = () => {
+    setUser(null);  // 로그아웃 시 유저 정보 초기화
+  };
 
   return (
-    <AuthContext.Provider value={{ token, setToken, user }}>
+    <AuthContext.Provider value={{ token, setToken, setUser, user, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
@@ -58,42 +55,17 @@ export const useAuth = () => {
 };
 
 // PrivateRoute 컴포넌트: 인증 상태에 따라 리다이렉트 또는 컴포넌트 렌더링
-export const PrivateRoute = ({ children }) => {
-  const { token } = useAuth();
+export const PrivateRoute = ({ children, role }) => {
+  const { token, user, isLoading } = useAuth();
 
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-  const [isValid, setIsValid] = useState(false); // 토큰 유효성 상태 추가
-
-  useEffect(() => {
-    const validateToken = async () => {
-      try {
-        // 토큰이 있을 때만 API 요청을 수행합니다.
-        if (token) {
-          const response = await apiClient.get('/login/auto');
-          
-          if (response.data.success) {
-            setIsValid(true);
-          } else {
-            setIsValid(false);
-          }
-        } else {
-          setIsValid(false);
-        }
-      } catch (error) {
-        setIsValid(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    validateToken(); // 토큰 유무, 인증 검사
-  }, [token]);
+  // role를 문자열로 받아 배열로 변환
+  const UserCodes = role.split(',').map(code => parseInt(code, 10)); // ['1', '2'] -> [1, 2]
 
   if (isLoading) {
-    return <div>Loading...</div>; // 로딩 중일 때 빈 화면 또는 스피너를 표시
+    return <div>Loading...</div>; // 로딩 중
   }
 
-  if (!isValid) {
+  if (!token || (user && !UserCodes.includes(user.userCode))) { // 유효한 token 및 권한 체크
     return <Navigate to="/login" />;
   }
 
