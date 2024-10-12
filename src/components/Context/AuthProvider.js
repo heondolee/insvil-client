@@ -8,20 +8,45 @@ const AuthContext = createContext();
 // AuthProvider 컴포넌트
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null); // 유저 정보 상태 추가
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('insvilToken');
     setToken(storedToken);
-    setIsLoading(false); // 토큰을 불러온 후 로딩 상태를 false로 설정
+    
+    // 토큰이 있을 경우 자동으로 유저 정보를 가져옵니다.
+    if (storedToken) {
+      fetchUserInfo(storedToken);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
+
+  // 유저 정보를 API를 통해 가져오는 함수
+  const fetchUserInfo = async (token) => {
+    try {
+      const response = await apiClient.get('/user/info', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.success) {
+        setUser(response.data.user); // 유저 정보 저장
+      }
+    } catch (error) {
+      console.error("Failed to fetch user info", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>; // 로딩 중일 때 빈 화면 또는 스피너를 표시
   }
 
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, user }}>
       {children}
     </AuthContext.Provider>
   );
