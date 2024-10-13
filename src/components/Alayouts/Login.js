@@ -16,7 +16,6 @@ const Login = () => {
 
     if(user) {
       navigate('/car');
-      
     }
 
   }, [navigate, user]);

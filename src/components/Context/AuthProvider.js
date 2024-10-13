@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem('insvilToken'); // 토큰 삭제
+    setToken(null);
     setUser(null);  // 로그아웃 시 유저 정보 초기화
   };
 
