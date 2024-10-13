@@ -66,7 +66,7 @@ export const PrivateRoute = ({ children, role }) => {
   }
 
   if (!token || (user && !UserCodes.includes(user.userCode))) { // 유효한 token 및 권한 체크
-    return <Navigate to="/login" />;
+    return <Navigate to="/car" />;
   }
 
   return children;

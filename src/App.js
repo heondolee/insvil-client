@@ -24,7 +24,7 @@ function App() {
           <Route path="/" 
             element={
               <PrivateRoute role="1">
-                <Car />
+                <Login />
               </PrivateRoute>
             } 
           />
