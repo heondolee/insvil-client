@@ -5,11 +5,13 @@ import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
 import { Link, useNavigate } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
+import { useAuth } from '../Context/AuthProvider';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Normal = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -42,7 +44,8 @@ const Normal = () => {
         contractStatus,
         manager,
         policyholder,
-        policyNumber
+        policyNumber,
+        user
       });
       setData(response.data.normals);
       setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
@@ -50,7 +53,7 @@ const Normal = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, policyholder, manager, policyNumber]);
+  }, [startDate, endDate, dateType, contractStatus, policyholder, manager, policyNumber, user]);
 
   useEffect(() => {
     fetchData();
