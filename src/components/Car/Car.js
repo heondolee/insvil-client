@@ -5,10 +5,12 @@ import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
 import { Link, useNavigate } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
+import { useAuth } from '../Context/AuthProvider';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Car = () => {
+  const { user } = useAuth();
   const navigate = useNavigate(); 
 
   const getCurrentDate = () => {
@@ -42,7 +44,8 @@ const Car = () => {
         dateType,
         contractor,
         responsibilityName,
-        carNumber
+        carNumber,
+        user
       });
       setData(response.data.cars);
       setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
@@ -50,7 +53,7 @@ const Car = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber]);
+  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user]);
 
   useEffect(() => {
     fetchData();
