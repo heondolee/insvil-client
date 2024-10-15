@@ -35,7 +35,7 @@ function App() {
           <Route 
             path="/long" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <Long />
               </PrivateRoute>
             } 
@@ -43,7 +43,7 @@ function App() {
           <Route 
             path="/long/new" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <LongDetail />
               </PrivateRoute>
             } 
@@ -51,7 +51,7 @@ function App() {
           <Route 
             path="/long/:id" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <LongDetail />
               </PrivateRoute>
             } 
@@ -59,7 +59,7 @@ function App() {
           <Route 
             path="/car" 
             element={
-              <PrivateRoute role="1,2">
+              <PrivateRoute role="1,2,3,4">
                 <Car />
               </PrivateRoute>
             } 
@@ -67,7 +67,7 @@ function App() {
           <Route 
             path="/car/:id" 
             element={
-              <PrivateRoute role="1,2">
+              <PrivateRoute role="1,2,3,4">
                 <CarDetail />
               </PrivateRoute>
             } 
@@ -99,7 +99,7 @@ function App() {
           <Route 
             path="/normal" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <Normal />
               </PrivateRoute>
             } 
@@ -107,7 +107,7 @@ function App() {
           <Route 
             path="/normal/new" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <NormalDetail />
               </PrivateRoute>
             } 
@@ -115,7 +115,7 @@ function App() {
           <Route 
             path="/normal/:id" 
             element={
-              <PrivateRoute role="1">
+              <PrivateRoute role="1,3,4">
                 <NormalDetail />
               </PrivateRoute>
             } 

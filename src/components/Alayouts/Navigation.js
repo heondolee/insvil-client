@@ -10,7 +10,7 @@ const Navigation = () => {
   return (
     <div className="App">
       <Nav className={styles.nav} defaultActiveKey="/home">
-        {user.userCode === 1 && (
+        {user.userCode !== 2 && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -21,7 +21,8 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {(user.userCode === 1 || user.userCode === 2) && (
+        {/* (user.userCode === 1 || user.userCode === 2) && */}
+        {user.userCode && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 
@@ -32,7 +33,7 @@ const Navigation = () => {
             </Nav.Link>
           </Nav.Item>
         )}
-        {user.userCode === 1 && (
+        {user.userCode !== 2 && (
           <Nav.Item>
             <Nav.Link 
               as={Link} 

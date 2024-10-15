@@ -11,6 +11,8 @@ const InfoDetail = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     username: '',
+    password: '',
+    userCode: '',
     branch: '',
     team: '',
     manager: '',
@@ -127,6 +129,37 @@ const InfoDetail = () => {
                       placeholder="아이디를 입력하세요"
                       style={{ backgroundColor: '#fbff88' }}
                     />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPassword">
+                  <Form.Label column sm={2}>비밀번호</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="password"
+                      value={userData.password}
+                      onChange={handleChange}
+                      placeholder="비밀번호를 입력하세요"
+                      style={{ backgroundColor: '#fbff88' }}
+                    />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="formPassword">
+                  <Form.Label column sm={2}>사이트 열람권한</Form.Label>
+                  <Col sm={6}>
+                    <Form.Select
+                      name="userCode"
+                      value={userData.userCode}
+                      onChange={handleChange}
+                      style={{ backgroundColor: '#fbff88' }}
+                    >
+                      <option value="1">insvil - 전체 가능</option>
+                      <option value="2">jadongcha - 자동차만</option>
+                      <option value="3">총무 - 자동차, 일반, 장기만</option>
+                      <option value="4">직원 - 개인계약만</option>
+                    </Form.Select>
                   </Col>
                 </Form.Group>
 
