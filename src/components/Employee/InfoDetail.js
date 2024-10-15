@@ -118,6 +118,19 @@ const InfoDetail = () => {
               <Alert variant="danger">{error}</Alert>
             ) : (
               <Form>
+                <Form.Group as={Row} controlId="formName">
+                  <Form.Label column sm={2}>이름</Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={userData.name}
+                      onChange={handleChange}
+                      placeholder="이름을 입력하세요"
+                    />
+                  </Col>
+                </Form.Group>
+
                 <Form.Group as={Row} controlId="formUsername">
                   <Form.Label column sm={2}>아이디</Form.Label>
                   <Col sm={6}>
@@ -185,19 +198,6 @@ const InfoDetail = () => {
                       value={userData.team}
                       onChange={handleChange}
                       placeholder="팀을 입력하세요"
-                    />
-                  </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formManager">
-                  <Form.Label column sm={2}>이름</Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      type="text"
-                      name="manager"
-                      value={userData.manager}
-                      onChange={handleChange}
-                      placeholder="이름을 입력하세요"
                     />
                   </Col>
                 </Form.Group>
