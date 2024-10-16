@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
 import apiClient from './ApiClient';
@@ -10,15 +10,15 @@ const Login = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
-  const { setToken, setUser, user } = useAuth(); // useAuth에서 setToken을 가져옵니다.
+  const { setToken, setUser } = useAuth(); // useAuth에서 setToken을 가져옵니다.
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(user) {
-      navigate('/car');
-    }
+  //   if(user) {
+  //     navigate('/car');
+  //   }
 
-  }, [navigate, user]);
+  // }, [navigate, user]);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
