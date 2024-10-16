@@ -267,9 +267,11 @@ const Long = () => {
                 className={styles.button_custom}
               >오늘날짜</Button>            
             </Col>
-            <Col xs={12} md="auto">
-            <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
-            </Col>
+            {user.userCode !== 4 && (
+              <Col xs={12} md="auto">
+                <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
+              </Col>
+            )}
           </Row>
         </Form>
         <div>
