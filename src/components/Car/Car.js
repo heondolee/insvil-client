@@ -6,11 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 import { useAuth } from '../Context/AuthProvider';
 
-import { Swiper, SwiperSlide } from 'swiper/react'; // Swiper React 컴포넌트 import
-import 'swiper/css';  // Swiper 기본 스타일 임포트
-import 'swiper/css/navigation'; // 네비게이션 스타일 임포트 (필요 시)
-import 'swiper/css/pagination'; // 페이지네이션 스타일 임포트 (필요 시)
-
 import styles from '../../css/Effect.module.css'; // 모듈 import
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -256,8 +251,8 @@ const Car = () => {
               </Col>
             )}
           </Row>
-          <Row style={{ flexWrap: 'nowrap' }}>
-            <Col>
+          <div className={styles.custom_row}>
+            <div>
               <Form.Group controlId="formYear">
                 <DropdownButton
                   variant="outline-secondary"
@@ -271,29 +266,21 @@ const Car = () => {
                   ))}
                 </DropdownButton>
               </Form.Group>
-            </Col>
+            </div>
 
-            <Col>
-              <div className="swiper-container">
-                <Swiper
-                  slidesPerView={6}
-                  spaceBetween={10} // 버튼 간의 간격을 늘립니다
-                  style={{ justifyContent: 'center' }} // 가운데 정렬
-                >
-                {generateMonths().map((month, index) => (
-                  <SwiperSlide key={index} >
-                    <Button
-                      onClick={() => handleMonthSelect(month)}
-                      active={month === selectedMonth}
-                    >
-                      {month}월
-                    </Button>
-                  </SwiperSlide>
-                ))}
-                </Swiper>
-              </div>
-            </Col>
-          </Row>
+            <div className={styles.custom_swiper}>
+              {generateMonths().map((month, index) => (
+                <div key={index} >
+                  <Button
+                    onClick={() => handleMonthSelect(month)}
+                    active={month === selectedMonth}
+                  >
+                    {month}월
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
         </Form>
         <div>
           <span>[ 초회보험료 합계 :  {calculateTotalInsurance('firstPremium')}원 ]</span>
