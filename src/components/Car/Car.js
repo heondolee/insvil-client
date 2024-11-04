@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
+import { ToggleButton, ToggleButtonGroup, ButtonGroup, Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import styles from '../../css/Effect.module.css'; // 모듈 import
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Car = () => {
-  const { user } = useAuth();
+  const { user, isCar, setIsCar } = useAuth();
   const navigate = useNavigate(); 
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -37,6 +37,7 @@ const Car = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 10;
 
   const fetchData = useCallback(async () => {
@@ -61,7 +62,8 @@ const Car = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    console.log('isCar updated:', isCar);
+  }, [fetchData, isCar]);
 
   const handleCreateNew = () => {
     navigate('/car/new');
@@ -153,11 +155,30 @@ const Car = () => {
     setEndDate(endOfMonth.toISOString().slice(0, 10));     // 2023-04-30 형식
   };
 
+  const handleToggle = (value) => {
+    console.log(value);
+    setIsCar(value);
+  };
 
   return (
     <div>
       <Navigation />
       <Container>
+        <ButtonGroup className="mb-3">
+          <ToggleButtonGroup
+            type="radio"
+            name="options"
+            value={isCar}
+            // onChange={handleToggle}
+          >
+            <ToggleButton variant="outline-primary" value="longTerm" onClick={() => handleToggle('longTerm')} >
+              자동차 장기 리스트
+            </ToggleButton>
+            <ToggleButton variant="outline-primary" value="design" onClick={() => handleToggle('design')}>
+              자동차 설계 리스트
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </ButtonGroup>
         <Form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <Row className="align-items-center">
             <Col xs={12} md="auto">

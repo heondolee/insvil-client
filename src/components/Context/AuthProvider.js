@@ -9,6 +9,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null); // 유저 정보 상태 추가
+  const [isCar, setIsCar] = useState('longTerm');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, setToken, setUser, user, logout, isLoading }}>
+    <AuthContext.Provider value={{ token, setToken, setUser, user, logout, isLoading, isCar, setIsCar }}>
       {children}
     </AuthContext.Provider>
   );

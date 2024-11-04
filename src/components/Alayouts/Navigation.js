@@ -29,7 +29,7 @@ const Navigation = () => {
               to="/car" 
               className={`${styles.navLink} ${location.pathname.startsWith('/car') ? styles.active : styles.inactive}`}
             >
-              자동차 보험
+              자동차
             </Nav.Link>
           </Nav.Item>
         )}
