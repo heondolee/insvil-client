@@ -339,7 +339,7 @@ const Car = () => {
                     <td>{item.insuredBirthGender}</td>
                     <td>{item.insured}</td>
                     <td><Link to={`/car/${item.id}`}>{item.contractor}</Link></td>
-                    <td>{item.carNumber}</td>
+                    <td><Link to={`/car/${item.id}`}>{item.carNumber}</Link></td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
                     <td>{item.personInCharge}</td>
