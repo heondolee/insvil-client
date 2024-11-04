@@ -2,16 +2,25 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
-import styles from '../../css/Effect.module.css'; // 모듈 import
 import { Link, useNavigate } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 import { useAuth } from '../Context/AuthProvider';
+
+import { Swiper, SwiperSlide } from 'swiper/react'; // Swiper React 컴포넌트 import
+import 'swiper/css';  // Swiper 기본 스타일 임포트
+import 'swiper/css/navigation'; // 네비게이션 스타일 임포트 (필요 시)
+import 'swiper/css/pagination'; // 페이지네이션 스타일 임포트 (필요 시)
+
+import styles from '../../css/Effect.module.css'; // 모듈 import
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Car = () => {
   const { user } = useAuth();
   const navigate = useNavigate(); 
+
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // 기본 현재 달 선택
 
   const getCurrentDate = () => {
     const today = new Date();
@@ -127,11 +136,34 @@ const Car = () => {
     return paginationItems;
   };
 
+  const generateMonths = () => {
+    const months = [];
+    const currentMonth = new Date().getMonth() + 1;
+
+    for (let i = -2; i <= 2; i++) {
+      const month = (currentMonth + i + 12) % 12 || 12; // 1 ~ 12 사이의 값으로 순환
+      months.push(month);
+    }
+    return months;
+  };
+
+  const handleMonthSelect = (month) => {
+    setSelectedMonth(month);
+
+    // 선택된 월에 맞게 시작일과 종료일을 설정
+    const startOfMonth = new Date(selectedYear, month - 1, 2);
+    const endOfMonth = new Date(selectedYear, month, 1);
+
+    setStartDate(startOfMonth.toISOString().slice(0, 10)); // 2023-04-01 형식
+    setEndDate(endOfMonth.toISOString().slice(0, 10));     // 2023-04-30 형식
+  };
+
+
   return (
     <div>
       <Navigation />
       <Container>
-        <Form>
+        <Form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <Row className="align-items-center">
             <Col xs={12} md="auto">
               <Form.Group controlId="formDateType">
@@ -223,6 +255,44 @@ const Car = () => {
                 <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType}/>
               </Col>
             )}
+          </Row>
+          <Row style={{ flexWrap: 'nowrap' }}>
+            <Col>
+              <Form.Group controlId="formYear">
+                <DropdownButton
+                  variant="outline-secondary"
+                  title={`${selectedYear}년`}
+                  onSelect={(eventKey) => setSelectedYear(Number(eventKey))}
+                >
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Dropdown.Item key={i} eventKey={new Date().getFullYear() - i}>
+                      {new Date().getFullYear() - i}년
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </Form.Group>
+            </Col>
+
+            <Col>
+              <div className="swiper-container">
+                <Swiper
+                  slidesPerView={6}
+                  spaceBetween={10} // 버튼 간의 간격을 늘립니다
+                  style={{ justifyContent: 'center' }} // 가운데 정렬
+                >
+                {generateMonths().map((month, index) => (
+                  <SwiperSlide key={index} >
+                    <Button
+                      onClick={() => handleMonthSelect(month)}
+                      active={month === selectedMonth}
+                    >
+                      {month}월
+                    </Button>
+                  </SwiperSlide>
+                ))}
+                </Swiper>
+              </div>
+            </Col>
           </Row>
         </Form>
         <div>
