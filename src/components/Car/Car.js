@@ -260,8 +260,8 @@ const Car = () => {
                   onSelect={(eventKey) => setSelectedYear(Number(eventKey))}
                 >
                   {Array.from({ length: 5 }, (_, i) => (
-                    <Dropdown.Item key={i} eventKey={new Date().getFullYear() - i}>
-                      {new Date().getFullYear() - i}년
+                    <Dropdown.Item key={i} eventKey={new Date().getFullYear() + 3 - i}>
+                      {new Date().getFullYear() + 3 - i}년
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
