@@ -50,7 +50,8 @@ const Car = () => {
         contractor,
         responsibilityName,
         carNumber,
-        user
+        user,
+        isCar
       });
       setData(response.data.cars);
       setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
@@ -58,11 +59,10 @@ const Car = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user]);
+  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar]);
 
   useEffect(() => {
     fetchData();
-    console.log('isCar updated:', isCar);
   }, [fetchData, isCar]);
 
   const handleCreateNew = () => {
@@ -156,7 +156,6 @@ const Car = () => {
   };
 
   const handleToggle = (value) => {
-    console.log(value);
     setIsCar(value);
   };
 

@@ -3,10 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
+import { useAuth } from '../Context/AuthProvider';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const CarDetail = () => {
+  const { isCar } = useAuth();
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [carData, setCarData] = useState({
@@ -111,7 +114,7 @@ const CarDetail = () => {
     if (id !== "new") {
       const fetchCarData = async () => {
         try {
-          const response = await axios.post(`${API_URL}/car/detail`, { id });
+          const response = await axios.post(`${API_URL}/car/detail`, { id, isCar });
           setCarData(response.data);
         } catch (error) {
           setError("데이터를 가져오는 중 오류가 발생했습니다.");
@@ -128,7 +131,7 @@ const CarDetail = () => {
       }));
       setLoading(false);
     }
-  }, [id]);
+  }, [id, isCar]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -161,7 +164,7 @@ const CarDetail = () => {
       }
   
       const endpoint = id === 'new' ? '/car/create' : '/car/update';
-      await axios.post(`${API_URL}${endpoint}`, carData);
+      await axios.post(`${API_URL}${endpoint}`, carData, isCar);
       navigate('/car');
       alert("데이터가 저장되었습니다.");
     } catch (error) {
@@ -179,7 +182,7 @@ const CarDetail = () => {
       const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
       if (confirmDelete) {
         await axios.delete(`${API_URL}/car/delete`, {
-          data: { id: carData.id },
+          data: { id: carData.id, isCar},
         });
         navigate('/car');
         alert("데이터가 삭제되었습니다.");
