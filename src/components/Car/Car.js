@@ -171,10 +171,10 @@ const Car = () => {
             // onChange={handleToggle}
           >
             <ToggleButton variant="outline-primary" value="longTerm" onClick={() => handleToggle('longTerm')} >
-              자동차 장기 리스트
+              자동차 계약리스트
             </ToggleButton>
             <ToggleButton variant="outline-primary" value="design" onClick={() => handleToggle('design')}>
-              자동차 설계 리스트
+              자동차 설계리스트
             </ToggleButton>
           </ToggleButtonGroup>
         </ButtonGroup>
