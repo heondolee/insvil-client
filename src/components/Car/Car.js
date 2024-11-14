@@ -40,7 +40,7 @@ const Car = () => {
 
   const itemsPerPage = 10;
   const [totalItems, setTotalItems] = useState(0);
-
+  const [totalFirstPremium, setTotalFirstPremium] = useState(0);
 
   const fetchData = useCallback(async (page = 1) => {
     setIsLoading(true);
@@ -60,12 +60,15 @@ const Car = () => {
       console.log('💕response', response.data.cars);
       setData(response.data.cars);
       setTotalItems(response.data.totalItems);
-      setCurrentPage(page); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
+      setCurrentPage(page); // 현재 페이지 업데이트
+      if (page === 1) {
+        setTotalFirstPremium(response.data.totalFirstPremium);  // 합계 업데이트
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar, itemsPerPage]);
+  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar]);
 
   useEffect(() => {
     fetchData();
@@ -73,18 +76,6 @@ const Car = () => {
 
   const handleCreateNew = () => {
     navigate('/car/new');
-  };
-
-  const calculateTotalInsurance = (key) => {
-    const total = data.reduce((sum, item) => {
-      let value = item[key];
-      if (!value.includes(',')) {
-        return sum + Number(value);
-      } else {
-        return sum + Number(value.replace(/,/g, ''));
-      }
-    }, 0);
-    return new Intl.NumberFormat().format(total);
   };
 
   // 페이지 변경 핸들러
@@ -305,7 +296,7 @@ const Car = () => {
           </div>
         </Form>
         <div>
-          <span>[ 초회보험료 합계 :  {calculateTotalInsurance('firstPremium')}원 ]</span>
+        <span>[ 초회보험료 합계 : {totalFirstPremium ? new Intl.NumberFormat().format(totalFirstPremium) : 0}원 ]</span>
         </div>
         {isLoading ? (
           <div className="text-center my-3">
