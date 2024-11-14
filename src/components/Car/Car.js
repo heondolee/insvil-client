@@ -32,15 +32,17 @@ const Car = () => {
 
   const [contractor, setContractor] = useState('');
   const [responsibilityName, setResponsibilityName] = useState('');
-  const [carNumber, setcarNumber] = useState('');
+  const [carNumber, setCarNumber] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 10;
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchData = useCallback(async () => {
+
+  const fetchData = useCallback(async (page = 1) => {
     setIsLoading(true);
     try {
       const response = await axios.post(`${API_URL}/car/date-range`, {
@@ -51,15 +53,19 @@ const Car = () => {
         responsibilityName,
         carNumber,
         user,
-        isCar
+        isCar,
+        page,
+        itemsPerPage
       });
+      console.log('💕response', response.data.cars);
       setData(response.data.cars);
-      setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
+      setTotalItems(response.data.totalItems);
+      setCurrentPage(page); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
     } catch (error) {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar]);
+  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar, itemsPerPage]);
 
   useEffect(() => {
     fetchData();
@@ -68,11 +74,6 @@ const Car = () => {
   const handleCreateNew = () => {
     navigate('/car/new');
   };
-
-  // 현재 페이지에 맞는 데이터 슬라이싱
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const calculateTotalInsurance = (key) => {
     const total = data.reduce((sum, item) => {
@@ -88,11 +89,11 @@ const Car = () => {
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    fetchData(pageNumber);
   };
 
   const renderPaginationItems = () => {
-    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
     const maxPageNumbersToShow = 10;
     const paginationItems = [];
 
@@ -219,7 +220,7 @@ const Car = () => {
                   type="text"
                   placeholder='차량번호:'
                   value={carNumber}
-                  onChange={(e) => setcarNumber(e.target.value)}
+                  onChange={(e) => setCarNumber(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
@@ -331,7 +332,7 @@ const Car = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((item, index) => (
+                {data.map((item, index) => (
                   <tr key={index}>
                     <td>{item.receiptDate}</td>
                     <td>{`${item.startDate} ~ ${item.endDate}`}</td>
@@ -359,8 +360,8 @@ const Car = () => {
               <Pagination.First onClick={() => handlePageChange(1)} />
               <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
               {renderPaginationItems()}
-              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(data.length / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
-              <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
+              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(totalItems / itemsPerPage) ? currentPage + 1 : Math.ceil(totalItems / itemsPerPage))} />
+              <Pagination.Last onClick={() => handlePageChange(Math.ceil(totalItems / itemsPerPage))} />
               <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>
               </Col>
