@@ -34,8 +34,10 @@ const Long = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [totalItems, setTotalItems] = useState(0);
 
-  const fetchData = useCallback(async () => {
+
+  const fetchData = useCallback(async (page = 1) => {
     setIsLoading(true);
     try {
       const response = await axios.post(`${API_URL}/long/date-range`, {
@@ -46,10 +48,14 @@ const Long = () => {
         responsibleName,
         contractor,
         policyNumber,
-        user
+        user,
+        page,
+        itemsPerPage
       });
       setData(response.data.longs);
-      setCurrentPage(1); // 새로운 데이터를 가져올 때 페이지를 첫 페이지로 초기화
+      console.log('💕',response.data.longs);
+      setTotalItems(response.data.totalItems);
+      setCurrentPage(page); // 페이지 변경
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -80,11 +86,6 @@ const Long = () => {
     navigate('/long/new');
   };
 
-  // 현재 페이지에 맞는 데이터 슬라이싱
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
   const calculateTotalInsurance = (key) => {
     const total = data.reduce((sum, item) => {
       let value = item[key];
@@ -99,11 +100,11 @@ const Long = () => {
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    fetchData(pageNumber);
   };
 
   const renderPaginationItems = () => {
-    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
     const maxPageNumbersToShow = 10;
     const paginationItems = [];
 
@@ -312,7 +313,7 @@ const Long = () => {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((item, index) => (
+                {data.map((item, index) => (
                   <tr key={index}>
                     <td>{item.contractDate}</td>
                     <td>{item.paymentStartDate}</td>
@@ -340,8 +341,8 @@ const Long = () => {
               <Pagination.First onClick={() => handlePageChange(1)} />
               <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
               {renderPaginationItems()}
-              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(data.length / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
-              <Pagination.Last onClick={() => handlePageChange(Math.ceil(data.length / itemsPerPage))} />
+              <Pagination.Next onClick={() => handlePageChange(currentPage < Math.ceil(totalItems / itemsPerPage) ? currentPage + 1 : Math.ceil(data.length / itemsPerPage))} />
+              <Pagination.Last onClick={() => handlePageChange(Math.ceil(totalItems / itemsPerPage))} />
               <Col xs={12} md="auto">
                   <Button onClick={handleCreateNew}>작성</Button>
               </Col>
