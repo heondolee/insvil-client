@@ -239,7 +239,7 @@ const Car = () => {
             </Col>
             <Col xs={12} md="auto">
               <Form.Group controlId="formDateRange">
-                <Form.Label>날짜 범위 :</Form.Label>
+                <Form.Label>날짜 범위 : (시작, 끝이 오늘날짜일 경우 ➡️ 전체로 조회)</Form.Label>
                 <InputGroup className={styles.input_group_custom}>
                   <Form.Control
                     type="date"
@@ -264,7 +264,7 @@ const Car = () => {
                   setEndDate(getCurrentDate());
                 }}
                 className={styles.button_custom}
-              >오늘날짜</Button>            
+              >전체(오늘날짜)</Button>            
             </Col>
             {user.userCode !== 4 && (
               <Col xs={12} md="auto">
@@ -301,6 +301,7 @@ const Car = () => {
                 </div>
               ))}
             </div>
+            <div>⬅️ 만기월로 바로 조회(1일 ~ 말일) </div>
           </div>
         </Form>
         <div>
