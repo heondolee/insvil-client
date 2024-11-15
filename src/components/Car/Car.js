@@ -72,6 +72,7 @@ const Car = () => {
 
   useEffect(() => {
     fetchData();
+    console.log('💕isCar', isCar);
   }, [fetchData, isCar]);
 
   const handleCreateNew = () => {
@@ -184,7 +185,7 @@ const Car = () => {
                   }
                   onSelect={(eventKey) => setDateType(eventKey)}
                 >
-                  <Dropdown.Item eventKey="receiptDate">영수일</Dropdown.Item>
+                  {isCar === 'longTerm'&& (<Dropdown.Item eventKey="receiptDate">영수일</Dropdown.Item>)}
                   <Dropdown.Item eventKey="startDate">개시일</Dropdown.Item>
                   <Dropdown.Item eventKey="endDate">만기일</Dropdown.Item>
                 </DropdownButton>
@@ -292,11 +293,13 @@ const Car = () => {
                 </div>
               ))}
             </div>
-            <div>⬅️ 만기월로 바로 조회(1일 ~ 말일) </div>
+            <div>⬅️ 만기월로 바로 조회(만기월 1일 ~ 말일) </div>
           </div>
         </Form>
         <div>
-        <span>[ 초회보험료 합계 : {totalFirstPremium ? new Intl.NumberFormat().format(totalFirstPremium) : 0}원 ]</span>
+        {isCar === 'longTerm'&& (
+          <span>[ 초회보험료 합계 : {totalFirstPremium ? new Intl.NumberFormat().format(totalFirstPremium) : 0}원 ] ⬅️ 기간을 설정한 후, 검색하세요</span>
+        )}
         </div>
         {isLoading ? (
           <div className="text-center my-3">
@@ -309,7 +312,7 @@ const Car = () => {
             <Table striped bordered hover className={styles.table_custom}>
               <thead>
                 <tr>
-                  <th>영수일</th>
+                  {isCar === 'longTerm'&& (<th>영수일</th>)}
                   <th>보험기간 (개시일 ~ 만기일)</th>
                   <th>전계약사</th>
                   <th>생년월일/성별</th>
@@ -326,7 +329,7 @@ const Car = () => {
               <tbody>
                 {data.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.receiptDate}</td>
+                    {isCar === 'longTerm'&& (<td>{item.receiptDate}</td>)}
                     <td>{`${item.startDate} ~ ${item.endDate}`}</td>
                     <td>{item.previousContractCompany}</td>
                     <td>{item.insuredBirthGender}</td>
