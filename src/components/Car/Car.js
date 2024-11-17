@@ -127,13 +127,7 @@ const Car = () => {
   };
 
   const generateMonths = () => {
-    const months = [];
-    const currentMonth = new Date().getMonth() + 1;
-
-    for (let i = -2; i <= 2; i++) {
-      const month = (currentMonth + i + 12) % 12 || 12; // 1 ~ 12 사이의 값으로 순환
-      months.push(month);
-    }
+    const months = [1,2,3,4,5,6,7,8,9,10,11,12];
     return months;
   };
 
