@@ -26,8 +26,8 @@ const Long = () => {
   };
 
   const [data, setData] = useState([]);
-  const [startDate, setStartDate] = useState('2018-01-01');
-  const [endDate, setEndDate] = useState('2040-12-31');
+  const [startDate, setStartDate] = useState(getCurrentDate());
+  const [endDate, setEndDate] = useState(getCurrentDate());
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
   const [contractor, setContractor] = useState('');
@@ -38,7 +38,8 @@ const Long = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [totalItems, setTotalItems] = useState(0);
-
+  const [paymentInsurance, setPaymentInsurance] = useState(0);
+  const [correctedInsurance, setCorrectedInsurance] = useState(0);
 
   const fetchData = useCallback(async (page = 1) => {
     setIsLoading(true);
@@ -59,6 +60,10 @@ const Long = () => {
       console.log('💕',response.data.longs);
       setTotalItems(response.data.totalItems);
       setCurrentPage(page); // 페이지 변경
+      if (page === 1) {
+        setPaymentInsurance(response.data.paymentInsurance); // 납입보험료 합계
+        setCorrectedInsurance(response.data.correctedInsurance); // 수정보험료 합계
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -87,18 +92,6 @@ const Long = () => {
 
   const handleCreateNew = () => {
     navigate('/long/new');
-  };
-
-  const calculateTotalInsurance = (key) => {
-    const total = data.reduce((sum, item) => {
-      let value = item[key];
-      if (!value.includes(',')) {
-        return sum + Number(value * 1000);
-      } else {
-        return sum + Number(value.replace(/,/g, ''));
-      }
-    }, 0);
-    return new Intl.NumberFormat().format(total);
   };
 
   // 페이지 변경 핸들러
@@ -260,7 +253,7 @@ const Long = () => {
             </Col>
             <Col xs={12} md="auto">
               <Form.Group controlId="formDateRange">
-                <Form.Label>날짜 범위 :</Form.Label>
+                <Form.Label>날짜 범위 : (시작, 끝이 오늘날짜일 경우 ➡️ 전체로 조회)</Form.Label>
                 <InputGroup className={styles.input_group_custom}>
                   <Form.Control
                     type="date"
@@ -285,7 +278,7 @@ const Long = () => {
                   setEndDate(getCurrentDate());
                 }}
                 className={styles.button_custom}
-              >오늘날짜</Button>            
+              >전체(오늘날짜)</Button>            
             </Col>
             {user.userCode !== 4 && (
               <Col xs={12} md="auto">
@@ -327,8 +320,9 @@ const Long = () => {
         </Form>
         <div>
           <span>
-            [ 납입보험료 합계 : {calculateTotalInsurance('paymentInsurance')}원 ] 
-            [ 수정보험료 합계 : {calculateTotalInsurance('correctedInsurance')}원 ]
+            [ 납입보험료 합계 : {paymentInsurance ? new Intl.NumberFormat().format(paymentInsurance) : 0}원 ] 
+            [ 수정보험료 합계 : {correctedInsurance ? new Intl.NumberFormat().format(correctedInsurance) : 0}원 ] 
+            [ 총 {totalItems}건 ]
           </span>
         </div>
         {isLoading ? (

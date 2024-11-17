@@ -292,8 +292,9 @@ const Car = () => {
         </Form>
         <div>
         {isCar === 'longTerm'&& (
-          <span>[ 초회보험료 합계 : {totalFirstPremium ? new Intl.NumberFormat().format(totalFirstPremium) : 0}원 ] ⬅️ 기간을 설정한 후, 검색하세요</span>
+          <span>[ 초회보험료 합계 : {totalFirstPremium ? new Intl.NumberFormat().format(totalFirstPremium) : 0}원 ]</span>
         )}
+        <span>[ 총 {totalItems}건 ] ⬅️ 기간을 설정한 후, 검색하세요</span>
         </div>
         {isLoading ? (
           <div className="text-center my-3">
