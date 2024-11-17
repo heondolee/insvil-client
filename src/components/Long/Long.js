@@ -14,6 +14,9 @@ const Long = () => {
   const { user } = useAuth();
   const navigate = useNavigate(); 
 
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); // 기본 현재 달 선택
+
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -145,6 +148,22 @@ const Long = () => {
     return paginationItems;
   };
 
+  const generateMonths = () => {
+    const months = [1,2,3,4,5,6,7,8,9,10,11,12];
+    return months;
+  };
+
+  const handleMonthSelect = (month) => {
+    setSelectedMonth(month);
+
+    // 선택된 월에 맞게 시작일과 종료일을 설정
+    const startOfMonth = new Date(selectedYear, month - 1, 2);
+    const endOfMonth = new Date(selectedYear, month, 1);
+
+    setStartDate(startOfMonth.toISOString().slice(0, 10)); // 2023-04-01 형식
+    setEndDate(endOfMonth.toISOString().slice(0, 10));     // 2023-04-30 형식
+  };
+
   return (
     <div>
       <Navigation />
@@ -274,6 +293,37 @@ const Long = () => {
               </Col>
             )}
           </Row>
+          <div className={styles.custom_row}>
+            <div>
+              <Form.Group controlId="formYear">
+                <DropdownButton
+                  variant="outline-secondary"
+                  title={`${selectedYear}년`}
+                  onSelect={(eventKey) => setSelectedYear(Number(eventKey))}
+                >
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Dropdown.Item key={i} eventKey={new Date().getFullYear() + 3 - i}>
+                      {new Date().getFullYear() + 3 - i}년
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
+              </Form.Group>
+            </div>
+
+            <div className={styles.custom_swiper}>
+              {generateMonths().map((month, index) => (
+                <div key={index} >
+                  <Button
+                    onClick={() => handleMonthSelect(month)}
+                    active={month === selectedMonth}
+                  >
+                    {month}월
+                  </Button>
+                </div>
+              ))}
+            </div>
+            <div>⬅️ 만기월로 바로 조회(만기월 1일 ~ 말일) </div>
+          </div>
         </Form>
         <div>
           <span>

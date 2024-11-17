@@ -165,7 +165,7 @@ const Car = () => {
             </ToggleButton>
           </ToggleButtonGroup>
         </ButtonGroup>
-        <Form style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <Form style={{ display: 'flex', flexDirection: 'column'}}>
           <Row className="align-items-center">
             <Col xs={12} md="auto">
               <Form.Group controlId="formDateType">
