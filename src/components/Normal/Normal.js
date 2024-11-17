@@ -315,7 +315,7 @@ const Normal = () => {
           </div>
         </Form>
         <div>
-          <span>[ 납입보험료 합계 :  {calculateTotalInsurance('insurancePremium')}원 ]</span>
+          <span>[ 납입보험료 합계 :  {calculateTotalInsurance('insurancePremium')}원 ] [ 총 {data.length}건 ]</span>
         </div>
         {isLoading ? (
           <div className="text-center my-3">
