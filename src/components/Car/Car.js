@@ -335,11 +335,11 @@ const Car = () => {
                     <td>{item.personInCharge}</td>
                     <td>
                       {typeof item.firstPremium === 'number' || !String(item.firstPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.firstPremium * 1000)
+                        ? new Intl.NumberFormat().format(item.firstPremium)
                         : item.firstPremium}
                     </td>
                     <td>{typeof item.oneYearPremium === 'number' || !String(item.oneYearPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.oneYearPremium * 1000)
+                        ? new Intl.NumberFormat().format(item.oneYearPremium)
                         : item.oneYearPremium}</td>
                   </tr>
                 ))}
