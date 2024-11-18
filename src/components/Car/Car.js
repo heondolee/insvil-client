@@ -287,7 +287,6 @@ const Car = () => {
                 </div>
               ))}
             </div>
-            <div>⬅️ 만기월로 바로 조회(만기월 1일 ~ 말일) </div>
           </div>
         </Form>
         <div>
