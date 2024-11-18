@@ -67,7 +67,7 @@ const Normal = () => {
     const numStr = num.toString();
 
     if (!numStr.includes(',')) {
-      const formattedNum = new Intl.NumberFormat().format(num * 1000);
+      const formattedNum = new Intl.NumberFormat().format(num);
       return formattedNum;
     } else {
       return numStr;
@@ -91,7 +91,7 @@ const Normal = () => {
     const total = data.reduce((sum, item) => {
       let value = item[key];
       if (!value.includes(',')) {
-        return sum + Number(value * 1000);
+        return sum + Number(value);
       } else {
         return sum + Number(value.replace(/,/g, ''));
       }
