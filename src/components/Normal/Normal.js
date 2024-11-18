@@ -290,7 +290,7 @@ const Normal = () => {
                   title={`${selectedYear}년`}
                   onSelect={(eventKey) => setSelectedYear(Number(eventKey))}
                 >
-                  {Array.from({ length: 5 }, (_, i) => (
+                  {Array.from({ length: 10 }, (_, i) => (
                     <Dropdown.Item key={i} eventKey={new Date().getFullYear() + 3 - i}>
                       {new Date().getFullYear() + 3 - i}년
                     </Dropdown.Item>
