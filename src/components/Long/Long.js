@@ -79,7 +79,7 @@ const Long = () => {
     const numStr = num.toString();
 
     if (!numStr.includes(',')) {
-      const formattedNum = new Intl.NumberFormat().format(num * 1000);
+      const formattedNum = new Intl.NumberFormat().format(num);
       return formattedNum;
     } else {
       return numStr;
