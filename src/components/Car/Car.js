@@ -75,6 +75,17 @@ const Car = () => {
     console.log('💕isCar', isCar);
   }, [fetchData, isCar]);
 
+  const formatNumber = (num) => {
+    let value = String(num);
+    if (Number(value) <= 2000 || value.includes('.')) {
+      return new Intl.NumberFormat().format(Number(value) * 1000);
+    } else if (value.includes(',')) {
+      return new Intl.NumberFormat().format(Number(value.replace(/,/g, '')));
+    } else {
+      return new Intl.NumberFormat().format(Number(value));
+    }
+  };
+
   const handleCreateNew = () => {
     navigate('/car/new');
   };
@@ -334,13 +345,10 @@ const Car = () => {
                     <td>{item.team}</td>
                     <td>{item.personInCharge}</td>
                     <td>
-                      {typeof item.firstPremium === 'number' || !String(item.firstPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.firstPremium)
-                        : item.firstPremium}
+                      {formatNumber(item.firstPremium)}
                     </td>
-                    <td>{typeof item.oneYearPremium === 'number' || !String(item.oneYearPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.oneYearPremium)
-                        : item.oneYearPremium}</td>
+                    <td>{formatNumber(item.oneYearPremium)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
