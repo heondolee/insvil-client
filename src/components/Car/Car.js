@@ -266,7 +266,7 @@ const Car = () => {
                   title={`${selectedYear}년`}
                   onSelect={(eventKey) => setSelectedYear(Number(eventKey))}
                 >
-                  {Array.from({ length: 5 }, (_, i) => (
+                  {Array.from({ length: 10 }, (_, i) => (
                     <Dropdown.Item key={i} eventKey={new Date().getFullYear() + 3 - i}>
                       {new Date().getFullYear() + 3 - i}년
                     </Dropdown.Item>
@@ -336,7 +336,7 @@ const Car = () => {
                     <td>{item.personInCharge}</td>
                     <td>
                       {typeof item.firstPremium === 'number' || !String(item.firstPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.firstPremium)
+                        ? new Intl.NumberFormat().format(item.firstPremium * 1000)
                         : item.firstPremium}
                     </td>
                     <td>{typeof item.oneYearPremium === 'number' || !String(item.oneYearPremium).includes(',')
