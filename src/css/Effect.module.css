@@ -32,6 +32,7 @@
 .custom_swiper {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 /* 모바일 화면에서 테이블을 스크롤 가능하게 하기 위한 스타일 */
