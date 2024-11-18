@@ -340,7 +340,7 @@ const Car = () => {
                         : item.firstPremium}
                     </td>
                     <td>{typeof item.oneYearPremium === 'number' || !String(item.oneYearPremium).includes(',')
-                        ? new Intl.NumberFormat().format(item.oneYearPremium)
+                        ? new Intl.NumberFormat().format(item.oneYearPremium * 1000)
                         : item.oneYearPremium}</td>
                   </tr>
                 ))}
