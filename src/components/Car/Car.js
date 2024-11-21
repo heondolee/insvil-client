@@ -31,6 +31,7 @@ const Car = () => {
   const [dateType, setDateType] = useState('endDate');
 
   const [contractor, setContractor] = useState('');
+  const [insured, setInsured] = useState('');
   const [responsibilityName, setResponsibilityName] = useState('');
   const [carNumber, setCarNumber] = useState('');
 
@@ -50,6 +51,7 @@ const Car = () => {
         endDate,
         dateType,
         contractor,
+        insured,
         responsibilityName,
         carNumber,
         user,
@@ -68,7 +70,7 @@ const Car = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor, responsibilityName, carNumber, user, isCar]);
+  }, [startDate, endDate, dateType, contractor,insured, responsibilityName, carNumber, user, isCar]);
 
   useEffect(() => {
     fetchData();
@@ -161,21 +163,26 @@ const Car = () => {
     <div>
       <Navigation />
       <Container>
-        <ButtonGroup className="mb-3">
-          <ToggleButtonGroup
-            type="radio"
-            name="options"
-            value={isCar}
-            // onChange={handleToggle}
-          >
-            <ToggleButton variant="outline-primary" value="longTerm" onClick={() => handleToggle('longTerm')} >
-              자동차 계약리스트
-            </ToggleButton>
-            <ToggleButton variant="outline-primary" value="design" onClick={() => handleToggle('design')}>
-              자동차 설계리스트
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </ButtonGroup>
+        <div className={styles.custom_button_group}>
+          <ButtonGroup className="mb-3">
+            <ToggleButtonGroup
+              type="radio"
+              name="options"
+              value={isCar}
+              // onChange={handleToggle}
+            >
+              <ToggleButton variant="outline-primary" value="longTerm" onClick={() => handleToggle('longTerm')} >
+                자동차 계약리스트
+              </ToggleButton>
+              <ToggleButton variant="outline-primary" value="design" onClick={() => handleToggle('design')}>
+                자동차 설계리스트
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </ButtonGroup>
+          {user.userCode !== 4 && (
+            <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType}/>
+          )}
+        </div>
         <Form style={{ display: 'flex', flexDirection: 'column'}}>
           <Row className="align-items-center">
             <Col xs={12} md="auto">
@@ -206,6 +213,18 @@ const Car = () => {
                   placeholder='계약자:'
                   value={contractor}
                   onChange={(e) => setContractor(e.target.value)}
+                  className={styles.form_control_custom}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} md={1}>
+              <Form.Group controlId="formContractor">
+                <Form.Label>피보험자 :</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder='피보험자:'
+                  value={insured}
+                  onChange={(e) => setInsured(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
@@ -263,11 +282,6 @@ const Car = () => {
                 className={styles.button_custom}
               >전체(오늘날짜)</Button>            
             </Col>
-            {user.userCode !== 4 && (
-              <Col xs={12} md="auto">
-                <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType}/>
-              </Col>
-            )}
           </Row>
           <div className={styles.custom_row}>
             <div>
