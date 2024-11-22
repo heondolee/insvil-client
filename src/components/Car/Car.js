@@ -333,7 +333,8 @@ const Car = () => {
                 <tr>
                   {isCar === 'longTerm'&& (<th>영수일</th>)}
                   <th>보험기간 (개시일 ~ 만기일)</th>
-                  <th>전계약사</th>
+                  {isCar === 'longTerm'&& (<th>회사</th>)}
+                  {isCar === 'design'&& (<th>전계약사</th>)}
                   <th>생년월일/성별</th>
                   <th>피보험자</th>
                   <th>계약자</th>
@@ -350,7 +351,8 @@ const Car = () => {
                   <tr key={index}>
                     {isCar === 'longTerm'&& (<td>{item.receiptDate}</td>)}
                     <td>{`${item.startDate} ~ ${item.endDate}`}</td>
-                    <td>{item.previousContractCompany}</td>
+                    {isCar === 'longTerm'&& (<td>{item.contractCompany}</td>)}
+                    {isCar === 'design'&& (<td>{item.previousContractCompany}</td>)}
                     <td>{item.insuredBirthGender}</td>
                     <td>{item.insured}</td>
                     <td><Link to={`/car/${item.id}`}>{item.contractor}</Link></td>
