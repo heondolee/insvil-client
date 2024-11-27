@@ -162,9 +162,8 @@ const CarDetail = () => {
         alert("만기일을 입력하세요.");
         return;
       }
-  
       const endpoint = id === 'new' ? '/car/create' : '/car/update';
-      await axios.post(`${API_URL}${endpoint}`, carData, isCar);
+      await axios.post(`${API_URL}${endpoint}`, { carData, isCar });
       navigate('/car');
       alert("데이터가 저장되었습니다.");
     } catch (error) {

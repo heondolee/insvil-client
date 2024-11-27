@@ -75,7 +75,6 @@ const Long = () => {
   }, [fetchData]);
 
   const formatNumber = (num) => {
-
     const numStr = num.toString();
 
     if (!numStr.includes(',')) {

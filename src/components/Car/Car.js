@@ -59,7 +59,6 @@ const Car = () => {
         page,
         itemsPerPage
       });
-      console.log('💕response', response.data.cars);
       setData(response.data.cars);
       setTotalItems(response.data.totalItems);
       setCurrentPage(page); // 현재 페이지 업데이트
@@ -74,7 +73,6 @@ const Car = () => {
 
   useEffect(() => {
     fetchData();
-    console.log('💕isCar', isCar);
   }, [fetchData, isCar]);
 
   const formatNumber = (num) => {
