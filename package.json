@@ -50,7 +50,8 @@
     "chokidar": "^3.6.0",
     "fsevents": "^2.3.3",
     "gulp": "^5.0.0",
-    "gulp-autoprefixer": "^9.0.0"
+    "gulp-autoprefixer": "^9.0.0",
+    "webpack-dev-server": "^5.2.0"
   },
   "proxy": "http://apiserver.com:5000",
   "optionalDependencies": {

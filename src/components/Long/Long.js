@@ -31,6 +31,7 @@ const Long = () => {
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
   const [contractor, setContractor] = useState('');
+  const [insuredPerson, setInsuredPerson] = useState('');
   const [responsibleName, setResponsibleName] = useState('');
   const [policyNumber, setPolicyNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +52,7 @@ const Long = () => {
         contractStatus,
         responsibleName,
         contractor,
+        insuredPerson,
         policyNumber,
         user,
         page,
@@ -68,7 +70,7 @@ const Long = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, contractor, responsibleName, policyNumber, user]);
+  }, [startDate, endDate, dateType, contractStatus, contractor, insuredPerson, responsibleName, policyNumber, user]);
 
   useEffect(() => {
     fetchData();
@@ -222,6 +224,18 @@ const Long = () => {
                   placeholder='계약자:'
                   value={contractor}
                   onChange={(e) => setContractor(e.target.value)}
+                  className={styles.form_control_custom}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} md={1}>
+              <Form.Group controlId="formContractor">
+                <Form.Label>피보험자 :</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder='피보험자:'
+                  value={insuredPerson}
+                  onChange={(e) => setInsuredPerson(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
