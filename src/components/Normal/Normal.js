@@ -29,7 +29,8 @@ const Normal = () => {
   const [endDate, setEndDate] = useState('2100-12-31');
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
-  const [policyholder, setPolicyholder] = useState('');
+  const [policyholder, setPolicyholder] = useState(''); // 계약자
+  const [insuredPerson, setInsuredPerson] = useState(''); // 피보험자
   const [manager, setManager] = useState('');
   const [policyNumber, setPolicyNumber] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +48,7 @@ const Normal = () => {
         contractStatus,
         manager,
         policyholder,
+        insuredPerson,
         policyNumber,
         user
       });
@@ -56,7 +58,7 @@ const Normal = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, policyholder, manager, policyNumber, user]);
+  }, [startDate, endDate, dateType, contractStatus, policyholder, insuredPerson, manager, policyNumber, user]);
 
   useEffect(() => {
     fetchData();
@@ -219,6 +221,18 @@ const Normal = () => {
                   placeholder='계약자:'
                   value={policyholder}
                   onChange={(e) => setPolicyholder(e.target.value)}
+                  className={styles.form_control_custom}
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12} md={1}>
+              <Form.Group controlId="formInsuredPerson">
+                <Form.Label>피보험자 :</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder='피보험자:'
+                  value={insuredPerson}
+                  onChange={(e) => setInsuredPerson(e.target.value)}
                   className={styles.form_control_custom}
                 />
               </Form.Group>
