@@ -290,11 +290,6 @@ const Normal = () => {
                 className={styles.button_custom}
               >오늘날짜</Button>            
             </Col>
-            {user.userCode !== 4 && (
-              <Col xs={12} md="auto">
-                <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType}/>
-              </Col>
-            )}
           </Row>
           <div className={styles.custom_row}>
             <div>
@@ -325,6 +320,11 @@ const Normal = () => {
                 </div>
               ))}
             </div>
+            {user.userCode !== 4 && (
+              <Col xs={12} md="auto">
+                <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType}/>
+              </Col>
+            )}
           </div>
         </Form>
         <div>

@@ -30,6 +30,7 @@ const Long = () => {
   const [endDate, setEndDate] = useState(getCurrentDate());
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
+  const [contractCompany, setContractCompany] = useState('allCompany');
   const [contractor, setContractor] = useState('');
   const [insuredPerson, setInsuredPerson] = useState('');
   const [responsibleName, setResponsibleName] = useState('');
@@ -50,6 +51,7 @@ const Long = () => {
         endDate,
         dateType,
         contractStatus,
+        contractCompany,
         responsibleName,
         contractor,
         insuredPerson,
@@ -70,7 +72,7 @@ const Long = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, contractor, insuredPerson, responsibleName, policyNumber, user]);
+  }, [startDate, endDate, dateType, contractStatus,contractCompany, contractor, insuredPerson, responsibleName, policyNumber, user]);
 
   useEffect(() => {
     fetchData();
@@ -291,13 +293,8 @@ const Long = () => {
                   setEndDate(getCurrentDate());
                 }}
                 className={styles.button_custom}
-              >전체(오늘날짜)</Button>            
+              >오늘날짜</Button>            
             </Col>
-            {user.userCode !== 4 && (
-              <Col xs={12} md="auto">
-                <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
-              </Col>
-            )}
           </Row>
           <div className={styles.custom_row}>
             <div>
@@ -328,6 +325,43 @@ const Long = () => {
                 </div>
               ))}
             </div>
+            <Form.Group controlId="formContractStatus">
+              {/* <Form.Label>계약상태 :</Form.Label> */}
+              <DropdownButton
+                variant="outline-secondary"
+                title={
+                  contractCompany === 'allCompany'
+                    ? '회사전체'
+                    : contractCompany === 'kbsb'
+                    ? 'KB손보'
+                    : contractCompany === 'samsung'
+                    ? '삼성화재'
+                    : contractCompany === 'meritz'
+                    ? '메리츠화재'
+                    : contractCompany === 'dbsb'
+                    ? 'DB손보'
+                    : contractCompany === 'hyundai'
+                    ? '현대해상'
+                    : contractCompany === 'mgsb'
+                    ? 'MG손보'
+                    : '회사전체'
+                }
+                onSelect={(eventKey) => setContractCompany(eventKey)}
+              >
+                <Dropdown.Item eventKey="allCompany">회사전체</Dropdown.Item>
+                <Dropdown.Item eventKey="kbsb">KB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="samsung">삼성화재</Dropdown.Item>
+                <Dropdown.Item eventKey="meritz">메리츠화재</Dropdown.Item>
+                <Dropdown.Item eventKey="dbsb">DB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="hyundai">현대해상</Dropdown.Item>
+                <Dropdown.Item eventKey="mgsb">MG손보</Dropdown.Item>
+              </DropdownButton>
+            </Form.Group>
+            {user.userCode !== 4 && (
+              <Col xs={12} md="auto">
+                <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
+              </Col>
+            )}
           </div>
         </Form>
         <div>
