@@ -29,6 +29,7 @@ const Normal = () => {
   const [endDate, setEndDate] = useState('2100-12-31');
   const [dateType, setDateType] = useState('contractDate');
   const [contractStatus, setContractStatus] = useState('statusAll');
+  const [contractCompany, setContractCompany] = useState('allCompany');
   const [policyholder, setPolicyholder] = useState(''); // 계약자
   const [insuredPerson, setInsuredPerson] = useState(''); // 피보험자
   const [manager, setManager] = useState('');
@@ -46,6 +47,7 @@ const Normal = () => {
         endDate,
         dateType,
         contractStatus,
+        contractCompany,
         manager,
         policyholder,
         insuredPerson,
@@ -58,7 +60,7 @@ const Normal = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractStatus, policyholder, insuredPerson, manager, policyNumber, user]);
+  }, [startDate, endDate, dateType, contractStatus, contractCompany, policyholder, insuredPerson, manager, policyNumber, user]);
 
   useEffect(() => {
     fetchData();
@@ -320,6 +322,38 @@ const Normal = () => {
                 </div>
               ))}
             </div>
+            <Form.Group controlId="formContractStatus">
+              {/* <Form.Label>계약상태 :</Form.Label> */}
+              <DropdownButton
+                variant="outline-secondary"
+                title={
+                  contractCompany === 'allCompany'
+                    ? '회사전체'
+                    : contractCompany === 'kbsb'
+                    ? 'KB손보'
+                    : contractCompany === 'samsung'
+                    ? '삼성화재'
+                    : contractCompany === 'meritz'
+                    ? '메리츠화재'
+                    : contractCompany === 'dbsb'
+                    ? 'DB손보'
+                    : contractCompany === 'hyundai'
+                    ? '현대해상'
+                    : contractCompany === 'mgsb'
+                    ? 'MG손보'
+                    : '회사전체'
+                }
+                onSelect={(eventKey) => setContractCompany(eventKey)}
+              >
+                <Dropdown.Item eventKey="allCompany">회사전체</Dropdown.Item>
+                <Dropdown.Item eventKey="kbsb">KB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="samsung">삼성화재</Dropdown.Item>
+                <Dropdown.Item eventKey="meritz">메리츠화재</Dropdown.Item>
+                <Dropdown.Item eventKey="dbsb">DB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="hyundai">현대해상</Dropdown.Item>
+                <Dropdown.Item eventKey="mgsb">MG손보</Dropdown.Item>
+              </DropdownButton>
+            </Form.Group>
             {user.userCode !== 4 && (
               <Col xs={12} md="auto">
                 <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType}/>
