@@ -30,6 +30,7 @@ const Car = () => {
   const [endDate, setEndDate] = useState(getCurrentDate());
   const [dateType, setDateType] = useState('endDate');
 
+  const [contractCompany, setContractCompany] = useState('allCompany');
   const [contractor, setContractor] = useState('');
   const [insured, setInsured] = useState('');
   const [responsibilityName, setResponsibilityName] = useState('');
@@ -50,6 +51,7 @@ const Car = () => {
         startDate,
         endDate,
         dateType,
+        contractCompany,
         contractor,
         insured,
         responsibilityName,
@@ -69,7 +71,7 @@ const Car = () => {
       console.error('Error fetching data:', error);
     }
     setIsLoading(false);
-  }, [startDate, endDate, dateType, contractor,insured, responsibilityName, carNumber, user, isCar]);
+  }, [startDate, endDate, dateType, contractCompany, contractor,insured, responsibilityName, carNumber, user, isCar]);
 
   useEffect(() => {
     fetchData();
@@ -310,6 +312,41 @@ const Car = () => {
                 </div>
               ))}
             </div>
+            <Form.Group controlId="formContractStatus">
+              {/* <Form.Label>계약상태 :</Form.Label> */}
+              <DropdownButton
+                variant="outline-secondary"
+                title={
+                  contractCompany === 'allCompany'
+                    ? '회사전체'
+                    : contractCompany === 'kbsb'
+                    ? 'KB손보'
+                    : contractCompany === 'samsung'
+                    ? '삼성화재'
+                    : contractCompany === 'meritz'
+                    ? '메리츠화재'
+                    : contractCompany === 'dbsb'
+                    ? 'DB손보'
+                    : contractCompany === 'hyundai'
+                    ? '현대해상'
+                    : contractCompany === 'mgsb'
+                    ? 'MG손보'
+                    : contractCompany === 'hghj'
+                    ? '흥국화재'
+                    : '회사전체'
+                }
+                onSelect={(eventKey) => setContractCompany(eventKey)}
+              >
+                <Dropdown.Item eventKey="allCompany">회사전체</Dropdown.Item>
+                <Dropdown.Item eventKey="kbsb">KB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="samsung">삼성화재</Dropdown.Item>
+                <Dropdown.Item eventKey="meritz">메리츠화재</Dropdown.Item>
+                <Dropdown.Item eventKey="dbsb">DB손보</Dropdown.Item>
+                <Dropdown.Item eventKey="hyundai">현대해상</Dropdown.Item>
+                <Dropdown.Item eventKey="mgsb">MG손보</Dropdown.Item>
+                <Dropdown.Item eventKey="hghj">흥국화재</Dropdown.Item>
+              </DropdownButton>
+            </Form.Group>
           </div>
         </Form>
         <div>
