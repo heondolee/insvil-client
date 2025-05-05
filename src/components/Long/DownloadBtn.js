@@ -44,9 +44,9 @@ function DownloadButton({ modelName, startDate, endDate, dateType, responsibleNa
     };
   
     fetchRanges();
-  }, [modelName, startDate, endDate, dateType]);
+  }, [modelName, startDate, endDate, dateType, responsibleName]);
 
-  const handleDownload = async (startDate, endDate, dateType) => {
+  const handleDownload = async (startDate, endDate, dateType, responsibleName) => {
     try {
       setIsDownloading(true);
 
@@ -54,7 +54,7 @@ function DownloadButton({ modelName, startDate, endDate, dateType, responsibleNa
         url: `${API_URL}/download-excel`,
         method: 'POST',
         responseType: 'blob',
-        data: { modelName, startDate, endDate, dateType },
+        data: { modelName, startDate, endDate, dateType, responsibleName },
       });
 
       if (response.status !== 200) {
@@ -85,7 +85,7 @@ function DownloadButton({ modelName, startDate, endDate, dateType, responsibleNa
       const dateRange = selectedOption.value.split(': ')[1];
       const [startDate, endDate] = dateRange.split('~').map(date => date.trim());
   
-      handleDownload(startDate, endDate, dateType);
+      handleDownload(startDate, endDate, dateType, responsibleName);
     }
   };
   
