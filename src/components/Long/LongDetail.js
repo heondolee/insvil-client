@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
@@ -8,6 +8,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const LongDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [longData, setLongData] = useState({
     branch: '',
@@ -145,7 +146,9 @@ const LongDetail = () => {
   };
 
   const handleCancel = () => {
-    navigate('/long');
+    navigate('/long', {
+      state: location.state, // 이전 페이지에서 받은 state를 그대로 넘김
+    });
   };
 
   const handleDelete = async () => {

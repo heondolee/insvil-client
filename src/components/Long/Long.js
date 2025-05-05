@@ -3,7 +3,7 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import DownloadButton from './DownloadBtn';
 import { useAuth } from '../Context/AuthProvider';
 
@@ -74,8 +74,35 @@ const Long = () => {
     setIsLoading(false);
   }, [startDate, endDate, dateType, contractStatus,contractCompany, contractor, insuredPerson, responsibleName, policyNumber, user]);
 
+  const location = useLocation();
+
   useEffect(() => {
-    fetchData();
+    if (location.state) {
+      const {
+        startDate, endDate, dateType, contractStatus, contractCompany,
+        contractor, insuredPerson, responsibleName, policyNumber,
+        selectedYear, selectedMonth, currentPage,
+      } = location.state;
+  
+      setStartDate(startDate);
+      setEndDate(endDate);
+      setDateType(dateType);
+      setContractStatus(contractStatus);
+      setContractCompany(contractCompany);
+      setContractor(contractor);
+      setInsuredPerson(insuredPerson);
+      setResponsibleName(responsibleName);
+      setPolicyNumber(policyNumber);
+      setSelectedYear(selectedYear);
+      setSelectedMonth(selectedMonth);
+  
+      // 중요: fetchData는 상태가 세팅된 다음 실행되어야 하므로 setTimeout 사용
+      setTimeout(() => {
+        fetchData(currentPage || 1);
+      }, 0);
+    } else {
+      fetchData(1);
+    }
   }, [fetchData]);
 
   const formatNumber = (num) => {
@@ -415,7 +442,27 @@ const Long = () => {
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdate_gender}</td>
                     <td>{item.insuredPerson}</td>
-                    <td><Link to={`/long/${item.id}`}>{item.contractor}</Link></td>
+                    <td>
+                      <Link
+                        to={`/long/${item.id}`}
+                        state={{
+                          startDate,
+                          endDate,
+                          dateType,
+                          contractStatus,
+                          contractCompany,
+                          contractor,
+                          insuredPerson,
+                          responsibleName,
+                          policyNumber,
+                          selectedYear,
+                          selectedMonth,
+                          currentPage
+                        }}
+                      >
+                        {item.contractor}
+                      </Link>
+                    </td>
                     <td>{item.policyNumber}</td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
