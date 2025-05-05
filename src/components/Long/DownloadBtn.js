@@ -18,7 +18,7 @@ const customStyles = {
 
 function DownloadButton({ modelName, startDate, endDate, dateType, responsibleName }) {
 
-  console.log('⚠️ responsibleName:', responsibleName);
+  console.log('⚠️ responsibleName:', responsibleName, '⚠️ modelName:', modelName, '⚠️ startDate:', startDate, '⚠️ endDate:', endDate, '⚠️ dateType:', dateType);
 
   const [isDownloading, setIsDownloading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -32,6 +32,8 @@ function DownloadButton({ modelName, startDate, endDate, dateType, responsibleNa
   
         // 백엔드에서 받은 ranges 데이터를 그대로 사용
         const { ranges } = response.data;
+
+        console.log('💕 Received ranges:', ranges);
   
         // 받은 ranges 데이터를 options 형식으로 변환
         const options = ranges.map((range, index) => ({
