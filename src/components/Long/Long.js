@@ -61,7 +61,7 @@ const Long = () => {
         itemsPerPage
       });
       setData(response.data.longs);
-      console.log('💕',response.data.longs);
+      console.log('Long 컴포넌트 responsibleName:', responsibleName);
       setTotalItems(response.data.totalItems);
       setCurrentPage(page); // 페이지 변경
       if (page === 1) {
@@ -362,7 +362,7 @@ const Long = () => {
             </Form.Group>
             {user.userCode !== 4 && (
               <Col xs={12} md="auto">
-                <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType}/>
+                <DownloadButton modelName="long" startDate={startDate} endDate={endDate} dateType={dateType} responsibleName={responsibleName}/>
               </Col>
             )}
           </div>

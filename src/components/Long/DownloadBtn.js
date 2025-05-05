@@ -18,6 +18,8 @@ const customStyles = {
 
 function DownloadButton({ modelName, startDate, endDate, dateType, responsibleName }) {
 
+  console.log('⚠️ responsibleName:', responsibleName);
+
   const [isDownloading, setIsDownloading] = useState(false);
   const [options, setOptions] = useState([]);
 
@@ -47,6 +49,7 @@ function DownloadButton({ modelName, startDate, endDate, dateType, responsibleNa
   }, [modelName, startDate, endDate, dateType, responsibleName]);
 
   const handleDownload = async (startDate, endDate, dateType, responsibleName) => {
+
     try {
       setIsDownloading(true);
 
