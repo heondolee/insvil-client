@@ -89,7 +89,7 @@ useEffect(() => {
       setCurrentPage(currentPage || 1);
     }, 0);
   } else {
-    fetchData();
+    fetchData(1);
   }
 }, [fetchData]);
 
