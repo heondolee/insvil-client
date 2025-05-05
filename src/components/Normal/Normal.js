@@ -3,7 +3,7 @@ import { Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton,
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
 import styles from '../../css/Effect.module.css'; // 모듈 import
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 import { useAuth } from '../Context/AuthProvider';
 
@@ -62,9 +62,36 @@ const Normal = () => {
     setIsLoading(false);
   }, [startDate, endDate, dateType, contractStatus, contractCompany, policyholder, insuredPerson, manager, policyNumber, user]);
 
-  useEffect(() => {
+  const location = useLocation();
+
+useEffect(() => {
+  if (location.state) {
+    const {
+      startDate, endDate, dateType, contractStatus, contractCompany,
+      policyholder, insuredPerson, manager, policyNumber,
+      selectedYear, selectedMonth, currentPage
+    } = location.state;
+
+    if (startDate) setStartDate(startDate);
+    if (endDate) setEndDate(endDate);
+    if (dateType) setDateType(dateType);
+    if (contractStatus) setContractStatus(contractStatus);
+    if (contractCompany) setContractCompany(contractCompany);
+    if (policyholder) setPolicyholder(policyholder);
+    if (insuredPerson) setInsuredPerson(insuredPerson);
+    if (manager) setManager(manager);
+    if (policyNumber) setPolicyNumber(policyNumber);
+    if (selectedYear) setSelectedYear(selectedYear);
+    if (selectedMonth) setSelectedMonth(selectedMonth);
+
+    setTimeout(() => {
+      fetchData();
+      setCurrentPage(currentPage || 1);
+    }, 0);
+  } else {
     fetchData();
-  }, [fetchData]);
+  }
+}, [fetchData]);
 
   const formatNumber = (num) => {
 
@@ -403,7 +430,27 @@ const Normal = () => {
                     <td>{item.contractCompany}</td>
                     <td>{item.longTermProduct}</td>
                     <td>{item.birthdateGender}</td>
-                    <td><Link to={`/normal/${item.id}`}>{item.insuredPerson}</Link></td>
+                    <td>
+                      <Link
+                        to={`/normal/${item.id}`}
+                        state={{
+                          startDate,
+                          endDate,
+                          dateType,
+                          contractStatus,
+                          contractCompany,
+                          policyholder,
+                          insuredPerson,
+                          manager,
+                          policyNumber,
+                          selectedYear,
+                          selectedMonth,
+                          currentPage
+                        }}
+                      >
+                        {item.insuredPerson}
+                      </Link>
+                    </td>
                     <td>{item.policyholder}</td>
                     <td>{item.policyNumber}</td>
                     <td>{item.branch}</td>

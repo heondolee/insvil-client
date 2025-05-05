@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation';
@@ -9,6 +9,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const NormalDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [normalData, setNormalData] = useState({
     manager: '',
     branch: '',
@@ -145,7 +146,9 @@ const NormalDetail = () => {
   };
 
   const handleCancel = () => {
-    navigate('/normal');
+    navigate('/normal', {
+      state: location.state, // 받은 state 그대로 전달
+    });
   };
 
   const handleDelete = async () => {
