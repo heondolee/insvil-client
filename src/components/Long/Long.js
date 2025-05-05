@@ -204,6 +204,8 @@ const Long = () => {
                       ? '취소'
                       : contractStatus === 'statusExpire'
                       ? '만기'
+                      : contractStatus === 'statusFinished'
+                      ? '완납'
                       : '전체'
                   }
                   onSelect={(eventKey) => setContractStatus(eventKey)}
@@ -215,6 +217,7 @@ const Long = () => {
                   <Dropdown.Item eventKey="statusWithdraw">철회</Dropdown.Item>
                   <Dropdown.Item eventKey="statusCancel">취소</Dropdown.Item>
                   <Dropdown.Item eventKey="statusExpire">만기</Dropdown.Item>
+                  <Dropdown.Item eventKey="statusFinished">완납</Dropdown.Item>
                 </DropdownButton>
               </Form.Group>
             </Col>
