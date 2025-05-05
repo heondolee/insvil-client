@@ -180,7 +180,7 @@ const Car = () => {
             </ToggleButtonGroup>
           </ButtonGroup>
           {user.userCode !== 4 && (
-            <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType}/>
+            <DownloadButton modelName="car" startDate={startDate} endDate={endDate} dateType={dateType} responsibleName={responsibilityName}/>
           )}
         </div>
         <Form style={{ display: 'flex', flexDirection: 'column'}}>

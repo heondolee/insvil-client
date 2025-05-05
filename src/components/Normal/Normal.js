@@ -356,7 +356,7 @@ const Normal = () => {
             </Form.Group>
             {user.userCode !== 4 && (
               <Col xs={12} md="auto">
-                <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType}/>
+                <DownloadButton modelName="normal" startDate={startDate} endDate={endDate} dateType={dateType} responsibleName={manager}/>
               </Col>
             )}
           </div>

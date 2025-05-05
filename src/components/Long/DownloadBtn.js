@@ -16,7 +16,7 @@ const customStyles = {
   }),
 };
 
-function DownloadButton({ modelName, startDate, endDate, dateType }) {
+function DownloadButton({ modelName, startDate, endDate, dateType, responsibleName }) {
 
   const [isDownloading, setIsDownloading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -25,7 +25,7 @@ function DownloadButton({ modelName, startDate, endDate, dateType }) {
     const fetchRanges = async () => {
       try {
         const response = await axios.get(`${API_URL}/download-excel/count`, {
-          params: { modelName, startDate, endDate, dateType },
+          params: { modelName, startDate, endDate, dateType, responsibleName },
         });
   
         // 백엔드에서 받은 ranges 데이터를 그대로 사용
