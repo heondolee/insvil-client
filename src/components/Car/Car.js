@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { ToggleButton, ToggleButtonGroup, ButtonGroup, Form, Table, Container, Row, Col, InputGroup, Dropdown, DropdownButton, Button, Spinner, Pagination } from 'react-bootstrap';
 import Navigation from '../Alayouts/Navigation'; // Navigation 컴포넌트 임포트
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import DownloadButton from '../Long/DownloadBtn';
 import { useAuth } from '../Context/AuthProvider';
 
@@ -73,9 +73,36 @@ const Car = () => {
     setIsLoading(false);
   }, [startDate, endDate, dateType, contractCompany, contractor,insured, responsibilityName, carNumber, user, isCar]);
 
+  const location = useLocation();
+
   useEffect(() => {
-    fetchData();
-  }, [fetchData, isCar]);
+    if (location.state) {
+      const {
+        startDate, endDate, dateType, contractCompany,
+        contractor, insured, responsibilityName, carNumber,
+        selectedYear, selectedMonth, currentPage, isCar
+      } = location.state;
+  
+      if (startDate) setStartDate(startDate);
+      if (endDate) setEndDate(endDate);
+      if (dateType) setDateType(dateType);
+      if (contractCompany) setContractCompany(contractCompany);
+      if (contractor) setContractor(contractor);
+      if (insured) setInsured(insured);
+      if (responsibilityName) setResponsibilityName(responsibilityName);
+      if (carNumber) setCarNumber(carNumber);
+      if (selectedYear) setSelectedYear(selectedYear);
+      if (selectedMonth) setSelectedMonth(selectedMonth);
+      if (isCar) setIsCar(isCar);
+  
+      // 상태가 반영된 후 fetchData 실행
+      setTimeout(() => {
+        fetchData(currentPage || 1);
+      }, 0);
+    } else {
+      fetchData(1);
+    }
+  }, [fetchData]);  
 
   const formatNumber = (num) => {
     let value = String(num);
@@ -390,8 +417,48 @@ const Car = () => {
                     {isCar === 'design'&& (<td>{item.previousContractCompany}</td>)}
                     <td>{item.insuredBirthGender}</td>
                     <td>{item.insured}</td>
-                    <td><Link to={`/car/${item.id}`}>{item.contractor}</Link></td>
-                    <td><Link to={`/car/${item.id}`}>{item.carNumber}</Link></td>
+                    <td>
+                      <Link
+                        to={`/car/${item.id}`}
+                        state={{
+                          startDate,
+                          endDate,
+                          dateType,
+                          contractCompany,
+                          contractor,
+                          insured,
+                          responsibilityName,
+                          carNumber,
+                          selectedYear,
+                          selectedMonth,
+                          currentPage,
+                          isCar
+                        }}
+                      >
+                        {item.contractor}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link
+                        to={`/car/${item.id}`}
+                        state={{
+                          startDate,
+                          endDate,
+                          dateType,
+                          contractCompany,
+                          contractor,
+                          insured,
+                          responsibilityName,
+                          carNumber,
+                          selectedYear,
+                          selectedMonth,
+                          currentPage,
+                          isCar
+                        }}
+                      >
+                        {item.carNumber}
+                      </Link>
+                    </td>
                     <td>{item.branch}</td>
                     <td>{item.team}</td>
                     <td>{item.personInCharge}</td>
